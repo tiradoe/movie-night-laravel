@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMovieListsTable extends Migration
+class CreateMovieMovieListTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateMovieListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('movie_lists', function (Blueprint $table) {
+        Schema::create('movie_movie_list', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->boolean('isPublic')->default(false);
-            $table->integer('owner')->nullable();
+            $table->foreignId('movie_id')->constrained();
+            $table->foreignId('movie_list_id')->constrained();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateMovieListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('movie_lists');
+        Schema::dropIfExists('movie_movie_list');
     }
 }

@@ -5,12 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MovieList extends Model
+class Movie extends Model
 {
     use HasFactory;
 
-    public function movies()
-    {
-        return $this->belongsToMany(Movie::class);
-    }
+    protected $fillable = ["title", "year", "rated", "genre", "director", "actors","plot", "poster" ];
 }

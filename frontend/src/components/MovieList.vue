@@ -1,28 +1,44 @@
 <template>
-  <ul>
-    <li :key="movie.id" v-for="movie in movieList">{{ movie.title }}</li>
+  <ul v-show="movies.length">
+    <li :key="movie.id" v-for="movie in movies">{{ movie.title }}</li>
   </ul>
+  <p v-show="!movies.length">No movies in list</p>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "@vue/runtime-core";
-import { Movie } from "@/types/index";
+import { List, Movie } from "@/types/index";
+
+let movies: Movie[] = [];
+let list: List | null = null;
 
 export default defineComponent({
   name: "MovieList",
   components: {},
   data: function () {
     return {
-      currentList: {},
-      movieList: [
-        { id: 1, title: "Movie Title", year: "2000" },
-        { id: 2, title: "Movie Title 2", year: "2001" },
-      ],
+      list: list,
+      movies: movies,
     };
   },
+  methods: {
+    addToList(): void {
+      console.log("adding");
+    },
+  },
+  mounted() {
+    this.$http.get(`/lists/${this.$route.params.id}`).then((response: any) => {
+      if (response.data.status === 404) {
+        console.log("No Movies Found");
+      } else {
+        this.list = response.data.list;
+        this.movies = response.data.movies;
+      }
+    });
+  },
   props: {
-    movies: {
-      type: Object as PropType<Movie>,
+    currentList: {
+      type: Object as PropType<List>,
       required: true,
     },
   },

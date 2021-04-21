@@ -1,6 +1,6 @@
 <template>
   <div class="movie m-5 sm:m-10">
-    <div class="text-left rounded" :key="movie.id" v-for="movie in movies">
+    <div class="text-left rounded">
       <div class="mb-10">
         <!-- MOVIE POSTER -->
         <img
@@ -52,6 +52,13 @@
           </ul>
 
           <div class="">
+            <button
+              v-if="movie"
+              @click="addToList(movie)"
+              class="text-white rounded bg-blue-600 p-2"
+            >
+              Add to List
+            </button>
             <span>Add to: </span>
             <select class="p-1">
               <option>One</option>
@@ -67,13 +74,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
+import { Movie } from "@/types/index";
 
 export default defineComponent({
   name: "MovieDisplay",
+  methods: {
+    addToList(movie: Movie): void {
+      //The movie API has capitalized keys and the DB doesn't like that.  I don't like it either.
+      const updatedMovie = Object.fromEntries(
+        Object.entries(movie).map(([key, value]) => [key.toLowerCase(), value])
+      );
+      this.$http.post(`/lists/1`, updatedMovie);
+    },
+  },
   props: {
-    movies: {
-      type: Object,
+    movie: {
+      type: Object as PropType<Movie>,
       required: true,
     },
   },

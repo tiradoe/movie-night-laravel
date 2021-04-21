@@ -25,7 +25,7 @@
     </div>
 
     <!-- RESULTS -->
-    <MovieDisplay class="" v-if="movies.length > 0" :movies="movies" />
+    <MovieDisplay class="" v-if="movie" :movie="movie" />
     <div v-show="showNotFound === false">No movie found.</div>
 
     <!-- ADD MOVIE -->
@@ -70,7 +70,7 @@ import { defineComponent } from "vue";
 import MovieDisplay from "@/components/MovieDisplay.vue";
 import { Movie } from "@/types/index";
 
-const movies: Movie[] = [];
+let movie: Movie | null = null;
 
 export default defineComponent({
   name: "SearchForm",
@@ -94,22 +94,19 @@ export default defineComponent({
     return {
       query: "",
       searchStatus: "waiting",
-      movies: movies,
+      movie: movie,
     };
   },
   methods: {
     findMovie(): void {
-      this.movies = [];
-      fetch(
-        `${process.env.VUE_APP_ROOT_API}/api/movies/search?query=${this.query}`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          if ("Error" in data) {
+      this.$http
+        .get(`/movies/search?query=${this.query}`)
+        .then((response: any) => {
+          if ("Error" in response.data) {
             this.searchStatus = "Not Found";
           } else {
             this.searchStatus = "Found";
-            this.movies.push(data);
+            this.movie = response.data;
           }
         });
     },

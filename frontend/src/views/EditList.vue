@@ -4,7 +4,7 @@
     <div id="movie-search" class="flex m-5">
       <search-form class="mx-auto" />
     </div>
-    <movie-list class="" movies="currentList" />
+    <movie-list v-if="currentList" :currentList="currentList" />
   </div>
 </template>
 
@@ -27,8 +27,9 @@ export default defineComponent({
   mounted() {
     this.currentList = this.$http
       .get(`/lists/${this.$route.params.id}`)
-      .then((response: any) => (this.currentList = response.data));
-    console.log("wtf");
+      .then((response: any) => {
+        this.currentList = response.data.list;
+      });
   },
 });
 </script>

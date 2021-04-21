@@ -74,6 +74,7 @@ export default defineComponent({
   components: {},
   data: function () {
     return {
+      errorText: "",
       formData: {
         name: "",
         email: "",

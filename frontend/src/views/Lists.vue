@@ -39,7 +39,7 @@
           >
           <span id="quote-actor" class="inline-block">Tom Cruise - </span>
           <span id="quote-movie-title" class="inline-block"
-            >"Jerry Maguire"</span
+            >&nbsp;Jerry Maguire</span
           >
         </div>
       </div>
