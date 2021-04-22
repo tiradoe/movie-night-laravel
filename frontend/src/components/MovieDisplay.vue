@@ -1,16 +1,16 @@
 <template>
-  <div class="movie m-5 sm:m-10">
-    <div class="text-left rounded">
+  <div class="movie sm:m-10">
+    <div class="text-left rounded sm:p-2 shadow bg-white">
       <div class="mb-10">
         <!-- MOVIE POSTER -->
         <img
-          class="my-10 sm:my-0 sm:align-top sm:inline-block object-scale-down mx-auto w-40 sm:w-2/5 lg:w-1/5 sm:align-top max-h-96"
+          class="object-scale-down w-40 mx-auto my-10 sm:my-0 sm:align-top hidden sm:inline-block sm:w-2/5 lg:w-1/5 max-h-96"
           :src="movie.Poster"
         />
-        <div class="inline-block align-top sm:w-3/5 lg:w-4/5 mb-10">
+        <div class="inline-block mb-10 align-top sm:w-3/5 lg:w-4/5">
           <!-- MOVIE TITLE -->
           <span
-            class="block text-center sm:text-left font-bold text-3xl pt-5 sm:pt-0 sm:pl-4 mb-5 sm:mb-0"
+            class="block pt-5 mb-5 text-3xl font-bold text-center sm:text-left sm:pt-0 sm:pl-4 sm:mb-0"
           >
             {{ movie.Title }}
           </span>
@@ -43,7 +43,7 @@
       </div>
 
       <!-- ADD TO LIST -->
-      <div class="mx-4">
+      <div v-if="!mainDisplay" class="mx-4">
         <span class="font-semibold">Currently on these lists:</span>
         <div class="flex justify-between">
           <ul class="">
@@ -55,17 +55,10 @@
             <button
               v-if="movie"
               @click="addToList(movie)"
-              class="text-white rounded bg-blue-600 p-2"
+              class="p-2 text-white bg-blue-600 rounded"
             >
               Add to List
             </button>
-            <span>Add to: </span>
-            <select class="p-1">
-              <option>One</option>
-              <option>two</option>
-              <option>three</option>
-            </select>
-            <button class="p-1 px-2 ml-1 bg-green-200 rounded">+</button>
           </div>
         </div>
       </div>
@@ -92,6 +85,10 @@ export default defineComponent({
     movie: {
       type: Object as PropType<Movie>,
       required: true,
+    },
+    mainDisplay: {
+      type: Boolean,
+      required: false,
     },
   },
 });

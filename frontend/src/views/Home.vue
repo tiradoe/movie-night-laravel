@@ -1,7 +1,7 @@
 <template>
   <div class="p-4">
     <h1 class="m-5 md:m-10 text-3xl font-bold sm:text-left">TONIGHT</h1>
-    <MovieDisplay v-if="movie" :movie="movie" />
+    <MovieDisplay v-if="movie" :movie="movie" :mainDisplay="true" />
   </div>
 </template>
 
