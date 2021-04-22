@@ -11,6 +11,7 @@ class MovieListController extends Controller
     /**
      * @OA\Post(
      *     path="/api/lists/{listId}",
+     *     tags={"lists"},
      *     summary="Adds a movie to a list",
      *     operationId="addToList",
      *     @OA\Parameter(

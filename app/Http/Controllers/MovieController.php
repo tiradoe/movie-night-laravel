@@ -15,6 +15,7 @@ class MovieController extends Controller
     /**
     * @OA\Get(
     *     path="/api/movies",
+    *     tags={"movies"},
     *     summary="Find all movies",
     *     description="Returns a list of movies",
     *     @OA\Response(response="200", description="A list of movies")
@@ -51,6 +52,7 @@ class MovieController extends Controller
     /**
      * @OA\Get(
      *     path="/api/movies/{id}",
+    *     tags={"movies"},
      *     summary="Find movie by ID",
      *     description="Returns a single movie",
      *     operationId="getMovie",
@@ -87,6 +89,7 @@ class MovieController extends Controller
     /**
     * @OA\Post(
     *     path="/api/movies/{id}",
+    *     tags={"movies"},
     *     @OA\Property(
     *       property="id",
     *       type="integer",

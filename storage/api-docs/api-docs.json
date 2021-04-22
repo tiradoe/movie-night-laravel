@@ -7,6 +7,9 @@
     "paths": {
         "/api/movies": {
             "get": {
+                "tags": [
+                    "movies"
+                ],
                 "summary": "Find all movies",
                 "description": "Returns a list of movies",
                 "operationId": "App\\Http\\Controllers\\MovieController::getMovies",
@@ -19,6 +22,9 @@
         },
         "/api/movies/{id}": {
             "get": {
+                "tags": [
+                    "movies"
+                ],
                 "summary": "Find movie by ID",
                 "description": "Returns a single movie",
                 "operationId": "getMovie",
@@ -44,6 +50,9 @@
                 }
             },
             "post": {
+                "tags": [
+                    "movies"
+                ],
                 "operationId": "App\\Http\\Controllers\\MovieController::createMovie",
                 "responses": {
                     "200": {
@@ -54,6 +63,9 @@
         },
         "/api/lists/{listId}": {
             "post": {
+                "tags": [
+                    "lists"
+                ],
                 "summary": "Adds a movie to a list",
                 "operationId": "addToList",
                 "parameters": [
