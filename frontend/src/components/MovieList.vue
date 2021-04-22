@@ -21,11 +21,6 @@ export default defineComponent({
       movies: movies,
     };
   },
-  methods: {
-    addToList(): void {
-      console.log("adding");
-    },
-  },
   mounted() {
     this.$http.get(`/lists/${this.$route.params.id}`).then((response: any) => {
       if (response.data.status === 404) {

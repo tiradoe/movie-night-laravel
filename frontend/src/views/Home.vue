@@ -24,7 +24,6 @@ export default defineComponent({
   },
   mounted() {
     this.$http.get("/movies").then((response: any) => {
-      console.log(response.data);
       this.movie = response.data;
     });
   },

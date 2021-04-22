@@ -34,7 +34,7 @@ export default defineComponent({
         if (error.response && error.response.status === 401) {
           this.$router.push("/login");
         } else {
-          console.log(error);
+          console.error(error);
         }
       });
   },
