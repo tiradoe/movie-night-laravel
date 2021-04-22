@@ -1,7 +1,7 @@
 <template>
   <div class="p-4">
     <h1 class="m-5 md:m-10 text-3xl font-bold sm:text-left">TONIGHT</h1>
-    <MovieDisplay :movies="movies" />
+    <MovieDisplay v-if="movie" :movie="movie" />
   </div>
 </template>
 
@@ -10,7 +10,7 @@ import { defineComponent } from "vue";
 import MovieDisplay from "@/components/MovieDisplay.vue"; // @ is an alias to /src
 import { Movie } from "@/types/index";
 
-const movies: Movie[] = [];
+const movie: Movie | null = null;
 
 export default defineComponent({
   name: "Home",
@@ -19,13 +19,13 @@ export default defineComponent({
   },
   data: function () {
     return {
-      movies: movies,
+      movie: movie,
     };
   },
   mounted() {
-    this.movies = [];
     this.$http.get("/movies").then((response: any) => {
-      this.movies.push(response.data);
+      console.log(response.data);
+      this.movie = response.data;
     });
   },
 });
