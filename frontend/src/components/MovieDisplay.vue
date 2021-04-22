@@ -1,6 +1,6 @@
 <template>
   <div class="movie sm:m-10">
-    <div class="text-left rounded sm:p-2 shadow bg-white">
+    <div class="text-left rounded sm:p-5 shadow bg-white">
       <div class="mb-10">
         <!-- MOVIE POSTER -->
         <img
@@ -33,7 +33,7 @@
               <span class="font-semibold">Year:</span>
               {{ movie.Year }}
             </span>
-            <span class="block">
+            <span v-if="movie.Ratings.length > 1" class="block">
               <span class="font-semibold">Rotten Tomatoes Score:</span>
               {{ movie.Ratings[1].Value }}
             </span>
