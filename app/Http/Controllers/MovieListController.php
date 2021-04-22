@@ -8,14 +8,52 @@ use Illuminate\Http\Request;
 
 class MovieListController extends Controller
 {
+    /**
+     * @OA\Post(
+     *     path="/api/lists/{listId}",
+     *     summary="Adds a movie to a list",
+     *     operationId="addToList",
+     *     @OA\Parameter(
+     *         name="listId",
+     *         in="path",
+     *         description="ID of list in which to place the movie",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Added to list"
+     *     ),
+     *     @OA\RequestBody(
+     *         description="Movie to be added",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="title",
+     *                     description="Title of the movie",
+     *                     type="string",
+     *                 ),
+     *                 @OA\Property(
+     *                     property="year",
+     *                     description="Year the movie was made",
+     *                     type="integer"
+     *                 )
+     *             )
+     *         )
+     *     )
+     * )
+     */
     public function addToList(Request $request)
     {
         $list = MovieList::find($request->id);
         $movie = Movie::find($request->input('id'));
-        //$movieTitle = $request->input('title');
 
         if (empty($movie)) {
-            //create new movie
             $movie = Movie::create([
                 'title' => $request->input('title'),
                 'year' => $request->input('year'),

@@ -51,6 +51,49 @@
                     }
                 }
             }
+        },
+        "/api/lists/{listId}": {
+            "post": {
+                "summary": "Adds a movie to a list",
+                "operationId": "addToList",
+                "parameters": [
+                    {
+                        "name": "listId",
+                        "in": "path",
+                        "description": "ID of list in which to place the movie",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Movie to be added",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "description": "Title of the movie",
+                                        "type": "string"
+                                    },
+                                    "year": {
+                                        "description": "Year the movie was made",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Added to list"
+                    }
+                }
+            }
         }
     },
     "security": [
