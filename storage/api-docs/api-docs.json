@@ -1,0 +1,59 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Movie Night",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/movies": {
+            "get": {
+                "summary": "Find all movies",
+                "description": "Returns a list of movies",
+                "operationId": "App\\Http\\Controllers\\MovieController::getMovies",
+                "responses": {
+                    "200": {
+                        "description": "A list of movies"
+                    }
+                }
+            }
+        },
+        "/api/movies/{id}": {
+            "get": {
+                "summary": "Find movie by ID",
+                "description": "Returns a single movie",
+                "operationId": "getMovie",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Movie ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    },
+                    "404": {
+                        "description": "Movie not found"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "App\\Http\\Controllers\\MovieController::createMovie",
+                "responses": {
+                    "200": {
+                        "description": "Movie added to database"
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

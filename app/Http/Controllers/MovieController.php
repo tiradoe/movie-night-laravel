@@ -8,10 +8,18 @@ use Illuminate\Support\Facades\Http;
 class MovieController extends Controller
 {
     /**
-     * Get a list of movies
-     * @param Request $request
-     * @author Ed Tirado
-     */
+     *
+    * @OA\Info(title="Movie Night", version="0.1")
+    */
+
+    /**
+    * @OA\Get(
+    *     path="/api/movies",
+    *     summary="Find all movies",
+    *     description="Returns a list of movies",
+    *     @OA\Response(response="200", description="A list of movies")
+    * )
+    */
 
     public function getMovies(Request $request)
     {
@@ -41,9 +49,30 @@ class MovieController extends Controller
     }
 
     /**
-     * Fetch a single movie
-     * @param int $id
-     * @author Ed Tirado
+     * @OA\Get(
+     *     path="/api/movies/{id}",
+     *     summary="Find movie by ID",
+     *     description="Returns a single movie",
+     *     operationId="getMovie",
+     *     @OA\Parameter(
+     *         description="Movie ID",
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="integer",
+     *           format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Movie not found"
+     *     ),
+     * )
      */
     public function getMovie(int $id)
     {
@@ -56,10 +85,16 @@ class MovieController extends Controller
     }
 
     /**
-     * Add a new movie to the database
-     * @param Array $movie
-     * @author Ed Tirado
-     */
+    * @OA\Post(
+    *     path="/api/movies/{id}",
+    *     @OA\Property(
+    *       property="id",
+    *       type="integer",
+    *       description="The movie's ID"
+    *     ),
+    *     @OA\Response(response="200", description="Movie added to database")
+    * )
+    */
     public function createMovie(array $movie)
     {
         $movie = [
