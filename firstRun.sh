@@ -5,24 +5,24 @@ read CREATE_FILE
 
 if [ "$CREATE_FILE" == "y" ]; then
     cp .env.example .env
-    echo "\nFile created!"
+    echo "File created!"
 fi
 
-echo "\nEnter your OMDb key.  You can get one from http://www.omdbapi.com/apikey.aspx."
+echo "Enter your OMDb key.  You can get one from http://www.omdbapi.com/apikey.aspx."
 read OMDB_KEY
 
 if [ "$OMDB_KEY" != "" ]; then
-    echo "\n===== Adding Key to .env ====="
+    echo "===== Adding Key to .env ====="
     echo "OMDB_KEY=$OMDB_KEY" >> .env
 fi
 
-echo "\n===== Installing PHP dependencies ====="
+echo "===== Installing PHP dependencies ====="
 composer install
 
-echo "\n===== Building application ====="
+echo "===== Building application ====="
 vendor/bin/sail up --build -d
-vendor/bin/sail npm install frontend/
+vendor/bin/sail run web npm install frontend/
 vendor/bin/sail php artisan migrate
 
-echo "\n===== Generating API documentation ====="
+echo "===== Generating API documentation ====="
 vendor/bin/sail php artisan l5-swagger:generate
