@@ -4,7 +4,9 @@
 
 [Docker](https://www.docker.com/get-started)
 
-- On Windows and Mac choose "Docker Desktop". \nOn Linux just use your distro's
+- On Windows and Mac choose "Docker Desktop".
+
+On Linux just use your distro's
 package manager and laugh at the GUI using n00bs.
 
 [Docker Compose](https://docs.docker.com/compose/install/)
