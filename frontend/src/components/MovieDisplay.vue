@@ -4,13 +4,13 @@
       <div class="mb-10">
         <!-- MOVIE POSTER -->
         <img
-          class="object-scale-down w-40 mx-auto my-10 sm:my-0 sm:align-top hidden sm:inline-block sm:w-2/5 lg:w-1/5 max-h-96"
+          class="object-scale-down max-h-32 pt-5 sm:pt-0 w-40 mx-auto my-10 sm:my-0 sm:align-top sm:inline-block sm:w-2/5 lg:w-1/5 sm:max-h-96"
           :src="movie.Poster"
         />
         <div class="inline-block mb-10 align-top sm:w-3/5 lg:w-4/5">
           <!-- MOVIE TITLE -->
           <span
-            class="block pt-5 mb-5 text-3xl font-bold text-center sm:text-left sm:pt-0 sm:pl-4 sm:mb-0"
+            class="block p-1 mb-5 text-3xl font-bold text-center sm:text-left sm:pt-0 sm:pl-4 sm:mb-0"
           >
             {{ movie.Title }}
           </span>

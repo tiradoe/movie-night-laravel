@@ -1,7 +1,7 @@
 <template>
-  <div class="p-4">
+  <div class="sm:p-4 mt-10">
     <h1 class="font-bold">{{ currentList.name }}</h1>
-    <div id="movie-search" class="flex m-5">
+    <div id="movie-search" class="flex sm:m-5">
       <search-form class="mx-auto" />
     </div>
     <movie-list v-if="currentList" :currentList="currentList" />

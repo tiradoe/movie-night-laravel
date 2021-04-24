@@ -1,6 +1,7 @@
 # Movie Night
 
 ## Setup
+
 This _should_ work but I haven't tested it yet.  Will update if I missed anything.
 
 1. Copy `.env.example` to `.env`

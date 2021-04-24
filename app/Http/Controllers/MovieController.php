@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Models\Movie;
 
 class MovieController extends Controller
 {
@@ -78,11 +79,11 @@ class MovieController extends Controller
      */
     public function getMovie(int $id)
     {
-        $movie = [
-            "id" => $id,
-            "title" => "The Shawshank Redemption"
-        ];
-
+        try {
+            $movie = Movie::findOrFail($id);
+        } catch (Exception $e) {
+            return response()->json(["status" => 404, data => "Movie not Found"]);
+        }
         return response()->json($movie);
     }
 
