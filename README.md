@@ -31,7 +31,7 @@ This project uses Laravel Sail to control the containers.  Commands can be found
 Run tests with `vendor/bin/sail php artisan test`
 
 Generate test coverage with
-`sail run laravel.test vendor/bin/phpunit --coverage-html tests/coverage`
+`vendor/bin/sail run laravel.test vendor/bin/phpunit --coverage-html tests/coverage`
 
 Once that finishes, open `tests/coverage/index.html` in your browser to view
 the current test coverage.
