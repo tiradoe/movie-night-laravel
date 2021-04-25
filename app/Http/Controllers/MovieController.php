@@ -37,7 +37,7 @@ class MovieController extends Controller
     /**
      * @OA\Get(
      *     path="/api/movies/{id}",
-    *     tags={"movies"},
+     *     tags={"movies"},
      *     summary="Find movie by ID",
      *     description="Returns a single movie",
      *     operationId="getMovie",

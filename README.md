@@ -25,3 +25,13 @@ to see the site. API docs can be found at [http://localhost:80/api/docs](http://
 
 This project uses Laravel Sail to control the containers.  Commands can be found
 [here](https://laravel.com/docs/8.x/sail)
+
+## Testing
+
+Run tests with `vendor/bin/sail php artisan test`
+
+Generate test coverage with
+`sail run laravel.test vendor/bin/phpunit --coverage-html tests/coverage`
+
+Once that finishes, open `tests/coverage/index.html` in your browser to view
+the current test coverage.
