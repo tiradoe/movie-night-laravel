@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 use App\Models\Movie;
+use App\Models\MovieMovieList;
 
 class MovieController extends Controller
 {
@@ -23,7 +27,7 @@ class MovieController extends Controller
     * )
     */
 
-    public function getMovies(Request $request)
+    public function getMovies(Request $request): JsonResponse
     {
         $movies = [
             "id" => 1,
@@ -77,36 +81,16 @@ class MovieController extends Controller
      *     ),
      * )
      */
-    public function getMovie(int $id)
+    public function getMovie($id): JsonResponse
     {
         try {
             $movie = Movie::findOrFail($id);
-        } catch (Exception $e) {
-            return response()->json(["status" => 404, data => "Movie not Found"]);
+            return response()->json($movie);
+        } catch (ModelNotFoundException $e) {
+            return response()
+                ->json(["data" => "Movie not Found"])
+                ->setStatusCode(404);
         }
-        return response()->json($movie);
-    }
-
-    /**
-    * @OA\Post(
-    *     path="/api/movies/{id}",
-    *     tags={"movies"},
-    *     @OA\Property(
-    *       property="id",
-    *       type="integer",
-    *       description="The movie's ID"
-    *     ),
-    *     @OA\Response(response="200", description="Movie added to database")
-    * )
-    */
-    public function createMovie(array $movie)
-    {
-        $movie = [
-            "id" => $id,
-            "title" => "The Shawshank Redemption"
-        ];
-
-        return response()->json($movie);
     }
 
     /**
@@ -114,7 +98,7 @@ class MovieController extends Controller
      * @param Request $request
      * @author Ed Tirado
      */
-    public function updateMovie()
+    public function updateMovie(): JsonResponse
     {
         $movie = [
             "id" => 6,
@@ -128,14 +112,15 @@ class MovieController extends Controller
      * Delete a movie from the database
      * @author Ed Tirado
      */
-    public function deleteMovie()
+    public function deleteMovie($id): JsonResponse
     {
-        $movie = [
-            "id" => 7,
-            "title" => "Rambo"
-        ];
-
-        return response()->json($movie);
+        try {
+            $movie = MovieMovieList::find($id);
+            $movie->delete();
+            return response()->json($movie);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(["data"=>"Could not find movie to delete"]);
+        }
     }
 
     /**
@@ -145,7 +130,7 @@ class MovieController extends Controller
      * @author Ed Tirado
      */
 
-    public function search(Request $request)
+    public function search(Request $request): JsonResponse
     {
         $imdbIdRegex = "/tt\d+/";
 
@@ -163,8 +148,8 @@ class MovieController extends Controller
             "apikey" => config("app.omdb_key"),
             "plot" => "full",
             $queryType => $query
-        ]);
+        ])->collect();
 
-        return $response->json();
+        return response()->json($response);
     }
 }
