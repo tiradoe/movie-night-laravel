@@ -22,3 +22,6 @@ Run the `firstRun.sh` bash script and follow the prompts.
 
 This will probably take a while but when it's done, go to [http://localhost:8080](http://localhost:8080)
 to see the site. API docs can be found at [http://localhost:80/api/docs](http://localhost:80/api/docs)
+
+This project uses Laravel Sail to control the containers.  Commands can be found
+[here](https://laravel.com/docs/8.x/sail)
