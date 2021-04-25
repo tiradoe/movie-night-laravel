@@ -26,5 +26,8 @@ vendor/bin/sail php artisan migrate
 
 echo "===== Generating API documentation ====="
 vendor/bin/sail php artisan l5-swagger:generate
+
+
+echo "===== Restarting Container ====="
 vendor/bin/sail restart
 vendor/bin/sail logs -f
