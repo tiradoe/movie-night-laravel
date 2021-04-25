@@ -21,7 +21,7 @@ composer install
 
 echo "===== Building application ====="
 vendor/bin/sail up --build -d
-vendor/bin/sail run web npm install frontend/
+vendor/bin/sail run web npm install
 vendor/bin/sail php artisan migrate
 
 echo "===== Generating API documentation ====="
