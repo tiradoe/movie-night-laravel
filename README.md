@@ -11,6 +11,8 @@ package manager and laugh at the GUI using n00bs.
 [Docker Compose](https://docs.docker.com/compose/install/)
 
 [Composer](https://getcomposer.org/download/)
+    - The setup script assumes you have Composer installed globally.
+    - Update the command in `firstRun.sh`if that's not the case.
 
 [Node.js](https://nodejs.org/en/download/)
 
