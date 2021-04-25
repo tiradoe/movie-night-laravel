@@ -31,8 +31,6 @@ class MovieTest extends TestCase
      */
     public function test_returns_404_if_movie_doesnt_exist()
     {
-        $movies = Movie::all();
-
         $this->get('/api/movies/8405')
             ->assertStatus(404);
     }
