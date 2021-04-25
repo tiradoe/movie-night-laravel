@@ -20,5 +20,5 @@ An API key from the [Open Movie Database](http://www.omdbapi.com/apikey.aspx)
 
 Run the `firstRun.sh` bash script and follow the prompts.
 
-This will probably take a while but when it's done, go to `http://localhost:8080`
-to see the site. API docs can be found at `localhost/api/docs`
+This will probably take a while but when it's done, go to [http://localhost:8080](http://localhost:8080)
+to see the site. API docs can be found at [http://localhost:80/api/docs](http://localhost:80/api/docs)
