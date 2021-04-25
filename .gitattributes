@@ -2,4 +2,6 @@
 *.css linguist-vendored
 *.scss linguist-vendored
 *.js linguist-vendored
+tests/coverage/* linguist-generated
+frontend/public/* linguist-generated
 CHANGELOG.md export-ignore
