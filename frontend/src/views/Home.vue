@@ -2,6 +2,7 @@
   <div class="p-4">
     <h1 class="m-5 md:m-10 text-3xl font-bold sm:text-left">TONIGHT</h1>
     <MovieDisplay v-if="movie" :movie="movie" :mainDisplay="true" />
+    <p v-else>No movie scheduled.</p>
   </div>
 </template>
 
@@ -23,7 +24,7 @@ export default defineComponent({
     };
   },
   mounted() {
-    this.$http.get("/movies").then((response: any) => {
+    this.$http.get("/movies/1").then((response: any) => {
       this.movie = response.data;
     });
   },
