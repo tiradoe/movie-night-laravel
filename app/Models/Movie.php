@@ -20,7 +20,7 @@ class Movie extends Model
         "poster"
     ];
 
-    public function lists()
+    public function movieLists()
     {
         return $this->belongsToMany(MovieList::class);
     }

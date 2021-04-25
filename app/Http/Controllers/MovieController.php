@@ -74,34 +74,21 @@ class MovieController extends Controller
     }
 
     /**
-     * Update information for a movie
-     * @param Request $request
-     * @author Ed Tirado
-     */
-    public function updateMovie(): JsonResponse
-    {
-        $movie = [
-            "id" => 6,
-            "title" => "Who Killed Captain Alex?"
-        ];
-
-        return response()->json($movie);
-    }
-
-    /**
      * Delete a movie from the database
      * @author Ed Tirado
      */
     public function deleteMovie($id): JsonResponse
     {
         try {
-            $movie = Movie::find($id);
-            $movie->lists()->detach();
+            $movie = Movie::findOrFail($id);
+            $movie->movieLists()->detach();
             $movie->delete();
 
             return response()->json($movie);
         } catch (ModelNotFoundException $e) {
-            return response()->json(["data"=>"Could not find movie to delete"]);
+            return response()
+                ->json(["data"=>"Could not find movie to delete"])
+                ->setStatusCode(404);
         }
     }
 

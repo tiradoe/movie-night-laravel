@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illumitate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class MovieListMovie extends Pivot
 {
