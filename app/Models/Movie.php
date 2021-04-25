@@ -9,5 +9,19 @@ class Movie extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["title", "year", "rated", "genre", "director", "actors","plot", "poster" ];
+    protected $fillable = [
+        "title",
+        "year",
+        "rated",
+        "genre",
+        "director",
+        "actors",
+        "plot",
+        "poster"
+    ];
+
+    public function lists()
+    {
+        return $this->belongsToMany(MovieList::class);
+    }
 }

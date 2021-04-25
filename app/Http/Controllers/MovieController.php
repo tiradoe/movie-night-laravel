@@ -29,27 +29,7 @@ class MovieController extends Controller
 
     public function getMovies(Request $request): JsonResponse
     {
-        $movies = [
-            "id" => 1,
-            "Title" => "Masters of the Universe",
-            "Year" => 1987,
-            "Rated" => "PG",
-            "Genre" => "Action, Adventure, Fantasy, Sci-Fi",
-            "Director" => "Gary Goddard",
-            "Actors" => "Dolph Lundgren, Frank Langella, Meg Foster, Billy Barty",
-            "Plot" => "The heroic warrior He-Man battles against the evil lord Skeletor and his armies of darkness for control of Castle Grayskull.",
-            "Ratings" => [
-                [
-                    "Source" => "Internet Movie Database",
-                    "Value" => "5.4/10"
-                ],
-                [
-                    "Source" => "Rotten Tomatoes",
-                    "Value" => "13%"
-                ]
-            ],
-            "Poster" => "https://m.media-amazon.com/images/M/MV5BYzRlMzQzNDEtYTg5My00NTFjLWFiYzYtMjJkMzUyYzJjMzgyXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
-        ];
+        $movies = Movie::all();
 
         return response()->json($movies);
     }
@@ -115,8 +95,10 @@ class MovieController extends Controller
     public function deleteMovie($id): JsonResponse
     {
         try {
-            $movie = MovieMovieList::find($id);
+            $movie = Movie::find($id);
+            $movie->lists()->detach();
             $movie->delete();
+
             return response()->json($movie);
         } catch (ModelNotFoundException $e) {
             return response()->json(["data"=>"Could not find movie to delete"]);
