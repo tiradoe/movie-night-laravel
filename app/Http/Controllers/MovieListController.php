@@ -50,10 +50,10 @@ class MovieListController extends Controller
      *     )
      * )
      */
-    public function addToList(Request $request, $id)
+    public function addToList(Request $request, $list_id)
     {
         try {
-            $movieList = MovieList::findOrFail($id);
+            $movieList = MovieList::findOrFail($list_id);
         } catch (ModelNotFoundException $e) {
             return response()->json(["data" => []])->setStatusCode(404);
         }
@@ -105,9 +105,9 @@ class MovieListController extends Controller
         return response()->json($movieLists);
     }
 
-    public function getMovielist(Request $request, $id)
+    public function getMovielist(Request $request, $list_id)
     {
-        $list = MovieList::find($id);
+        $list = MovieList::find($list_id);
         if (empty($list)) {
             return response()->json(['list' => null, 'movies' => null])->setStatusCode(404);
         }
@@ -115,10 +115,10 @@ class MovieListController extends Controller
         return response()->json(['status' => 200, 'list' => $list, 'movies' => $list->movies]);
     }
 
-    public function deleteMovieList(Request $request, $id)
+    public function deleteMovieList(Request $request, $list_id)
     {
         try {
-            $movieList = MovieList::findOrFail($id);
+            $movieList = MovieList::findOrFail($list_id);
             $movieList->movies()->detach();
             $movieList->delete();
 
