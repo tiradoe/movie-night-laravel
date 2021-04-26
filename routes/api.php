@@ -25,7 +25,6 @@ Route::get('/movies/search', [MovieController::class, 'search']);
 Route::get('/movies/{id}', [MovieController::class, 'getMovie']);
 Route::post('/movies', [MovieController::class, 'createMovie']);
 Route::delete('/movies/{id}', [MovieController::class, 'deleteMovie']);
-Route::put('/movies/{id}', [MovieController::class, 'updateMovie']);
 
 Route::get('/lists', [MovieListController::class, 'getMovieLists']);
 Route::get('/lists/{id}', [MovieListController::class, 'getMovieList']);

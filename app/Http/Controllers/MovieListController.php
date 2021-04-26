@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Movie;
 use App\Models\MovieList;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class MovieListController extends Controller
 {
@@ -49,9 +50,14 @@ class MovieListController extends Controller
      *     )
      * )
      */
-    public function addToList(Request $request)
+    public function addToList(Request $request, $id)
     {
-        $list = MovieList::find($request->id);
+        try {
+            $movieList = MovieList::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(["data" => []])->setStatusCode(404);
+        }
+
         $movie = Movie::find($request->input('id'));
 
         if (empty($movie)) {
@@ -69,13 +75,9 @@ class MovieListController extends Controller
         }
 
         //add this movie to list
-        $list->movies()->attach($movie->id);
+        $movieList->movies()->attach($movie->id);
 
-        if (empty($list)) {
-            return response()->json(['status' => 404, 'data' => $list]);
-        } else {
-            return response()->json(['status' => 200, 'data' => $list->movies]);
-        }
+        return response()->json(['data' => $movieList->movies]);
     }
 
     public function createMovieList(Request $request)
@@ -103,29 +105,28 @@ class MovieListController extends Controller
         return response()->json($movieLists);
     }
 
-    public function getMovielist(Request $request)
+    public function getMovielist(Request $request, $id)
     {
-        $list = MovieList::find($request->id);
+        $list = MovieList::find($id);
         if (empty($list)) {
-            return response()->json(['status' => 404, 'list' => null, 'movies' => null]);
+            return response()->json(['list' => null, 'movies' => null])->setStatusCode(404);
         }
 
         return response()->json(['status' => 200, 'list' => $list, 'movies' => $list->movies]);
     }
 
-    public function updateMovieList()
+    public function deleteMovieList(Request $request, $id)
     {
-    }
+        try {
+            $movieList = MovieList::findOrFail($id);
+            $movieList->movies()->detach();
+            $movieList->delete();
 
-    public function deleteMovieList(Request $request)
-    {
-        MovieList::destroy($request->id);
-
-        $response = [
-                'status' => 200,
-                'message' => 'Successfully deleted list.',
-            ];
-
-        return response()->json($response);
+            return response()->json($movieList);
+        } catch (ModelNotFoundException $e) {
+            return response()
+                ->json(["data"=>"Could not find movie to delete"])
+                ->setStatusCode(404);
+        }
     }
 }
