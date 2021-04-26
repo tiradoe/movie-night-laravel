@@ -25,7 +25,7 @@
     </div>
 
     <!-- RESULTS -->
-    <MovieDisplay class="" v-if="movie" :movie="movie" />
+    <MovieDisplay class="" v-if="movie" :movie="movie" :listId="listId" />
     <div v-show="showNotFound === false">No movie found.</div>
 
     <!-- ADD MOVIE -->
@@ -109,6 +109,12 @@ export default defineComponent({
             this.movie = response.data;
           }
         });
+    },
+  },
+  props: {
+    listId: {
+      type: Number,
+      required: true,
     },
   },
 });

@@ -1,10 +1,10 @@
 <template>
   <div class="movie sm:m-10">
-    <div class="text-left rounded sm:p-5 shadow bg-white">
+    <div class="text-left bg-white rounded shadow sm:p-5">
       <div class="mb-10">
         <!-- MOVIE POSTER -->
         <img
-          class="object-scale-down max-h-32 pt-5 sm:pt-0 w-40 mx-auto my-10 sm:my-0 sm:align-top sm:inline-block sm:w-2/5 lg:w-1/5 sm:max-h-96"
+          class="object-scale-down w-40 pt-5 mx-auto my-10 max-h-32 sm:pt-0 sm:my-0 sm:align-top sm:inline-block sm:w-2/5 lg:w-1/5 sm:max-h-96"
           :src="movie.Poster"
         />
         <div class="inline-block mb-10 align-top sm:w-3/5 lg:w-4/5">
@@ -78,7 +78,7 @@ export default defineComponent({
       const updatedMovie = Object.fromEntries(
         Object.entries(movie).map(([key, value]) => [key.toLowerCase(), value])
       );
-      this.$http.post(`/lists/1`, updatedMovie);
+      this.$http.post(`/lists/${this.listId}`, updatedMovie);
     },
   },
   props: {
@@ -89,6 +89,10 @@ export default defineComponent({
     mainDisplay: {
       type: Boolean,
       required: false,
+    },
+    listId: {
+      type: Number,
+      required: true,
     },
   },
 });

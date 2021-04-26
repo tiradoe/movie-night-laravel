@@ -2,7 +2,11 @@
   <div class="sm:p-4 mt-10">
     <h1 class="font-bold">{{ currentList.name }}</h1>
     <div id="movie-search" class="flex sm:m-5">
-      <search-form class="mx-auto" />
+      <search-form
+        v-if="currentList.id"
+        class="mx-auto"
+        :listId="currentList.id"
+      />
     </div>
     <movie-list v-if="currentList" :currentList="currentList" />
   </div>
