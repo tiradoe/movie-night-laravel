@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col">
     <!-- SEARCH INPUT -->
-    <div class="flex max-h-10 mb-5 max-w-md mx-auto">
+    <div class="flex max-h-10 mb-5 mb-10 max-w-md mx-auto">
       <!-- TEXT FIELD -->
       <div class="shadow">
         <input
@@ -16,7 +16,7 @@
 
       <!-- SEARCH BUTTON -->
       <button
-        class="inline-block p-2 text-white bg-blue-600 rounded rounded-l-none cursor-pointer border-l-none"
+        class="inline-block p-2 text-white bg-button rounded rounded-l-none cursor-pointer border-l-none"
         @click="findMovie()"
         aria-label="Search"
       >
@@ -25,7 +25,13 @@
     </div>
 
     <!-- RESULTS -->
-    <MovieDisplay class="" v-if="movie" :movie="movie" :listId="listId" />
+    <MovieDisplay
+      class=""
+      v-if="movie"
+      :movie="movie"
+      :listId="listId"
+      v-on:resetMovie="resetMovie"
+    />
     <div v-show="showNotFound === false">No movie found.</div>
 
     <!-- ADD MOVIE -->
@@ -109,6 +115,10 @@ export default defineComponent({
             this.movie = response.data;
           }
         });
+    },
+    resetMovie(): void {
+      this.movie = null;
+      this.query = "";
     },
   },
   props: {

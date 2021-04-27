@@ -45,7 +45,7 @@
       </div>
 
       <input
-        class="p-2 border border-gray-400 rounded rounded-r-none border-r-none focus:outline-none focus:shadow-outline"
+        class="p-2 shadow rounded rounded-r-none border-r-none focus:outline-none focus:shadow-outline"
         type="text"
         placeholder="List Name"
         aria-placeholder="Enter List Name"
@@ -53,7 +53,7 @@
         @keyup.enter="addList"
       />
       <div
-        class="inline-block p-2 mt-5 text-white bg-blue-600 border border-gray-400 rounded rounded-l-none cursor-pointer border-l-none"
+        class="inline-block shadow p-2 mt-5 text-white bg-button rounded rounded-l-none cursor-pointer border-l-none"
         @click="addList()"
       >
         Create list

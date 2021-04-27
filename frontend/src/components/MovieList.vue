@@ -1,8 +1,17 @@
 <template>
-  <ul v-show="movies.length">
-    <li :key="movie.id" v-for="movie in movies">{{ movie.title }}</li>
-  </ul>
-  <p v-show="!movies.length">No movies in list</p>
+  <div class="bg-white mt-10 sm:m-10 mb-10 rounded shadow">
+    <ul v-show="movies.length">
+      <li
+        class="flex p-5 even:bg-gray-200"
+        :key="movie.id"
+        v-for="movie in movies"
+      >
+        <span> {{ movie.title }}</span>
+        <span class="flex-1 text-right"> {{ movie.year }}</span>
+      </li>
+    </ul>
+    <p v-show="!movies.length">No movies in list</p>
+  </div>
 </template>
 
 <script lang="ts">
