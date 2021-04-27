@@ -1,5 +1,5 @@
 <template>
-  <div class="movie sm:m-10">
+  <div>
     <div class="text-left bg-white rounded shadow sm:p-5">
       <div class="mb-10">
         <!-- MOVIE POSTER -->
@@ -13,6 +13,15 @@
             class="block p-1 mb-5 text-3xl font-bold text-center sm:text-left sm:pt-0 sm:pl-4 sm:mb-0"
           >
             {{ movie.title }}
+            <div class="sm:hidden">
+              <button
+                v-if="movie"
+                @click="addToList(movie)"
+                class="p-2 mt-5 text-lg text-white rounded bg-button"
+              >
+                Add to List
+              </button>
+            </div>
           </span>
 
           <!-- MOVIE INFO -->
@@ -54,11 +63,11 @@
             <li>List two</li>
           </ul>
 
-          <div class="">
+          <div>
             <button
               v-if="movie"
               @click="addToList(movie)"
-              class="p-2 text-white bg-blue-600 rounded"
+              class="hidden p-2 text-white rounded sm:block bg-button"
             >
               Add to List
             </button>
@@ -76,9 +85,11 @@ import store from "@/store/index";
 
 export default defineComponent({
   name: "MovieDisplay",
+  emits: ["resetMovie"],
   methods: {
     addToList(movie: Movie): void {
       this.$http.post(`/lists/${this.listId}`, movie).then((response: any) => {
+        this.$emit("resetMovie");
         store.commit("updateList", response.data.list);
       });
     },

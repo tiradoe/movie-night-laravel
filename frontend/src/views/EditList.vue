@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-10 sm:p-4">
-    <h1 class="font-bold">{{ currentList.name }}</h1>
-    <div id="movie-search" class="flex sm:m-5">
+  <div class="mt-10">
+    <h1 class="text-3xl font-bold">{{ currentList.name }}</h1>
+    <div id="movie-search" class="flex sm:m-10">
       <search-form
         v-if="currentList.id"
         class="mx-auto"
