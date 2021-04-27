@@ -33,7 +33,10 @@
               <span class="font-semibold">Year:</span>
               {{ movie.year }}
             </span>
-            <span v-if="movie.ratings.length > 1" class="block">
+            <span
+              v-if="movie.ratings && movie.ratings.length > 1"
+              class="block"
+            >
               <span class="font-semibold">Rotten Tomatoes Score:</span>
               {{ movie.ratings[1].Value }}
             </span>
