@@ -5,39 +5,39 @@
         <!-- MOVIE POSTER -->
         <img
           class="object-scale-down w-40 pt-5 mx-auto my-10 max-h-32 sm:pt-0 sm:my-0 sm:align-top sm:inline-block sm:w-2/5 lg:w-1/5 sm:max-h-96"
-          :src="movie.Poster"
+          :src="movie.poster"
         />
         <div class="inline-block mb-10 align-top sm:w-3/5 lg:w-4/5">
           <!-- MOVIE TITLE -->
           <span
             class="block p-1 mb-5 text-3xl font-bold text-center sm:text-left sm:pt-0 sm:pl-4 sm:mb-0"
           >
-            {{ movie.Title }}
+            {{ movie.title }}
           </span>
 
           <!-- MOVIE INFO -->
           <div class="p-4">
             <span class="block"
               ><span class="font-semibold">Director:</span>
-              {{ movie.Director }}</span
+              {{ movie.director }}</span
             >
             <span class="block">
               <span class="font-semibold">Genre:</span>
-              {{ movie.Genre }}
+              {{ movie.genre }}
             </span>
             <span class="block">
               <span class="font-semibold">Rating:</span>
-              {{ movie.Rated }}
+              {{ movie.rated }}
             </span>
             <span class="block">
               <span class="font-semibold">Year:</span>
-              {{ movie.Year }}
+              {{ movie.year }}
             </span>
-            <span v-if="movie.Ratings.length > 1" class="block">
+            <span v-if="movie.ratings.length > 1" class="block">
               <span class="font-semibold">Rotten Tomatoes Score:</span>
-              {{ movie.Ratings[1].Value }}
+              {{ movie.ratings[1].Value }}
             </span>
-            <span class="block mt-5">{{ movie.Plot }}</span>
+            <span class="block mt-5">{{ movie.plot }}</span>
           </div>
         </div>
       </div>
@@ -69,16 +69,15 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { Movie } from "@/types/index";
+import store from "@/store/index";
 
 export default defineComponent({
   name: "MovieDisplay",
   methods: {
     addToList(movie: Movie): void {
-      //The movie API has capitalized keys and the DB doesn't like that.  I don't like it either.
-      const updatedMovie = Object.fromEntries(
-        Object.entries(movie).map(([key, value]) => [key.toLowerCase(), value])
-      );
-      this.$http.post(`/lists/${this.listId}`, updatedMovie);
+      this.$http.post(`/lists/${this.listId}`, movie).then((response: any) => {
+        store.commit("updateList", response.data.list);
+      });
     },
   },
   props: {

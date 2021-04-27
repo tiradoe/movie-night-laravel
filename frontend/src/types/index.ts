@@ -2,6 +2,7 @@ export interface List {
     id: number;
     name: string;
     movieCount: number;
+    movies: Movie[];
 }
 
 export interface Movie {

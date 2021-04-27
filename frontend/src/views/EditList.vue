@@ -1,5 +1,5 @@
 <template>
-  <div class="sm:p-4 mt-10">
+  <div class="mt-10 sm:p-4">
     <h1 class="font-bold">{{ currentList.name }}</h1>
     <div id="movie-search" class="flex sm:m-5">
       <search-form
@@ -8,7 +8,7 @@
         :listId="currentList.id"
       />
     </div>
-    <movie-list v-if="currentList" :currentList="currentList" />
+    <movie-list />
   </div>
 </template>
 
@@ -16,24 +16,18 @@
 import { defineComponent } from "@vue/runtime-core";
 import SearchForm from "@/components/SearchForm.vue";
 import MovieList from "@/components/MovieList.vue";
+import store from "@/store/index";
 
 export default defineComponent({
-  name: "AddMovie",
+  name: "EditList",
   components: {
     SearchForm,
     MovieList,
   },
-  data: function () {
-    return {
-      currentList: {},
-    };
-  },
-  mounted() {
-    this.currentList = this.$http
-      .get(`/lists/${this.$route.params.id}`)
-      .then((response: any) => {
-        this.currentList = response.data.list;
-      });
+  computed: {
+    currentList() {
+      return store.state.currentList;
+    },
   },
 });
 </script>

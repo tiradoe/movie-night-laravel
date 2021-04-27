@@ -6,36 +6,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "@vue/runtime-core";
-import { List, Movie } from "@/types/index";
-
-let movies: Movie[] = [];
-let list: List | null = null;
+import { defineComponent } from "@vue/runtime-core";
+import { Movie } from "@/types/index";
+import store from "@/store/index";
 
 export default defineComponent({
   name: "MovieList",
   components: {},
-  data: function () {
-    return {
-      list: list,
-      movies: movies,
-    };
+  computed: {
+    movies(): Movie[] {
+      return store.state.currentList.movies;
+    },
   },
   mounted() {
     this.$http.get(`/lists/${this.$route.params.id}`).then((response: any) => {
-      if (response.data.status === 404) {
-        console.log("No Movies Found");
-      } else {
-        this.list = response.data.list;
-        this.movies = response.data.movies;
-      }
+      store.commit("updateList", response.data.list);
     });
-  },
-  props: {
-    currentList: {
-      type: Object as PropType<List>,
-      required: true,
-    },
   },
 });
 </script>
