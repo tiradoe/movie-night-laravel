@@ -117,8 +117,8 @@ class MovieController extends Controller
             "apikey" => config("app.omdb_key"),
             "plot" => "full",
             $queryType => $query
-        ])->collect();
+        ])->json();
 
-        return response()->json($response);
+        return response()->json(array_change_key_case($response, CASE_LOWER));
     }
 }
