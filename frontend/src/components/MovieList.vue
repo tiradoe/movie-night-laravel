@@ -10,7 +10,7 @@
         <span class="flex-1 text-right"> {{ movie.year }}</span>
       </li>
     </ul>
-    <p v-show="!movies.length">No movies in list</p>
+    <p class="p-10" v-show="!movies.length">No movies in list</p>
   </div>
 </template>
 
