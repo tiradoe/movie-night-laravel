@@ -103,7 +103,7 @@ class MovieListController extends Controller
 
     public function getMovieLists()
     {
-        $movieLists = MovieList::all();
+        $movieLists = MovieList::withCount('movies')->get();
 
         return response()->json($movieLists);
     }

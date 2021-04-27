@@ -16,7 +16,7 @@
           <span class="flex-1 text-left">{{ list.name }}</span>
 
           <!-- MOVIE COUNT -->
-          <span class="flex-1 text-left">{{ list.id }} movies </span>
+          <span class="flex-1 text-left">{{ list.movies_count }} movies </span>
 
           <!-- EDIT AND DELETE -->
           <div class="text-left">
