@@ -26,7 +26,7 @@
 
       <button
         @click.prevent="authenticate"
-        class="block p-2 mt-10 mx-auto text-white bg-blue-600 rounded"
+        class="block p-5 mt-10 mx-auto text-white bg-button rounded"
         type="submit"
         value="submit"
       >

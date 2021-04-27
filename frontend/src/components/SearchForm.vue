@@ -11,6 +11,8 @@
           type="text"
           v-model="query"
           aria-label="Enter Movie Title"
+          placeholder="Enter Movie Title or IMDB ID"
+          aria-placeholder="Enter Movie Title or IMDB ID"
         />
       </div>
 

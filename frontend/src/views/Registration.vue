@@ -50,7 +50,7 @@
 
       <button
         @click.prevent="authenticate"
-        class="block p-2 mx-auto bg-blue-600 rounded text-white"
+        class="block p-5 mx-auto bg-button rounded text-white"
         type="submit"
         value="submit"
       >
