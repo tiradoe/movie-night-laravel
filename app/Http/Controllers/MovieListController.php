@@ -77,7 +77,10 @@ class MovieListController extends Controller
         //add this movie to list
         $movieList->movies()->attach($movie->id);
 
-        return response()->json(['data' => $movieList->movies]);
+        return response()->json([
+            'list' => $movieList,
+            'movies' => $movieList->movies
+        ]);
     }
 
     public function createMovieList(Request $request)
