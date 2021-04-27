@@ -13,7 +13,7 @@ export default createStore({
         currentList: movieList,
     },
     mutations: {
-        updateList(state, newList) {
+        updateList(state, newList: List) {
             state.currentList = newList;
         },
     },
