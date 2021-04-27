@@ -1,7 +1,12 @@
 <template>
   <div class="p-4">
     <h1 class="m-5 md:m-10 text-3xl font-bold sm:text-left">TONIGHT</h1>
-    <MovieDisplay v-if="movie" :movie="movie" :mainDisplay="true" />
+    <MovieDisplay
+      v-if="movie"
+      :movie="movie"
+      :mainDisplay="true"
+      :listId="listId"
+    />
     <p v-else>No movie scheduled.</p>
   </div>
 </template>
@@ -21,6 +26,7 @@ export default defineComponent({
   data: function () {
     return {
       movie: movie,
+      listId: 0,
     };
   },
   mounted() {
