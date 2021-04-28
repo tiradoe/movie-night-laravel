@@ -59,7 +59,7 @@ class MovieListTest extends TestCase
     {
         $movieList = MovieList::factory()->create();
         $this->post("/api/lists/", $movieList->toArray())
-            ->assertStatus(200);
+                ->assertStatus(200);
     }
 
     public function test_can_find_existing_list()
