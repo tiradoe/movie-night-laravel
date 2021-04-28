@@ -22,7 +22,7 @@ class MovieFactory extends Factory
     public function definition()
     {
         return [
-            'id' => $this->faker->unique()->randomDigit(),
+            'id' => $this->faker->unique()->randomNumber(5, true),
             'title' => $this->faker->sentence(),
             'year' => $this->faker->year(),
             'rated' => $this->faker->countryCode(),
