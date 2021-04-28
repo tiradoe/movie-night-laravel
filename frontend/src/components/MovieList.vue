@@ -8,6 +8,11 @@
       >
         <span> {{ movie.title }}</span>
         <span class="flex-1 text-right"> {{ movie.year }}</span>
+        <font-awesome-icon
+          @click="deleteMovie(movie.id)"
+          class="ml-5 mr-1 cursor-pointer hover:text-red-700"
+          icon="trash-alt"
+        />
       </li>
     </ul>
     <p class="p-10" v-show="!movies.length">No movies in list</p>
@@ -25,6 +30,20 @@ export default defineComponent({
   computed: {
     movies(): Movie[] {
       return store.state.currentList.movies;
+    },
+  },
+  data: function () {
+    return {
+      listId: this.$route.params.id,
+    };
+  },
+  methods: {
+    deleteMovie(movieId: number): void {
+      this.$http
+        .delete(`/lists/${this.listId}/movie/${movieId}`)
+        .then((response: any) => {
+          store.commit("updateList", response.data.list);
+        });
     },
   },
   mounted() {

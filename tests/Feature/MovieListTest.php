@@ -33,7 +33,7 @@ class MovieListTest extends TestCase
 
         $this->post($url, $movie->toArray())
             ->assertStatus(200)
-            ->assertJson(['data' => [$movie->toArray()]]);
+            ->assertJson(['movies' => [$movie->toArray()]]);
     }
 
     public function test_can_add_movie_to_list_when_not_already_in_database()
@@ -45,7 +45,7 @@ class MovieListTest extends TestCase
         $response = $this->post($url, $movie->toArray());
 
         $response->assertStatus(200);
-        $this->assertSame($response["data"][0]["title"], $movie->title);
+        $this->assertSame($response["movies"][0]["title"], $movie->title);
     }
 
     public function test_add_to_list_returns_404_if_list_doesnt_exist()
@@ -88,6 +88,25 @@ class MovieListTest extends TestCase
     public function test_movie_list_not_found_when_deleting_returns_404()
     {
         $this->delete("/api/lists/63536")
+            ->assertStatus(404);
+    }
+
+    public function test_can_remove_movie_from_movie_list()
+    {
+        $movies = Movie::factory()->count(3)->create();
+
+        $movieList = MovieList::factory()->hasAttached($movies)->create();
+        $deleteMovieId = $movies[0]["id"];
+
+        $this->delete("/api/lists/$movieList->id/movie/$deleteMovieId")
+            ->assertStatus(200)
+            ->assertJson(["list" => $movieList->toArray()])
+            ->assertJson(["movies" => $movieList->movies->toArray()]);
+    }
+
+    public function test_movie_not_found_when_removing_movie_from_list_returns_404()
+    {
+        $this->delete("/api/lists/63536/movie/3452352")
             ->assertStatus(404);
     }
 }
