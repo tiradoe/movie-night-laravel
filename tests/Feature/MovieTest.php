@@ -75,6 +75,6 @@ class MovieTest extends TestCase
         $response = $this->get("/api/movies/search?query=$imdb_id");
 
         $response->assertStatus(200);
-        $this->assertSame($response["Title"], "Masters of the Universe");
+        $this->assertSame($response["title"], "Masters of the Universe");
     }
 }

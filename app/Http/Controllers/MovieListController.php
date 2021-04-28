@@ -132,4 +132,19 @@ class MovieListController extends Controller
                 ->setStatusCode(404);
         }
     }
+
+    public function removeMovie(Request $request, $list_id, $movie_id)
+    {
+        try {
+            $movie = Movie::findOrFail($movie_id);
+            $movie->movieLists()->detach($list_id);
+            $movieList = MovieList::findOrFail($list_id);
+
+            return response()->json(["list" => $movieList, "movies" => $movieList->movies]);
+        } catch (ModelNotFoundException $e) {
+            return response()
+                ->json(['data' => 'Could not find movie.'])
+                ->setStatusCode(404);
+        }
+    }
 }

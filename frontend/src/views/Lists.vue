@@ -4,7 +4,7 @@
     using the API.  Otherwise show the details and let user add them.
   -->
   <div>
-    <div id="movie-search" class="m-5">
+    <div id="movie-search" class="m-10">
       <h1 class="text-2xl font-bold text-left">Lists</h1>
       <ul v-if="lists.length > 0" class="py-5">
         <li
@@ -21,11 +21,14 @@
           <!-- EDIT AND DELETE -->
           <div class="text-left">
             <router-link :to="`/lists/edit/${list.id}`">
-              <font-awesome-icon class="mx-1" icon="pencil-alt" />
+              <font-awesome-icon
+                class="mx-5 hover:text-yellow-600"
+                icon="pencil-alt"
+              />
             </router-link>
             <font-awesome-icon
               @click="deleteList(list.id)"
-              class="mx-1 cursor-pointer"
+              class="mx-1 cursor-pointer hover:text-red-600"
               icon="trash-alt"
             />
           </div>

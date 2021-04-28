@@ -30,4 +30,5 @@ Route::get('/lists', [MovieListController::class, 'getMovieLists']);
 Route::get('/lists/{id}', [MovieListController::class, 'getMovieList']);
 Route::post('/lists', [MovieListController::class, 'createMovieList']);
 Route::post('/lists/{id}', [MovieListController::class, 'addToList']);
+Route::delete('/lists/{id}/movie/{movieId}', [MovieListController::class, 'removeMovie']);
 Route::delete('/lists/{id}', [MovieListController::class, 'deleteMovieList']);
