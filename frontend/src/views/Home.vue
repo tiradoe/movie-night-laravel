@@ -1,14 +1,13 @@
 <template>
-  <div class="p-4">
-    <h1 class="m-5 md:m-10 text-3xl font-bold sm:text-left">TONIGHT</h1>
-    <MovieDisplay
-      v-if="movie"
-      :movie="movie"
-      :mainDisplay="true"
-      :listId="listId"
-    />
-    <p v-else>No movie scheduled.</p>
-  </div>
+  <h1 class="text-left text-3xl sm:text-5xl p-5 sm:p-10 font-bold">TONIGHT</h1>
+  <hr class="shadow mb-10" />
+  <MovieDisplay
+    v-if="movie"
+    :movie="movie"
+    :mainDisplay="true"
+    :listId="listId"
+  />
+  <p v-else>No movie scheduled.</p>
 </template>
 
 <script lang="ts">

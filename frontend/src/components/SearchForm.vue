@@ -1,12 +1,12 @@
 <template>
   <div class="w-full flex flex-col">
     <!-- SEARCH INPUT -->
-    <div class="flex max-h-10 mb-5 mb-10 max-w-md mx-auto">
+    <div class="flex max-w-md mx-auto p-10">
       <!-- TEXT FIELD -->
       <div class="shadow">
         <input
           id="search"
-          class="p-2 shadow-inner"
+          class="p-3 shadow-inner border"
           @keyup.enter="findMovie()"
           type="text"
           v-model="query"
@@ -18,7 +18,7 @@
 
       <!-- SEARCH BUTTON -->
       <button
-        class="inline-block p-2 text-white bg-button rounded rounded-l-none cursor-pointer border-l-none"
+        class="p-3 border text-white bg-button rounded rounded-l-none cursor-pointer border-l-none"
         @click="findMovie()"
         aria-label="Search"
       >
