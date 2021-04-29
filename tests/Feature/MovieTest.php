@@ -51,7 +51,7 @@ class MovieTest extends TestCase
 
         $this->get('/api/movies')
             ->assertStatus(200)
-            ->assertJson($movies->toArray());
+            ->assertJson(["movies" => $movies->toArray()]);
     }
 
     public function test_can_delete_movie()
