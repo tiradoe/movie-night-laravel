@@ -1,15 +1,15 @@
 <template>
   <div v-if="!movie.error" class="text-left bg-white rounded shadow sm:p-5">
-    <div class="mb-10">
+    <div class="py-10">
       <!-- MOVIE POSTER -->
       <img
-        class="object-scale-down pt-5 mx-auto my-10 max-h-32 sm:pt-0 sm:my-0 sm:align-top sm:inline-block sm:w-2/5 lg:w-1/5 sm:max-h-96"
+        class="object-scale-down mx-auto max-h-32 sm:pt-0 sm:my-0 sm:align-top sm:inline-block sm:w-2/5 lg:w-1/5 sm:max-h-96"
         :alt="moviePosterAlt"
         :src="movie.poster"
       />
       <div class="inline-block align-top sm:w-3/5 lg:w-4/5">
         <div
-          class="flex flex-col px-10 mb-10 sm:p-0 sm:mb-0 sm:flex-row justify-between"
+          class="flex flex-col px-10 sm:p-0 sm:mb-0 sm:flex-row justify-between"
         >
           <!-- MOVIE TITLE -->
           <span

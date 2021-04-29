@@ -1,17 +1,14 @@
 <template>
-  <div class="mt-10">
-    <h1 class="text-3xl sm:text-5xl mb-5 px-10 font-bold">
+  <div class="p-5 sm:p-10">
+    <h1 class="text-left text-3xl text-gray-700 sm:text-5xl font-bold">
       {{ currentList.name }}
     </h1>
-    <div id="movie-search" class="flex sm:m-10">
-      <search-form
-        v-if="currentList.id"
-        class="mx-auto"
-        :listId="currentList.id"
-      />
-    </div>
-    <movie-list />
   </div>
+  <hr class="shadow" />
+  <div id="movie-search" class="sm:m-10">
+    <search-form v-if="currentList.id" class="" :listId="currentList.id" />
+  </div>
+  <movie-list />
 </template>
 
 <script lang="ts">

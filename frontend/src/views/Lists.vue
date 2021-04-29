@@ -1,65 +1,65 @@
 <template>
-  <!--
-    Only show the new movie form if the movie can't be found
-    using the API.  Otherwise show the details and let user add them.
-  -->
-  <div>
-    <div id="movie-search" class="m-10">
-      <h1 class="text-2xl font-bold text-left">Lists</h1>
-      <ul v-if="lists.length > 0" class="py-5">
-        <li
-          :key="list.id"
-          v-for="list in lists"
-          class="flex justify-around mb-5"
-        >
-          <!-- LIST NAME -->
-          <span class="flex-1 text-left">{{ list.name }}</span>
+  <div id="movie-search" class="">
+    <h1 class="p-5 sm:p-10 text-2xl font-bold text-left text-3xl sm:text-5xl">
+      Lists
+    </h1>
+    <hr class="shadow mb-10" />
 
-          <!-- MOVIE COUNT -->
-          <span class="flex-1 text-left">{{ list.movies_count }} movies </span>
+    <!-- NEW LIST INPUT -->
+    <input
+      class="p-2 rounded rounded-r-none shadow border-r-none focus:shadow-outline"
+      type="text"
+      placeholder="List Name"
+      aria-placeholder="Enter List Name"
+      v-model="listName"
+      @keyup.enter="addList"
+    />
+    <div
+      class="mb-10 inline-block p-2 mt-5 text-white rounded rounded-l-none shadow cursor-pointer bg-button border-l-none"
+      @click="addList()"
+    >
+      Create list
+    </div>
 
-          <!-- EDIT AND DELETE -->
-          <div class="text-left">
-            <router-link :to="`/lists/edit/${list.id}`">
-              <font-awesome-icon
-                class="mx-5 hover:text-yellow-600"
-                icon="pencil-alt"
-              />
-            </router-link>
-            <font-awesome-icon
-              @click="deleteList(list.id)"
-              class="mx-1 cursor-pointer hover:text-red-600"
-              icon="trash-alt"
-            />
-          </div>
-        </li>
-      </ul>
-
-      <div v-else>
-        <div id="movie-quote">
-          <span id="quote" class="block"
-            >“If this is empty, this doesn't matter.”</span
-          >
-          <span id="quote-actor" class="inline-block">Tom Cruise - </span>
-          <span id="quote-movie-title" class="inline-block"
-            >&nbsp;Jerry Maguire</span
-          >
-        </div>
-      </div>
-
-      <input
-        class="p-2 shadow rounded rounded-r-none border-r-none focus:outline-none focus:shadow-outline"
-        type="text"
-        placeholder="List Name"
-        aria-placeholder="Enter List Name"
-        v-model="listName"
-        @keyup.enter="addList"
-      />
-      <div
-        class="inline-block shadow p-2 mt-5 text-white bg-button rounded rounded-l-none cursor-pointer border-l-none"
-        @click="addList()"
+    <!-- MOVIE LIST -->
+    <ul v-if="lists.length > 0" class="bg-white rounded shadow">
+      <li
+        :key="list.id"
+        v-for="list in lists"
+        class="flex justify-around p-5 even:bg-gray-200"
       >
-        Create list
+        <!-- LIST NAME -->
+        <span class="flex-1 text-left">{{ list.name }}</span>
+
+        <!-- MOVIE COUNT -->
+        <span class="flex-1 text-left">{{ list.movies_count }} movies </span>
+
+        <!-- EDIT AND DELETE -->
+        <div class="text-left">
+          <router-link :to="`/lists/edit/${list.id}`">
+            <font-awesome-icon
+              class="mx-5 hover:text-yellow-600"
+              icon="pencil-alt"
+            />
+          </router-link>
+          <font-awesome-icon
+            @click="deleteList(list.id)"
+            class="mx-1 cursor-pointer hover:text-red-600"
+            icon="trash-alt"
+          />
+        </div>
+      </li>
+    </ul>
+
+    <div v-else class="bg-white rounded shadow p-5">
+      <div id="movie-quote">
+        <span id="quote" class="block"
+          >“If this is empty, this doesn't matter.”</span
+        >
+        <span id="quote-actor" class="inline-block">Tom Cruise - </span>
+        <span id="quote-movie-title" class="inline-block"
+          >&nbsp;Jerry Maguire</span
+        >
       </div>
     </div>
   </div>
