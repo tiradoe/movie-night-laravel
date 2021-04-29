@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col">
+  <div class="w-full flex flex-col">
     <!-- SEARCH INPUT -->
     <div class="flex max-h-10 mb-5 mb-10 max-w-md mx-auto">
       <!-- TEXT FIELD -->
@@ -28,7 +28,6 @@
 
     <!-- RESULTS -->
     <MovieDisplay
-      class=""
       v-if="movie"
       :movie="movie"
       :listId="listId"
