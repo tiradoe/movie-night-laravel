@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white mt-10 sm:m-10 mb-10 rounded shadow">
+  <div class="bg-white sm:mx-10 mb-10 rounded shadow">
     <ul v-show="movies.length">
       <li
         class="flex p-5 even:bg-gray-200"
