@@ -94,8 +94,7 @@ class MovieListController extends Controller
         $movieList->save();
 
         $response = [
-            'status' => 200,
-            'message' => 'Success!',
+            'lists' => MovieList::all(),
         ];
 
         return response()->json($response);
