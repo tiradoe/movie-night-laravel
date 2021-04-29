@@ -47,9 +47,11 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.$http.get(`/lists/${this.$route.params.id}`).then((response: any) => {
-      store.commit("updateList", response.data.list);
-    });
+    this.$http
+      .get(`/api/lists/${this.$route.params.id}`)
+      .then((response: any) => {
+        store.commit("updateList", response.data.list);
+      });
   },
 });
 </script>
