@@ -6,8 +6,8 @@
     <div id="links" class="inline-block">
       <router-link class="font-bold" to="/">Home</router-link> |
       <router-link class="font-bold" to="/lists">Lists</router-link> |
-      <router-link class="font-bold" to="/profile">
-        <font-awesome-icon icon="user-circle" />
+      <router-link class="font-bold" to="/settings">
+        <font-awesome-icon icon="cogs" />
       </router-link>
       |
       <span @click="logout" class="font-bold cursor-pointer">
@@ -41,6 +41,6 @@ export default defineComponent({
 
 <style scoped>
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #f2da15;
 }
 </style>

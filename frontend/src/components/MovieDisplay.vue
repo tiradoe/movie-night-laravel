@@ -1,5 +1,5 @@
 <template>
-  <div class="text-left bg-white rounded shadow sm:p-5">
+  <div v-if="!movie.error" class="text-left bg-white rounded shadow sm:p-5">
     <div class="mb-10">
       <!-- MOVIE POSTER -->
       <img
@@ -53,24 +53,18 @@
 
     <!-- ADD TO LIST -->
     <div v-if="!mainDisplay" class="mx-4">
-      <span class="font-semibold">Currently on these lists:</span>
-      <div class="flex justify-between">
-        <ul class="">
-          <li>List one</li>
-          <li>List two</li>
-        </ul>
-
-        <div>
-          <button
-            v-if="movie"
-            @click="addToList(movie)"
-            class="hidden p-2 text-white rounded sm:block bg-button"
-          >
-            Add to List
-          </button>
-        </div>
-      </div>
+      <button
+        v-if="movie"
+        @click="addToList(movie)"
+        class="hidden p-2 text-white rounded sm:block bg-button"
+      >
+        Add to List
+      </button>
     </div>
+  </div>
+  <div v-else class="bg-white rounded shadow p-10">
+    <span class="block">"We ain't found shit."</span>
+    <span>Tim Russ - Spaceballs</span>
   </div>
 </template>
 
