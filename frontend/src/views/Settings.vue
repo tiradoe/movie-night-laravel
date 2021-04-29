@@ -1,11 +1,11 @@
 <template>
-  <h1 class="text-left text-3xl sm:text-5xl p-5 sm:p-10 font-bold">Settings</h1>
-  <hr class="shadow mb-10" />
+  <h1 class="p-5 text-3xl font-bold text-left sm:text-5xl sm:p-10">Settings</h1>
+  <hr class="mb-10 shadow" />
   <div
-    class="flex flex-row mx-10 items-center bg-gray-300 rounded shadow-lg p-5"
+    class="flex flex-row items-center p-5 mx-10 bg-gray-300 rounded shadow-lg"
   >
     <img
-      class="rounded-full h-24 w-24 sm:h-48 sm:w-48"
+      class="w-24 h-24 rounded-full sm:h-48 sm:w-48"
       src="https://www.placecage.com/400/400"
     />
     <div class="p-5 text-left align-middle">
@@ -29,7 +29,7 @@ export default defineComponent({
   },
   mounted() {
     this.$http
-      .get("/user")
+      .get("/api/user")
       .then((response: any) => {
         let userData: User = {
           id: response.data.id,

@@ -40,7 +40,7 @@ export default defineComponent({
   methods: {
     deleteMovie(movieId: number): void {
       this.$http
-        .delete(`/lists/${this.listId}/movie/${movieId}`)
+        .delete(`/api/lists/${this.listId}/movie/${movieId}`)
         .then((response: any) => {
           store.commit("updateList", response.data.list);
         });

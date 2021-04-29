@@ -1,6 +1,6 @@
 <template>
-  <h1 class="text-left text-3xl sm:text-5xl p-5 sm:p-10 font-bold">TONIGHT</h1>
-  <hr class="shadow mb-10" />
+  <h1 class="p-5 text-3xl font-bold text-left sm:text-5xl sm:p-10">TONIGHT</h1>
+  <hr class="mb-10 shadow" />
   <MovieDisplay
     class="sm:mx-10"
     v-if="movie"
@@ -8,7 +8,7 @@
     :mainDisplay="true"
     :listId="listId"
   />
-  <p v-else class="bg-white rounded shadow p-10 sm:m-10">No movie scheduled.</p>
+  <p v-else class="p-10 bg-white rounded shadow sm:m-10">No movie scheduled.</p>
 </template>
 
 <script lang="ts">
@@ -30,7 +30,7 @@ export default defineComponent({
     };
   },
   mounted() {
-    this.$http.get("/movies/").then((response: any) => {
+    this.$http.get("/api/movies/").then((response: any) => {
       this.movie = response.data.movies.pop();
     });
   },
