@@ -107,7 +107,7 @@ export default defineComponent({
   methods: {
     findMovie(): void {
       this.$http
-        .get(`/movies/search?query=${this.query}`)
+        .get(`/api/movies/search?query=${this.query}`)
         .then((response: any) => {
           if ("Error" in response.data) {
             this.searchStatus = "Not Found";

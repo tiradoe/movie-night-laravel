@@ -29,7 +29,7 @@ export default defineComponent({
   },
   mounted() {
     this.$http
-      .get("/user")
+      .get("/api/user")
       .then((response: any) => {
         let userData: User = {
           id: response.data.id,

@@ -87,19 +87,17 @@ export default defineComponent({
     addList() {
       if (this.listName !== "") {
         this.$http
-          .post("/lists", {
+          .post("/api/lists", {
             name: this.listName,
             isPublic: false,
             owner: 1,
           })
-          .then(() => {
-            this.$http.get("/lists").then((response: any) => {
-              if (response.status === 200) {
-                this.getLists();
-              } else {
-                alert("Could not create list");
-              }
-            });
+          .then((response: any) => {
+            if (response.status === 200) {
+              this.lists = response.data.lists;
+            } else {
+              alert("Could not create list");
+            }
           });
 
         this.listName = "";
@@ -108,7 +106,7 @@ export default defineComponent({
       }
     },
     deleteList(id: number) {
-      this.$http.delete(`/lists/${id}`).then((response: any) => {
+      this.$http.delete(`/api/lists/${id}`).then((response: any) => {
         if (response.status === 200) {
           this.getLists();
         } else {
@@ -118,7 +116,7 @@ export default defineComponent({
     },
     getLists() {
       this.$http
-        .get("/lists")
+        .get("/api/lists")
         .then((response: any) => (this.lists = response.data));
     },
   },

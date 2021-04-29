@@ -75,10 +75,12 @@ export default defineComponent({
   },
   methods: {
     addToList(movie: Movie): void {
-      this.$http.post(`/lists/${this.listId}`, movie).then((response: any) => {
-        this.$emit("resetMovie");
-        store.commit("updateList", response.data.list);
-      });
+      this.$http
+        .post(`/api/lists/${this.listId}`, movie)
+        .then((response: any) => {
+          this.$emit("resetMovie");
+          store.commit("updateList", response.data.list);
+        });
     },
   },
   props: {

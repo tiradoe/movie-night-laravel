@@ -30,7 +30,7 @@ export default defineComponent({
     };
   },
   mounted() {
-    this.$http.get("/movies/").then((response: any) => {
+    this.$http.get("/api/movies/").then((response: any) => {
       this.movie = response.data.movies.pop();
     });
   },
