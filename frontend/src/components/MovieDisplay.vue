@@ -7,22 +7,25 @@
         :alt="moviePosterAlt"
         :src="movie.poster"
       />
-      <div class="inline-block mb-10 align-top sm:w-3/5 lg:w-4/5">
-        <!-- MOVIE TITLE -->
-        <span
-          class="block p-1 mb-5 text-3xl font-bold text-center sm:text-left sm:pt-0 sm:pl-4 sm:mb-0"
+      <div class="inline-block align-top sm:w-3/5 lg:w-4/5">
+        <div
+          class="flex flex-col px-10 mb-10 sm:p-0 sm:mb-0 sm:flex-row justify-between"
         >
-          {{ movie.title }}
-          <div class="sm:hidden">
-            <button
-              v-if="movie"
-              @click="addToList(movie)"
-              class="p-2 mt-5 text-lg text-white rounded bg-button"
-            >
-              Add to List
-            </button>
-          </div>
-        </span>
+          <!-- MOVIE TITLE -->
+          <span
+            class="p-1 text-3xl font-bold text-center sm:text-left sm:pt-0 sm:pl-4 sm:mb-0"
+          >
+            {{ movie.title }}
+          </span>
+
+          <button
+            v-show="!mainDisplay && movie"
+            @click="addToList(movie)"
+            class="p-2 text-lg text-white rounded bg-button"
+          >
+            Add to List
+          </button>
+        </div>
 
         <!-- MOVIE INFO -->
         <div class="p-4">
@@ -49,17 +52,6 @@
           <span class="block mt-5">{{ movie.plot }}</span>
         </div>
       </div>
-    </div>
-
-    <!-- ADD TO LIST -->
-    <div v-if="!mainDisplay" class="mx-4">
-      <button
-        v-if="movie"
-        @click="addToList(movie)"
-        class="hidden p-2 text-white rounded sm:block bg-button"
-      >
-        Add to List
-      </button>
     </div>
   </div>
   <div v-else class="bg-white rounded shadow p-10">
