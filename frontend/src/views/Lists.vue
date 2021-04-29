@@ -51,7 +51,7 @@
       </li>
     </ul>
 
-    <div v-else class="bg-white rounded shadow p-5">
+    <div v-else class="bg-white rounded shadow p-5 sm:mx-10">
       <div id="movie-quote">
         <span id="quote" class="block"
           >“If this is empty, this doesn't matter.”</span
