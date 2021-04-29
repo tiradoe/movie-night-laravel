@@ -21,8 +21,8 @@
       Create list
     </div>
 
-    <!-- MOVIE LIST -->
-    <ul v-if="lists.length > 0" class="bg-white rounded shadow">
+    <!-- LISTS -->
+    <ul v-if="lists.length > 0" class="bg-white rounded shadow sm:m-10">
       <li
         :key="list.id"
         v-for="list in lists"

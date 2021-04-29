@@ -3,13 +3,13 @@
     <div class="py-10">
       <!-- MOVIE POSTER -->
       <img
-        class="object-scale-down mx-auto max-h-32 sm:pt-0 sm:my-0 sm:align-top sm:inline-block sm:w-2/5 lg:w-1/5 sm:max-h-96"
+        class="object-scale-down mx-auto max-h-32 sm:pt-0 sm:my-0 sm:align-top sm:inline-block sm:w-2/5 lg:w-1/5 sm:max-h-96 text-center p-5"
         :alt="moviePosterAlt"
         :src="movie.poster"
       />
       <div class="inline-block align-top sm:w-3/5 lg:w-4/5">
         <div
-          class="flex flex-col px-10 sm:p-0 sm:mb-0 sm:flex-row justify-between"
+          class="flex flex-col justify-between px-10 sm:p-0 sm:mb-0 sm:flex-row"
         >
           <!-- MOVIE TITLE -->
           <span
@@ -54,7 +54,7 @@
       </div>
     </div>
   </div>
-  <div v-else class="bg-white rounded shadow p-10">
+  <div v-else class="p-10 bg-white rounded shadow">
     <span class="block">"We ain't found shit."</span>
     <span>Tim Russ - Spaceballs</span>
   </div>

@@ -2,17 +2,18 @@
   <h1 class="text-left text-3xl sm:text-5xl p-5 sm:p-10 font-bold">TONIGHT</h1>
   <hr class="shadow mb-10" />
   <MovieDisplay
+    class="sm:mx-10"
     v-if="movie"
     :movie="movie"
     :mainDisplay="true"
     :listId="listId"
   />
-  <p v-else>No movie scheduled.</p>
+  <p v-else class="bg-white rounded shadow p-10 sm:m-10">No movie scheduled.</p>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import MovieDisplay from "@/components/MovieDisplay.vue"; // @ is an alias to /src
+import MovieDisplay from "@/components/MovieDisplay.vue";
 import { Movie } from "@/types/index";
 
 const movie: Movie | null = null;
@@ -29,8 +30,8 @@ export default defineComponent({
     };
   },
   mounted() {
-    this.$http.get("/movies/1").then((response: any) => {
-      this.movie = response.data;
+    this.$http.get("/movies/").then((response: any) => {
+      this.movie = response.data.movies.pop();
     });
   },
 });
