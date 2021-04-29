@@ -1,12 +1,12 @@
 <template>
   <div class="p-4 bg-gray-50">
     <h1 class="m-10 text-3xl font-bold text-center">Login</h1>
-    <p v-if="errorText" class="bg-red-100 inline-block p-3 text-gray-600">
+    <p v-if="errorText" class="inline-block p-3 text-gray-600 bg-red-100">
       {{ errorText }}
     </p>
     <form class="flex flex-col items-center">
       <div class="m-5">
-        <label class="block text-left pb-2" for="email">Email</label>
+        <label class="block pb-2 text-left" for="email">Email</label>
         <input
           v-model="formData.email"
           class="block p-2 bg-gray-200 rounded md:w-96"
@@ -15,7 +15,7 @@
         />
       </div>
       <div class="m-5">
-        <label class="block text-left pb-2" for="password">Password</label>
+        <label class="block pb-2 text-left" for="password">Password</label>
         <input
           v-model="formData.password"
           class="block p-2 bg-gray-200 rounded md:w-96"
@@ -26,7 +26,7 @@
 
       <button
         @click.prevent="authenticate"
-        class="block p-5 mt-10 mx-auto text-white bg-button rounded"
+        class="block p-5 mx-auto mt-10 text-white rounded bg-button"
         type="submit"
         value="submit"
       >
@@ -45,12 +45,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import axios from "axios";
-
-export const authClient = axios.create({
-  baseURL: process.env.VUE_APP_ROOT_API,
-  withCredentials: true,
-});
 
 export default defineComponent({
   name: "Login",
@@ -66,8 +60,8 @@ export default defineComponent({
   },
   methods: {
     authenticate() {
-      authClient.get("/sanctum/csrf-cookie").then(() => {
-        authClient
+      this.$http.get("/sanctum/csrf-cookie").then(() => {
+        this.$http
           .post(`/login`, this.formData, {
             headers: {
               Accept: "application/json",
@@ -77,7 +71,7 @@ export default defineComponent({
             localStorage.loggedIn = true;
             this.$router.push("/");
           })
-          .catch((error) => {
+          .catch((error: any) => {
             this.errorText = error.response.data.message;
           });
       });
