@@ -1,5 +1,5 @@
 <template>
-  <div class="text-left bg-white rounded shadow sm:p-5">
+  <div v-if="!movie.error" class="text-left bg-white rounded shadow sm:p-5">
     <div class="mb-10">
       <!-- MOVIE POSTER -->
       <img
@@ -7,22 +7,25 @@
         :alt="moviePosterAlt"
         :src="movie.poster"
       />
-      <div class="inline-block mb-10 align-top sm:w-3/5 lg:w-4/5">
-        <!-- MOVIE TITLE -->
-        <span
-          class="block p-1 mb-5 text-3xl font-bold text-center sm:text-left sm:pt-0 sm:pl-4 sm:mb-0"
+      <div class="inline-block align-top sm:w-3/5 lg:w-4/5">
+        <div
+          class="flex flex-col px-10 mb-10 sm:p-0 sm:mb-0 sm:flex-row justify-between"
         >
-          {{ movie.title }}
-          <div class="sm:hidden">
-            <button
-              v-if="movie"
-              @click="addToList(movie)"
-              class="p-2 mt-5 text-lg text-white rounded bg-button"
-            >
-              Add to List
-            </button>
-          </div>
-        </span>
+          <!-- MOVIE TITLE -->
+          <span
+            class="p-1 text-3xl font-bold text-center sm:text-left sm:pt-0 sm:pl-4 sm:mb-0"
+          >
+            {{ movie.title }}
+          </span>
+
+          <button
+            v-show="!mainDisplay && movie"
+            @click="addToList(movie)"
+            class="p-2 text-lg text-white rounded bg-button"
+          >
+            Add to List
+          </button>
+        </div>
 
         <!-- MOVIE INFO -->
         <div class="p-4">
@@ -50,27 +53,10 @@
         </div>
       </div>
     </div>
-
-    <!-- ADD TO LIST -->
-    <div v-if="!mainDisplay" class="mx-4">
-      <span class="font-semibold">Currently on these lists:</span>
-      <div class="flex justify-between">
-        <ul class="">
-          <li>List one</li>
-          <li>List two</li>
-        </ul>
-
-        <div>
-          <button
-            v-if="movie"
-            @click="addToList(movie)"
-            class="hidden p-2 text-white rounded sm:block bg-button"
-          >
-            Add to List
-          </button>
-        </div>
-      </div>
-    </div>
+  </div>
+  <div v-else class="bg-white rounded shadow p-10">
+    <span class="block">"We ain't found shit."</span>
+    <span>Tim Russ - Spaceballs</span>
   </div>
 </template>
 

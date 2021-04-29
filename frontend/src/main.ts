@@ -6,14 +6,14 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {
     faPencilAlt,
     faTrashAlt,
-    faUserCircle,
+    faCogs,
     faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import axiosPlugin from "@/plugins/axios";
 import "./index.css";
 
-library.add(faPencilAlt, faTrashAlt, faUserCircle, faSignOutAlt);
+library.add(faPencilAlt, faTrashAlt, faCogs, faSignOutAlt);
 
 const app = createApp(App);
 app.use(store);
