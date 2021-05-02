@@ -89,7 +89,7 @@ export default defineComponent({
         this.$http
           .post("/api/lists", {
             name: this.listName,
-            isPublic: false,
+            isPublic: "false",
             owner: 1,
           })
           .then((response: any) => {
