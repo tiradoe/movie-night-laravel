@@ -93,11 +93,7 @@ class MovieListController extends Controller
 
         $movieList->save();
 
-        $response = [
-            'lists' => MovieList::all(),
-        ];
-
-        return response()->json($response);
+        return response()->json(['lists' => MovieList::withCount('movies')->get()]);
     }
 
     public function getMovieLists()
@@ -127,7 +123,7 @@ class MovieListController extends Controller
             return response()->json($movieList);
         } catch (ModelNotFoundException $e) {
             return response()
-                ->json(["data"=>"Could not find movie to delete"])
+                ->json(["data" => "Could not find movie to delete"])
                 ->setStatusCode(404);
         }
     }
