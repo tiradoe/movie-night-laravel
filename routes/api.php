@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieListController;
-use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\ShowingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,5 +34,5 @@ Route::post('/lists/{id}', [MovieListController::class, 'addToList']);
 Route::delete('/lists/{id}/movie/{movieId}', [MovieListController::class, 'removeMovie']);
 Route::delete('/lists/{id}', [MovieListController::class, 'deleteMovieList']);
 
-Route::get('/schedules', [ScheduleController::class, 'getSchedules']);
-Route::post('/schedules', [ScheduleController::class, 'createSchedule']);
+Route::get('/showings', [ShowingController::class, 'getShowings']);
+Route::post('/showings', [ShowingController::class, 'createShowing']);
