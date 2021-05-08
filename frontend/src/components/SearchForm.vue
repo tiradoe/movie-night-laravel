@@ -109,12 +109,11 @@ export default defineComponent({
       this.$http
         .get(`/api/movies/search?query=${this.query}`)
         .then((response: any) => {
-          if ("Error" in response.data) {
-            this.searchStatus = "Not Found";
-          } else {
-            this.searchStatus = "Found";
-            this.movie = response.data;
-          }
+          this.searchStatus = "Found";
+          this.movie = response.data;
+        })
+        .catch(() => {
+          this.searchStatus = "Not Found";
         });
     },
     resetMovie(): void {

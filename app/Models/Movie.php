@@ -12,6 +12,7 @@ class Movie extends Model
 
     protected $fillable = [
         "title",
+        "imdb_id",
         "year",
         "rated",
         "genre",
@@ -29,5 +30,10 @@ class Movie extends Model
     public function showings()
     {
         return $this->hasMany(Showing::class);
+    }
+
+    public function nextShowing()
+    {
+        return $this->hasMany(Showing::class)->orderBy("show_time")->limit(1);
     }
 }

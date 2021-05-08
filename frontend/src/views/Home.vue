@@ -30,9 +30,14 @@ export default defineComponent({
     };
   },
   mounted() {
-    this.$http.get("/api/movies/").then((response: any) => {
-      this.movie = response.data.movies.pop();
-    });
+    this.$http
+      .get("/api/showings?next=1")
+      .then((response: any) => {
+        this.movie = response.data.movie;
+      })
+      .catch((error: Error) => {
+        console.error(error.message);
+      });
   },
 });
 </script>

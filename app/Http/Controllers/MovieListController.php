@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use App\Models\MovieList;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -58,29 +59,45 @@ class MovieListController extends Controller
             return response()->json(["data" => []])->setStatusCode(404);
         }
 
-        $movie = Movie::find($request->input('id'));
+        $imdb_id = $request->input("imdbid");
+
+        $movie = Movie::where('imdb_id', $imdb_id)->first();
 
         if (empty($movie)) {
-            $movie = Movie::create([
-                'title' => $request->input('title'),
-                'year' => $request->input('year'),
-                'rated' => $request->input('rated'),
-                'genre' => $request->input('genre'),
-                'director' => $request->input('director'),
-                'actors' => $request->input('actors'),
-                'plot' => $request->input('plot'),
-                //'ratings' => $request->input('ratings'),
-                'poster' => $request->input('poster'),
-            ]);
+            try {
+                $movie = Movie::create([
+                    'title' => $request->input('title'),
+                    'imdb_id' => $imdb_id,
+                    'year' => $request->input('year'),
+                    'rated' => $request->input('rated'),
+                    'genre' => $request->input('genre'),
+                    'director' => $request->input('director'),
+                    'actors' => $request->input('actors'),
+                    'plot' => $request->input('plot'),
+                    //'ratings' => $request->input('ratings'),
+                    'poster' => $request->input('poster'),
+                ]);
+            } catch (Exception $e) {
+                return response()->json(["error" => $e]);
+            }
         }
 
-        //add this movie to list
-        $movieList->movies()->attach($movie->id);
+        //add this movie to list if it's not already on it
+        if (empty($movieList->movies()->find($movie->id))) {
+            $movieList->movies()->attach($movie->id);
 
-        return response()->json([
-            'list' => $movieList,
-            'movies' => $movieList->movies
-        ]);
+            $movies = $movieList->movies;
+            foreach ($movies as $movie) {
+                $movie->nextShowing;
+            }
+            return response()->json([
+                'list' => $movieList,
+            ]);
+        } else {
+            return response()->json([
+                'list' => $movieList,
+            ])->setStatusCode(304);
+        }
     }
 
     public function createMovieList(Request $request)
@@ -106,11 +123,22 @@ class MovieListController extends Controller
     public function getMovielist(Request $request, $list_id)
     {
         $list = MovieList::find($list_id);
-        if (empty($list)) {
-            return response()->json(['list' => null, 'movies' => null])->setStatusCode(404);
+        $list->movies;
+
+        foreach ($list->movies as $movie) {
+            $movie->nextShowing;
         }
 
-        return response()->json(['status' => 200, 'list' => $list, 'movies' => $list->movies]);
+        if (empty($list)) {
+            return response()->json([
+                'list' => null,
+            ])->setStatusCode(404);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'list' => $list,
+        ]);
     }
 
     public function deleteMovieList(Request $request, $list_id)
@@ -131,11 +159,16 @@ class MovieListController extends Controller
     public function removeMovie(Request $request, $list_id, $movie_id)
     {
         try {
-            $movie = Movie::findOrFail($movie_id);
-            $movie->movieLists()->detach($list_id);
-            $movieList = MovieList::findOrFail($list_id);
+            $deleteMovie = Movie::findOrFail($movie_id);
+            $deleteMovie->movieLists()->detach($list_id);
 
-            return response()->json(["list" => $movieList, "movies" => $movieList->movies]);
+            $movieList = MovieList::findOrFail($list_id);
+            $movies = $movieList->movies;
+            foreach ($movies as $movie) {
+                $movie->nextShowing;
+            }
+
+            return response()->json(["list" => $movieList, "movies" => $movies]);
         } catch (ModelNotFoundException $e) {
             return response()
                 ->json(['data' => 'Could not find movie.'])

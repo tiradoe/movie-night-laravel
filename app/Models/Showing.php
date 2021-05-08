@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Movie;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,4 +18,9 @@ class Showing extends Model
         "movie_id",
         "show_time"
     ];
+
+    public function movie()
+    {
+        return $this->hasOne(Movie::class);
+    }
 }

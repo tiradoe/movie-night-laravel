@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0ea810121a1421551c7db44992a81b5",
+    "content-hash": "6dcee8532827dbd5625142fefd7e19b2",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -173,21 +173,21 @@
         },
         {
             "name": "darkaonline/l5-swagger",
-            "version": "8.0.4",
+            "version": "8.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DarkaOnLine/L5-Swagger.git",
-                "reference": "3477e7013daf8b6fc142c45fdcb9fe6c74d7398d"
+                "reference": "238e5d318b3d48a77c76b6950c51146578563853"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DarkaOnLine/L5-Swagger/zipball/3477e7013daf8b6fc142c45fdcb9fe6c74d7398d",
-                "reference": "3477e7013daf8b6fc142c45fdcb9fe6c74d7398d",
+                "url": "https://api.github.com/repos/DarkaOnLine/L5-Swagger/zipball/238e5d318b3d48a77c76b6950c51146578563853",
+                "reference": "238e5d318b3d48a77c76b6950c51146578563853",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "laravel/framework": "^8.0 || ^7.0",
+                "laravel/framework": ">=8.40.0 || ^7.0",
                 "php": "^7.2 || ^8.0",
                 "swagger-api/swagger-ui": "^3.0",
                 "symfony/yaml": "^5.0",
@@ -240,7 +240,7 @@
             ],
             "support": {
                 "issues": "https://github.com/DarkaOnLine/L5-Swagger/issues",
-                "source": "https://github.com/DarkaOnLine/L5-Swagger/tree/8.0.4"
+                "source": "https://github.com/DarkaOnLine/L5-Swagger/tree/8.0.5"
             },
             "funding": [
                 {
@@ -248,7 +248,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-12-08T13:29:20+00:00"
+            "time": "2021-05-07T09:57:00+00:00"
         },
         {
             "name": "dasprid/enum",
@@ -8036,7 +8036,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3|^8.0"
+        "php": "^7.3 | ^8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"

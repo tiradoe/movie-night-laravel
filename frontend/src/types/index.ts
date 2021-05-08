@@ -16,11 +16,18 @@ export interface Movie {
     plot: string;
     reviews: Review[];
     poster: string;
+    showings: Showing[];
+    next_showing: Showing;
 }
 
 export interface Review {
     source: string;
     value: string;
+}
+
+export interface Showing {
+    movie_id: number;
+    show_time: Date;
 }
 
 export interface User {
