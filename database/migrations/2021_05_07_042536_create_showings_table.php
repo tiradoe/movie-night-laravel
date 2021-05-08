@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSchedulesTable extends Migration
+class CreateShowingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateSchedulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('schedules', function (Blueprint $table) {
+        Schema::create('showings', function (Blueprint $table) {
             $table->id();
             $table->foreignId("movie_id");
-            $table->dateTime("showing");
+            $table->dateTime("show_time");
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateSchedulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules');
+        Schema::dropIfExists('showings');
     }
 }

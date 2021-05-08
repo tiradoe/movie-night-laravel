@@ -1,0 +1,49 @@
+<template>
+  <div class="flex space-x-2">
+    <label class="" for="datepicker">Add Showing</label>
+    <datepicker
+      id="datepicker"
+      class="text-center border border-gray-400"
+      placeholder="Choose Showing"
+      :lowerLimit="new Date()"
+      v-model="picked"
+      v-on:update:modelValue="addShowing"
+    />
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "@vue/runtime-core";
+import Datepicker from "vue3-datepicker";
+import { AxiosResponse } from "axios";
+
+export default defineComponent({
+  name: "AddShowing",
+  components: {
+    Datepicker,
+  },
+  data: function () {
+    return {
+      picked: new Date(),
+    };
+  },
+  methods: {
+    addShowing(event: Date): void {
+      this.$http
+        .post("/api/showings", {
+          movie_id: this.movieId,
+          show_time: event,
+        })
+        .then((response: AxiosResponse) => this.$emit("updated-list"))
+        .catch((error: Error) => console.error(error));
+    },
+  },
+  emits: ["updated-list"],
+  props: {
+    movieId: {
+      type: Number,
+      required: true,
+    },
+  },
+});
+</script>

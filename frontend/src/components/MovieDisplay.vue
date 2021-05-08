@@ -3,7 +3,7 @@
     <div class="py-10">
       <!-- MOVIE POSTER -->
       <img
-        class="object-scale-down mx-auto max-h-32 sm:pt-0 sm:my-0 sm:align-top sm:inline-block sm:w-2/5 lg:w-1/5 sm:max-h-96 text-center p-5"
+        class="object-scale-down p-5 mx-auto text-center max-h-32 sm:pt-0 sm:my-0 sm:align-top sm:inline-block sm:w-2/5 lg:w-1/5 sm:max-h-96"
         :alt="moviePosterAlt"
         :src="movie.poster"
       />
@@ -64,6 +64,7 @@
 import { defineComponent, PropType } from "vue";
 import { Movie } from "@/types/index";
 import store from "@/store/index";
+import { AxiosError, AxiosResponse } from "axios";
 
 export default defineComponent({
   name: "MovieDisplay",
@@ -77,9 +78,16 @@ export default defineComponent({
     addToList(movie: Movie): void {
       this.$http
         .post(`/api/lists/${this.listId}`, movie)
-        .then((response: any) => {
+        .then((response: AxiosResponse) => {
           this.$emit("resetMovie");
           store.commit("updateList", response.data.list);
+        })
+        .catch((error: AxiosError) => {
+          if (error.response && error.response.status === 304) {
+            alert("Movie already in list!");
+          } else {
+            console.error(error);
+          }
         });
     },
   },

@@ -8,24 +8,23 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Models\Movie;
-use App\Models\MovieMovieList;
 
 class MovieController extends Controller
 {
     /**
      *
-    * @OA\Info(title="Movie Night", version="0.1")
-    */
+     * @OA\Info(title="Movie Night", version="0.1")
+     */
 
     /**
-    * @OA\Get(
-    *     path="/api/movies",
-    *     tags={"movies"},
-    *     summary="Find all movies",
-    *     description="Returns a list of movies",
-    *     @OA\Response(response="200", description="A list of movies")
-    * )
-    */
+     * @OA\Get(
+     *     path="/api/movies",
+     *     tags={"movies"},
+     *     summary="Find all movies",
+     *     description="Returns a list of movies",
+     *     @OA\Response(response="200", description="A list of movies")
+     * )
+     */
 
     public function getMovies(Request $request): JsonResponse
     {
@@ -65,7 +64,11 @@ class MovieController extends Controller
     {
         try {
             $movie = Movie::findOrFail($id);
-            return response()->json($movie);
+            $movie->nextShowing;
+
+            return response()->json([
+                "movie" => $movie,
+            ]);
         } catch (ModelNotFoundException $e) {
             return response()
                 ->json(["data" => "Movie not Found"])
@@ -87,7 +90,7 @@ class MovieController extends Controller
             return response()->json($movie);
         } catch (ModelNotFoundException $e) {
             return response()
-                ->json(["data"=>"Could not find movie to delete"])
+                ->json(["data" => "Could not find movie to delete"])
                 ->setStatusCode(404);
         }
     }
