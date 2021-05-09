@@ -6,14 +6,15 @@
         :key="movie.id"
         v-for="movie in movies"
       >
-        <span class="text-left w-1/3"> {{ movie.title }}</span>
-        <span class="text-left w-1/3" v-if="movie.next_showing">
+        <span class="text-left sm:w-1/3">
+          {{ movie.title }} ({{ movie.year }})</span
+        >
+        <span class="text-left sm:w-1/3" v-if="movie.next_showing">
           {{ showTime(movie.next_showing) }}
         </span>
 
-        <div class="flex justify-end w-1/3 space-x-4">
+        <div class="flex justify-end sm:w-1/3 space-x-4">
           <add-showing :movieId="movie.id" @updated-list="updateList" />
-          <span class=""> {{ movie.year }}</span>
           <font-awesome-icon
             @click="deleteMovie(movie.id)"
             class="cursor-pointer hover:text-red-700"
