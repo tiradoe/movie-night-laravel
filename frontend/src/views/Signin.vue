@@ -36,9 +36,7 @@
 
     <div class="m-10">
       Don't have an account?
-      <router-link class="text-blue-400" to="signup"
-        >Sign up here!</router-link
-      >
+      <router-link class="text-blue-400" to="signup">Sign up here!</router-link>
     </div>
   </div>
 </template>
