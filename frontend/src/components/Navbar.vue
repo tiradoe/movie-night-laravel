@@ -32,7 +32,7 @@ export default defineComponent({
       this.$http.post("/logout").then(() => {
         localStorage.removeItem("loggedIn");
         this.loggedIn = false;
-        this.$router.push("/login");
+        this.$router.push("/signin");
       });
     },
   },
