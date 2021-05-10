@@ -1,5 +1,5 @@
 <template>
-  <div class="flex p-5 sm:p-10 justify-between shadow-lg text-white bg-header">
+  <div class="flex justify-between p-5 text-white shadow-lg sm:p-10 bg-header">
     <div id="logo" class="inline-block">
       <span class="text-xl font-bold">Movie Night!</span>
     </div>
