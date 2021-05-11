@@ -1,24 +1,22 @@
 <template>
-  <div class="w-full flex flex-col">
+  <div class="flex flex-col">
     <!-- SEARCH INPUT -->
-    <div class="flex max-w-md mx-auto p-10">
+    <div>
       <!-- TEXT FIELD -->
-      <div class="shadow">
-        <input
-          id="search"
-          class="p-3 shadow-inner border"
-          @keyup.enter="findMovie()"
-          type="text"
-          v-model="query"
-          aria-label="Enter Movie Title"
-          placeholder="Enter Movie Title or IMDB ID"
-          aria-placeholder="Enter Movie Title or IMDB ID"
-        />
-      </div>
+      <input
+        id="search"
+        class="p-2 rounded rounded-r-none shadow border-r-none focus:shadow-outline"
+        @keyup.enter="findMovie()"
+        type="text"
+        v-model="query"
+        aria-label="Enter Movie Title"
+        placeholder="Enter Movie Title or IMDB ID"
+        aria-placeholder="Enter Movie Title or IMDB ID"
+      />
 
       <!-- SEARCH BUTTON -->
       <button
-        class="p-3 border text-white bg-button rounded rounded-l-none cursor-pointer border-l-none"
+        class="mb-10 inline-block p-2 mt-5 text-white rounded rounded-l-none shadow cursor-pointer bg-button border-l-none"
         @click="findMovie()"
         aria-label="Search"
       >
@@ -40,19 +38,19 @@
       <h1 class="font-bold">Add Movie</h1>
       <div class="p-2">
         <!-- TITLE -->
-        <label for="title" class="font-semibold mr-2">Title</label>
+        <label for="title" class="mr-2 font-semibold">Title</label>
         <input id="title" class="bg-gray-200" type="text" />
       </div>
 
       <!-- DIRECTOR -->
       <div class="p-2">
-        <label for="title" class="font-semibold mr-2">Director</label>
+        <label for="title" class="mr-2 font-semibold">Director</label>
         <input id="title" class="bg-gray-200" type="text" />
       </div>
 
       <!-- RATING -->
       <div class="p-2">
-        <label for="rating" class="font-semibold mr-2">Rating</label>
+        <label for="rating" class="mr-2 font-semibold">Rating</label>
         <select class="p-2" id="rating">
           <option>G</option>
           <option>PG</option>

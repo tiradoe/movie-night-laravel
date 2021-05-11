@@ -1,6 +1,6 @@
 <template>
   <h1 class="p-5 text-3xl font-bold text-left sm:text-5xl sm:p-10">
-    {{ heading }}
+    {{ heading || "Nothing Scheduled" }}
   </h1>
   <hr class="mb-10 shadow" />
   <MovieDisplay
@@ -10,7 +10,14 @@
     :mainDisplay="true"
     :listId="listId"
   />
-  <p v-else class="p-10 bg-white rounded shadow sm:m-10">No movie scheduled.</p>
+  <p v-else class="p-10 bg-white rounded shadow sm:m-10">
+    <span class="block">
+      "Do I really look like a guy with a plan? <br />You know what I am? I'm a
+      dog chasing cars. <br />I wouldn't know what to do with one if I caught
+      it! You know, I just... <i>do</i> things."</span
+    >
+    <span class="italic font-semibold">Heath Ledger - The Dark Knight</span>
+  </p>
 </template>
 
 <script lang="ts">
@@ -51,15 +58,15 @@ export default defineComponent({
       const today = new Date();
       const date1 = `${
         showTime.getMonth() + 1
-      } / ${showTime.getDate()} / ${showTime.getFullYear()}`;
+      }/${showTime.getDate()}/${showTime.getFullYear()}`;
       const date2 = `${
         today.getMonth() + 1
-      } / ${today.getDate()} / ${today.getFullYear()}`;
+      }/${today.getDate()}/${today.getFullYear()}`;
 
       if (date1 === date2) {
         this.heading = "TONIGHT";
       } else {
-        this.heading = "Next up";
+        this.heading = `Next up: ${date1}`;
       }
     },
   },

@@ -51,8 +51,13 @@ class ShowingController extends Controller
             }
         }
 
+        $showings = Showing::orderBy('show_time')->get();
+        foreach ($showings as $showing) {
+            $showing->movie;
+        }
+
         return response()->json([
-            "showings" => Showing::all()
+            "showings" => $showings
         ]);
     }
 }

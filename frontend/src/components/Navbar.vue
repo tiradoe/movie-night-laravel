@@ -6,6 +6,7 @@
     <div id="links" class="inline-block">
       <router-link class="font-bold" to="/">Home</router-link> |
       <router-link class="font-bold" to="/lists">Lists</router-link> |
+      <router-link class="font-bold" to="/schedule">Schedule</router-link> |
       <router-link class="font-bold" to="/settings">
         <font-awesome-icon icon="cogs" />
       </router-link>
@@ -32,7 +33,7 @@ export default defineComponent({
       this.$http.post("/logout").then(() => {
         localStorage.removeItem("loggedIn");
         this.loggedIn = false;
-        this.$router.push("/signin");
+        this.$router.push("/login");
       });
     },
   },
