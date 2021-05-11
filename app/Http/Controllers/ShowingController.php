@@ -60,4 +60,18 @@ class ShowingController extends Controller
             "showings" => $showings
         ]);
     }
+
+    public function deleteShowing(Request $request, $showing_id)
+    {
+        try {
+            $showing = Showing::findOrFail($showing_id);
+            $showing->delete();
+
+            return response()->json($showing);
+        } catch (ModelNotFoundException $e) {
+            return response()
+                ->json(["data" => "Could not find movie to delete"])
+                ->setStatusCode(404);
+        }
+    }
 }

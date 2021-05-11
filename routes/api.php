@@ -36,3 +36,4 @@ Route::delete('/lists/{id}', [MovieListController::class, 'deleteMovieList']);
 
 Route::get('/showings', [ShowingController::class, 'getShowings']);
 Route::post('/showings', [ShowingController::class, 'createShowing']);
+Route::delete('/showings/{id}', [ShowingController::class, 'deleteShowing']);
