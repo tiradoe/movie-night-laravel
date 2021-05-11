@@ -41,11 +41,15 @@ export default defineComponent({
       return formatted;
     },
     deleteShowing(showingId: number): void {
-      this.$http
-        .delete(`/api/showings/${showingId}`)
-        .then((response: AxiosResponse) => {
-          this.getShowings();
-        });
+      const confirmDelete = confirm(`Delete showing?`);
+
+      if (confirmDelete === true) {
+        this.$http
+          .delete(`/api/showings/${showingId}`)
+          .then((response: AxiosResponse) => {
+            this.getShowings();
+          });
+      }
     },
     getShowings(): void {
       this.$http.get("/api/showings").then((response: AxiosResponse) => {
