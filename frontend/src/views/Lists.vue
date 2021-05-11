@@ -52,15 +52,11 @@
     </ul>
 
     <div v-else class="bg-white rounded shadow p-5 sm:mx-10">
-      <div id="movie-quote">
-        <span id="quote" class="block"
-          >“If this is empty, this doesn't matter.”</span
-        >
-        <span id="quote-actor" class="inline-block">Tom Cruise - </span>
-        <span id="quote-movie-title" class="inline-block"
-          >&nbsp;Jerry Maguire</span
-        >
-      </div>
+      <movie-quote
+        quote="If <i>this</i> is empty, <i>this</i> doesn't matter."
+        actor="Tom Cruise"
+        movie="Jerry Maguire"
+      />
     </div>
   </div>
 </template>
@@ -68,12 +64,13 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import { List } from "@/types/index";
+import MovieQuote from "@/components/MovieQuote.vue";
 
 const lists: List[] = [];
 
 export default defineComponent({
   name: "Lists",
-  components: {},
+  components: { MovieQuote },
   data: function () {
     return {
       listName: "",
