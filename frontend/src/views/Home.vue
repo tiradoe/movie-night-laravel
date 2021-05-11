@@ -11,12 +11,14 @@
     :listId="listId"
   />
   <p v-else class="p-10 bg-white rounded shadow sm:m-10">
-    <span class="block">
-      "Do I really look like a guy with a plan? <br />You know what I am? I'm a
-      dog chasing cars. <br />I wouldn't know what to do with one if I caught
-      it! You know, I just... <i>do</i> things."</span
-    >
-    <span class="italic font-semibold">Heath Ledger - The Dark Knight</span>
+    <movie-quote
+      actor="Heath Ledger"
+      movie="The Dark Knight"
+      quote="Do I really
+    look like a guy with a plan? <br />You know what I am? I'm a dog chasing
+    cars. <br />I wouldn't know what to do with one if I caught it! You know, I
+    just... <i>do</i> things."
+    />
   </p>
 </template>
 
@@ -24,6 +26,7 @@
 import { defineComponent } from "vue";
 import MovieDisplay from "@/components/MovieDisplay.vue";
 import { Movie } from "@/types/index";
+import MovieQuote from "@/components/MovieQuote.vue";
 
 const movie: Movie | null = null;
 
@@ -31,6 +34,7 @@ export default defineComponent({
   name: "Home",
   components: {
     MovieDisplay,
+    MovieQuote,
   },
   data: function () {
     return {
