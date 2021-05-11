@@ -50,16 +50,22 @@ const routes: Array<RouteRecordRaw> = [
         },
     },
     {
-        path: "/signup",
-        name: "Signup",
+        path: "/register",
+        name: "Register",
         component: () =>
-            import(/* webpackChunkName: "signup" */ "@/views/Signup.vue"),
+            import(/* webpackChunkName: "register" */ "@/views/Register.vue"),
     },
     {
-        path: "/signin",
-        name: "Signin",
+        path: "/schedule",
+        name: "Schedule",
         component: () =>
-            import(/* webpackChunkName: "signin" */ "@/views/Signin.vue"),
+            import(/* webpackChunkName: "schedule" */ "@/views/Schedule.vue"),
+    },
+    {
+        path: "/login",
+        name: "Login",
+        component: () =>
+            import(/* webpackChunkName: "login" */ "@/views/Login.vue"),
     },
     {
         path: "/lists/edit/:id",
