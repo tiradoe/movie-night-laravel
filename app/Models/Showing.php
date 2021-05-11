@@ -21,6 +21,6 @@ class Showing extends Model
 
     public function movie()
     {
-        return $this->hasOne(Movie::class);
+        return $this->belongsTo(Movie::class);
     }
 }
