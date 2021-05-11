@@ -8,6 +8,11 @@
       <span class="text-right sm:text-left w-1/2">{{
         prettyDate(showing.show_time)
       }}</span>
+      <font-awesome-icon
+        @click="deleteShowing(showing.id)"
+        class="cursor-pointer hover:text-red-700"
+        icon="trash-alt"
+      />
     </li>
   </ul>
   <div v-else>
@@ -35,6 +40,18 @@ export default defineComponent({
       const formatted = `${showTime.getMonth()}/${showTime.getDate()}/${showTime.getFullYear()}`;
       return formatted;
     },
+    deleteShowing(showingId: number): void {
+      this.$http
+        .delete(`/api/showings/${showingId}`)
+        .then((response: AxiosResponse) => {
+          this.getShowings();
+        });
+    },
+    getShowings(): void {
+      this.$http.get("/api/showings").then((response: AxiosResponse) => {
+        this.showings = response.data.showings;
+      });
+    },
   },
   data: function () {
     return {
@@ -42,9 +59,7 @@ export default defineComponent({
     };
   },
   mounted() {
-    this.$http.get("/api/showings").then((response: AxiosResponse) => {
-      this.showings = response.data.showings;
-    });
+    this.getShowings();
   },
 });
 </script>
