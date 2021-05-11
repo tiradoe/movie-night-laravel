@@ -51,6 +51,7 @@ class MovieListController extends Controller
      *     )
      * )
      */
+
     public function addToList(Request $request, $list_id)
     {
         try {
@@ -68,7 +69,7 @@ class MovieListController extends Controller
                 $movie = Movie::create([
                     'title' => $request->input('title'),
                     'imdb_id' => $imdb_id,
-                    'year' => $request->input('year'),
+                    'year' => intval($request->input('year')),
                     'rated' => $request->input('rated'),
                     'genre' => $request->input('genre'),
                     'director' => $request->input('director'),
