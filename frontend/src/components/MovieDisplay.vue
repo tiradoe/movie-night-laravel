@@ -55,8 +55,11 @@
     </div>
   </div>
   <div v-else class="p-10 bg-white rounded shadow">
-    <span class="block">"We ain't found shit."</span>
-    <span>Tim Russ - Spaceballs</span>
+    <movie-quote
+      quote="We ain't found shit"
+      actor="Tim Russ"
+      movie="Spaceballs"
+    />
   </div>
 </template>
 
@@ -65,10 +68,14 @@ import { defineComponent, PropType } from "vue";
 import { Movie } from "@/types/index";
 import store from "@/store/index";
 import { AxiosError, AxiosResponse } from "axios";
+import MovieQuote from "@/components/MovieQuote.vue";
 
 export default defineComponent({
   name: "MovieDisplay",
   emits: ["resetMovie"],
+  components: {
+    MovieQuote,
+  },
   computed: {
     moviePosterAlt(): string {
       return `movie poster for ${this.movie.title}`;

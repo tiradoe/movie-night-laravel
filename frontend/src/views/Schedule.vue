@@ -11,18 +11,23 @@
     </li>
   </ul>
   <div v-else>
-    <span class="block italic">"Anyway, how's your sex life?"</span>
-    <span class="font-semibold">Tommy Wiseau - The Room</span>
+    <movie-quote
+      actor="Tommy Wiseau"
+      movie="The Room"
+      quote="Anyway, how's
+    your sex life?"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { AxiosResponse } from "axios";
 import { defineComponent } from "vue";
+import MovieQuote from "@/components/MovieQuote.vue";
 
 export default defineComponent({
   name: "Schedule",
-  components: {},
+  components: { MovieQuote },
   methods: {
     prettyDate(showtime: Date): string {
       const showTime = new Date(showtime);
