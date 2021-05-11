@@ -12,7 +12,7 @@ const routes: Array<RouteRecordRaw> = [
             if (loggedIn) {
                 next();
             } else {
-                router.push("/signin");
+                router.push("/login");
             }
         },
     },
