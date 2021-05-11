@@ -24,18 +24,26 @@ export default defineComponent({
   },
   data: function () {
     return {
-      picked: new Date(),
+      picked: null,
     };
   },
   methods: {
     addShowing(event: Date): void {
-      this.$http
-        .post("/api/showings", {
-          movie_id: this.movieId,
-          show_time: event,
-        })
-        .then((response: AxiosResponse) => this.$emit("updated-list"))
-        .catch((error: Error) => console.error(error));
+      const confirmAdd = confirm(
+        `Add Showing for ${
+          event.getMonth() + 1
+        }/${event.getDate()}/${event.getFullYear()}?`
+      );
+
+      if (confirmAdd === true) {
+        this.$http
+          .post("/api/showings", {
+            movie_id: this.movieId,
+            show_time: event,
+          })
+          .then((response: AxiosResponse) => this.$emit("updated-list"))
+          .catch((error: Error) => console.error(error));
+      }
     },
   },
   emits: ["updated-list"],
