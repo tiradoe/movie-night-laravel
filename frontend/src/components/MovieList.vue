@@ -60,9 +60,15 @@ export default defineComponent({
     },
     showTime(dtTime: Showing[]): string {
       if (dtTime.length > 0) {
-        return `Next Showing: ${new Date(
-          dtTime[0].show_time
-        ).toLocaleString()}`;
+        const displayDate = new Date(dtTime[0].show_time).toLocaleString(
+          "en-US",
+          {
+            month: "2-digit",
+            day: "2-digit",
+            year: "2-digit",
+          }
+        );
+        return `Next Showing: ${displayDate}`;
       } else {
         return "Not Scheduled";
       }
