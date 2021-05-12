@@ -13,20 +13,22 @@ class CreateMoviesTable extends Migration
      */
     public function up()
     {
-        Schema::create('movies', function (Blueprint $table) {
+        Schema::create("movies", function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->text('title');
-            $table->string('imdb_id')->unique();
-            $table->year('year');
-            $table->string('rated');
-            $table->string('genre');
-            $table->string('director');
-            $table->string('actors');
-            $table->text('plot');
-            $table->string('poster');
-            $table->boolean('isGood')->nullable();
-            $table->dateTime('lastWatched')->nullable();
+            $table->text("title");
+            $table->string("imdb_id")->unique();
+            $table->year("year");
+            $table->string("rated");
+            $table->string("genre");
+            $table->string("director");
+            $table->string("actors");
+            $table->text("plot");
+            $table->string("poster");
+            $table->boolean("isGood")->nullable();
+            $table->integer("added_by");
+            $table->foreign("added_by")->references("id")->on("users");
+            $table->dateTime("lastWatched")->nullable();
         });
     }
 
@@ -37,6 +39,6 @@ class CreateMoviesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('movies');
+        Schema::dropIfExists("movies");
     }
 }

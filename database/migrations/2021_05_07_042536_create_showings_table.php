@@ -13,10 +13,12 @@ class CreateShowingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('showings', function (Blueprint $table) {
+        Schema::create("showings", function (Blueprint $table) {
             $table->id();
             $table->foreignId("movie_id");
             $table->dateTime("show_time");
+            $table->integer("owner");
+            $table->foreign("owner")->references("id")->on("users");
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateShowingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('showings');
+        Schema::dropIfExists("showings");
     }
 }

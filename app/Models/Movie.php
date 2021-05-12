@@ -11,6 +11,7 @@ class Movie extends Model
     use HasFactory;
 
     protected $fillable = [
+        "added_by",
         "title",
         "imdb_id",
         "year",
