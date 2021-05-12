@@ -23,6 +23,7 @@ class ShowingController extends Controller
         $showing = Showing::create([
             "movie_id" => $movie->id,
             "show_time" => $request->input("show_time"),
+            "owner" => $request->user()->id,
         ]);
 
         return response()->json([
@@ -34,24 +35,24 @@ class ShowingController extends Controller
     {
         if ($request->input('next') == 1) {
             try {
-                $showing = Showing::orderBy('show_time')->first();
-                if ($showing) {
-                    $movie = Movie::findOrFail($showing->movie_id);
-                    return response()->json([
-                        "showing" => $showing,
-                        "movie" => $movie
-                    ]);
-                } else {
-                    return response()->json(["showing" => $showing, "movie" => []])->setStatusCode(404);
-                }
-            } catch (ModelNotFoundException $e) {
+                $showing = Showing::where("owner", $request->user()->id)
+                    ->orderBy('show_time')
+                    ->firstOrFail();
+
+                $movie = Movie::findOrFail($showing->movie_id);
                 return response()->json([
-                    "error" => "Could not find any showings"
+                    "showing" => $showing,
+                    "movie" => $movie
                 ]);
+            } catch (ModelNotFoundException $e) {
+                return response()->json(["showing" => [], "movie" => []])->setStatusCode(404);
             }
         }
 
-        $showings = Showing::orderBy('show_time')->get();
+        $showings = Showing::where('owner', $request->user()->id)
+            ->orderBy('show_time')
+            ->get();
+
         foreach ($showings as $showing) {
             $showing->movie;
         }
@@ -64,7 +65,9 @@ class ShowingController extends Controller
     public function deleteShowing(Request $request, $showing_id)
     {
         try {
-            $showing = Showing::findOrFail($showing_id);
+            $showing = Showing::where("owner", $request->user()->id)
+                ->firstOrFail();
+
             $showing->delete();
 
             return response()->json($showing);

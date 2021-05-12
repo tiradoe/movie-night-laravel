@@ -56,6 +56,9 @@ class MovieListController extends Controller
     {
         try {
             $movieList = MovieList::findOrFail($list_id);
+            if ($movieList->owner != $request->user()->id) {
+                throw new ModelNotFoundException;
+            }
         } catch (ModelNotFoundException $e) {
             return response()->json(["data" => []])->setStatusCode(404);
         }
@@ -67,6 +70,7 @@ class MovieListController extends Controller
         if (empty($movie)) {
             try {
                 $movie = Movie::create([
+                    'added_by' => $request->user()->id,
                     'title' => $request->input('title'),
                     'imdb_id' => $imdb_id,
                     'year' => intval($request->input('year')),
@@ -107,27 +111,42 @@ class MovieListController extends Controller
 
         $movieList->name = $request->name;
         $movieList->isPublic = $request->isPublic;
-        $movieList->owner = $request->owner;
+        $movieList->owner = $request->user()->id;
 
         $movieList->save();
 
-        return response()->json(['lists' => MovieList::withCount('movies')->get()]);
+        return response()->json([
+            'lists' => MovieList::withCount('movies')
+                ->where('owner', $request->user()->id)
+                ->get()
+        ]);
     }
 
-    public function getMovieLists()
+    public function getMovieLists(Request $request)
     {
-        $movieLists = MovieList::withCount('movies')->get();
+        $movieLists = MovieList::withCount('movies')
+            ->where("owner", $request->user()->id)
+            ->get();
 
         return response()->json($movieLists);
     }
 
     public function getMovielist(Request $request, $list_id)
     {
-        $list = MovieList::find($list_id);
-        $list->movies;
+        try {
+            $list = MovieList::where('id', $list_id)
+                ->where('owner', $request->user()->id)
+                ->firstOrFail();
 
-        foreach ($list->movies as $movie) {
-            $movie->nextShowing;
+            $list->movies;
+
+            foreach ($list->movies as $movie) {
+                $movie->nextShowing;
+            }
+        } catch (ModelNotFoundException $e) {
+            return response()
+                ->json(["data" => "Could not find list"])
+                ->setStatusCode(404);
         }
 
         if (empty($list)) {
@@ -145,7 +164,9 @@ class MovieListController extends Controller
     public function deleteMovieList(Request $request, $list_id)
     {
         try {
-            $movieList = MovieList::findOrFail($list_id);
+            $movieList = MovieList::where("id", $list_id)
+                ->where("owner", $request->user()->id)
+                ->firstOrFail();
             $movieList->movies()->detach();
             $movieList->delete();
 
@@ -160,10 +181,13 @@ class MovieListController extends Controller
     public function removeMovie(Request $request, $list_id, $movie_id)
     {
         try {
+            $movieList = MovieList::where("id", $list_id)
+                ->where("owner", $request->user()->id)
+                ->firstOrFail();
+
             $deleteMovie = Movie::findOrFail($movie_id);
             $deleteMovie->movieLists()->detach($list_id);
 
-            $movieList = MovieList::findOrFail($list_id);
             $movies = $movieList->movies;
             foreach ($movies as $movie) {
                 $movie->nextShowing;
@@ -172,7 +196,7 @@ class MovieListController extends Controller
             return response()->json(["list" => $movieList, "movies" => $movies]);
         } catch (ModelNotFoundException $e) {
             return response()
-                ->json(['data' => 'Could not find movie.'])
+                ->json(['data' => 'Could not find movie on list.'])
                 ->setStatusCode(404);
         }
     }

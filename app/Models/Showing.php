@@ -16,7 +16,8 @@ class Showing extends Model
 
     protected $fillable = [
         "movie_id",
-        "show_time"
+        "show_time",
+        "owner",
     ];
 
     public function movie()
