@@ -1,9 +1,9 @@
 <template>
   <div id="movie-search" class="">
-    <h1 class="p-5 sm:p-10 text-2xl font-bold text-left text-3xl sm:text-5xl">
+    <h1 class="p-5 text-2xl text-3xl font-bold text-left sm:p-10 sm:text-5xl">
       Lists
     </h1>
-    <hr class="shadow mb-10" />
+    <hr class="mb-10 shadow" />
 
     <!-- NEW LIST INPUT -->
     <input
@@ -15,7 +15,7 @@
       @keyup.enter="addList"
     />
     <div
-      class="mb-10 inline-block p-2 mt-5 text-white rounded rounded-l-none shadow cursor-pointer bg-button border-l-none"
+      class="inline-block p-2 mt-5 mb-10 text-white rounded rounded-l-none shadow cursor-pointer bg-button border-l-none"
       @click="addList()"
     >
       Create list
@@ -51,7 +51,7 @@
       </li>
     </ul>
 
-    <div v-else class="bg-white rounded shadow p-5 sm:mx-10">
+    <div v-else class="p-5 bg-white rounded shadow sm:mx-10">
       <movie-quote
         quote="If <i>this</i> is empty, <i>this</i> doesn't matter."
         actor="Tom Cruise"
@@ -87,7 +87,6 @@ export default defineComponent({
           .post("/api/lists", {
             name: this.listName,
             isPublic: "false",
-            owner: 1,
           })
           .then((response: any) => {
             if (response.status === 200) {
