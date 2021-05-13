@@ -34,10 +34,13 @@ export default defineComponent({
   name: "Schedule",
   components: { MovieQuote },
   methods: {
-    prettyDate(showtime: Date): string {
-      const showTime = new Date(showtime);
+    prettyDate(showTime: Date): string {
+      const formatted = new Date(showTime).toLocaleString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "2-digit",
+      });
 
-      const formatted = `${showTime.getMonth()}/${showTime.getDate()}/${showTime.getFullYear()}`;
       return formatted;
     },
     deleteShowing(showingId: number): void {
@@ -46,9 +49,7 @@ export default defineComponent({
       if (confirmDelete === true) {
         this.$http
           .delete(`/api/showings/${showingId}`)
-          .then((response: AxiosResponse) => {
-            this.getShowings();
-          });
+          .then(this.getShowings());
       }
     },
     getShowings(): void {
