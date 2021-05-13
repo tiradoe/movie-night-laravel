@@ -27,6 +27,7 @@ import { defineComponent } from "vue";
 import MovieDisplay from "@/components/MovieDisplay.vue";
 import { Movie } from "@/types/index";
 import MovieQuote from "@/components/MovieQuote.vue";
+import { AxiosError, AxiosResponse } from "axios";
 
 const movie: Movie | null = null;
 
@@ -47,30 +48,38 @@ export default defineComponent({
   mounted() {
     this.$http
       .get("/api/showings?next=1")
-      .then((response: any) => {
+      .then((response: AxiosResponse) => {
         const showTime = new Date(response.data.showing.show_time);
         this.getHeading(showTime);
 
         this.movie = response.data.movie;
       })
-      .catch((error: Error) => {
-        console.error(error.message);
+      .catch((error: AxiosError) => {
+        if (error.response?.status == 401) {
+          this.$router.push("/login");
+        }
       });
   },
   methods: {
     getHeading(showTime: Date): void {
       const today = new Date();
-      const date1 = `${
-        showTime.getMonth() + 1
-      }/${showTime.getDate()}/${showTime.getFullYear()}`;
-      const date2 = `${
-        today.getMonth() + 1
-      }/${today.getDate()}/${today.getFullYear()}`;
 
-      if (date1 === date2) {
+      const showDate: string = showTime.toLocaleString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "2-digit",
+      });
+
+      const todayDate: string = today.toLocaleString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "2-digit",
+      });
+
+      if (showDate === todayDate) {
         this.heading = "TONIGHT";
       } else {
-        this.heading = `Next up: ${date1}`;
+        this.heading = `Next up: ${showDate}`;
       }
     },
   },

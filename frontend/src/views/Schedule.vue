@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { defineComponent } from "vue";
 import MovieQuote from "@/components/MovieQuote.vue";
 
@@ -52,9 +52,16 @@ export default defineComponent({
       }
     },
     getShowings(): void {
-      this.$http.get("/api/showings").then((response: AxiosResponse) => {
-        this.showings = response.data.showings;
-      });
+      this.$http
+        .get("/api/showings")
+        .then((response: AxiosResponse) => {
+          this.showings = response.data.showings;
+        })
+        .catch((error: AxiosError) => {
+          if (error.response?.status === 401) {
+            this.$router.push("/login");
+          }
+        });
     },
   },
   data: function () {
