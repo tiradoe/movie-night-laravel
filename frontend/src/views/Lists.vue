@@ -65,6 +65,7 @@
 import { defineComponent } from "@vue/runtime-core";
 import { List } from "@/types/index";
 import MovieQuote from "@/components/MovieQuote.vue";
+import { AxiosError, AxiosResponse } from "axios";
 
 const lists: List[] = [];
 
@@ -88,11 +89,16 @@ export default defineComponent({
             name: this.listName,
             isPublic: "false",
           })
-          .then((response: any) => {
+          .then((response: AxiosResponse) => {
             if (response.status === 200) {
               this.lists = response.data.lists;
             } else {
               alert("Could not create list");
+            }
+          })
+          .catch((error: AxiosError) => {
+            if (error.response?.status === 401) {
+              this.$router.push("/login");
             }
           });
 
@@ -102,7 +108,7 @@ export default defineComponent({
       }
     },
     deleteList(id: number) {
-      this.$http.delete(`/api/lists/${id}`).then((response: any) => {
+      this.$http.delete(`/api/lists/${id}`).then((response: AxiosResponse) => {
         if (response.status === 200) {
           this.getLists();
         } else {
@@ -113,7 +119,12 @@ export default defineComponent({
     getLists() {
       this.$http
         .get("/api/lists")
-        .then((response: any) => (this.lists = response.data));
+        .then((response: AxiosResponse) => (this.lists = response.data))
+        .catch((error: AxiosError) => {
+          if (error.response?.status === 401) {
+            this.$router.push("/login");
+          }
+        });
     },
   },
 });
