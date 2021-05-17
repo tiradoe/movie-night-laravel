@@ -74,6 +74,7 @@
 import { defineComponent } from "vue";
 import MovieDisplay from "@/components/MovieDisplay.vue";
 import { Movie } from "@/types/index";
+import { AxiosResponse } from "axios";
 
 let movie: Movie | null = null;
 
@@ -106,7 +107,7 @@ export default defineComponent({
     findMovie(): void {
       this.$http
         .get(`/api/movies/search?query=${this.query}`)
-        .then((response: any) => {
+        .then((response: AxiosResponse) => {
           this.searchStatus = "Found";
           this.movie = response.data;
         })

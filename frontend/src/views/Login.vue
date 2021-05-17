@@ -44,6 +44,7 @@
 </template>
 
 <script lang="ts">
+import { AxiosError } from "axios";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -71,8 +72,8 @@ export default defineComponent({
             localStorage.loggedIn = true;
             this.$router.push("/");
           })
-          .catch((error: any) => {
-            this.errorText = error.response.data.message;
+          .catch((error: AxiosError) => {
+            this.errorText = error.response?.data.message;
           });
       });
     },

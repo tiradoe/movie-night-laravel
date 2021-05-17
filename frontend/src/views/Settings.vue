@@ -18,6 +18,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { User } from "@/types/index";
+import { AxiosResponse, AxiosError } from "axios";
+import store from "@/store/index";
 
 export default defineComponent({
   name: "Settings",
@@ -30,7 +32,7 @@ export default defineComponent({
   mounted() {
     this.$http
       .get("/api/user")
-      .then((response: any) => {
+      .then((response: AxiosResponse) => {
         let userData: User = {
           id: response.data.id,
           name: response.data.name,
@@ -39,8 +41,9 @@ export default defineComponent({
 
         this.user = userData;
       })
-      .catch((error: any) => {
-        if (error.response && error.response.status === 401) {
+      .catch((error: AxiosError) => {
+        if (error.response?.status === 401) {
+          store.commit("updateLogin", false);
           this.$router.push("/login");
         } else {
           console.error(error);
