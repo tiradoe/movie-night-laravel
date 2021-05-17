@@ -44,6 +44,7 @@
 </template>
 
 <script lang="ts">
+import { AxiosError } from "axios";
 import { defineComponent } from "vue";
 import store from "@/store/index";
 
@@ -72,8 +73,8 @@ export default defineComponent({
             store.commit("updateLogin", true);
             this.$router.push("/");
           })
-          .catch((error: any) => {
-            this.errorText = error.response.data.message;
+          .catch((error: AxiosError) => {
+            this.errorText = error.response?.data.message;
           });
       });
     },
