@@ -62,6 +62,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import store from "@/store/index";
 import axios from "axios";
 
 export const authClient = axios.create({
@@ -93,7 +94,7 @@ export default defineComponent({
             },
           })
           .then(() => {
-            localStorage.loggedIn = true;
+            store.commit("updateLogin", true);
             this.$router.push("/");
           })
           .catch((error) => {

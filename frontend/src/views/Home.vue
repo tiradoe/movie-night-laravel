@@ -28,6 +28,7 @@ import MovieDisplay from "@/components/MovieDisplay.vue";
 import { Movie } from "@/types/index";
 import MovieQuote from "@/components/MovieQuote.vue";
 import { AxiosError, AxiosResponse } from "axios";
+import store from "@/store/index";
 
 const movie: Movie | null = null;
 
@@ -56,6 +57,7 @@ export default defineComponent({
       })
       .catch((error: AxiosError) => {
         if (error.response?.status == 401) {
+          store.commit("updateLogin", false);
           this.$router.push("/login");
         }
       });
