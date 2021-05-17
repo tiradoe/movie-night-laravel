@@ -3,7 +3,7 @@
     <div id="logo" class="inline-block">
       <span class="text-xl font-bold">Movie Night!</span>
     </div>
-    <div id="links" class="inline-block">
+    <div v-if="loggedIn" id="links" class="inline-block">
       <router-link class="font-bold" to="/">Home</router-link> |
       <router-link class="font-bold" to="/lists">Lists</router-link> |
       <router-link class="font-bold" to="/schedule">Schedule</router-link> |
@@ -20,19 +20,19 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import store from "@/store/index";
 
 export default defineComponent({
   name: "Navbar",
-  data: function () {
-    return {
-      loggedIn: false,
-    };
+  computed: {
+    loggedIn(): boolean {
+      return store.state.loggedIn;
+    },
   },
   methods: {
     logout() {
       this.$http.post("/logout").then(() => {
-        localStorage.removeItem("loggedIn");
-        this.loggedIn = false;
+        store.commit("updateLogin", false);
         this.$router.push("/login");
       });
     },

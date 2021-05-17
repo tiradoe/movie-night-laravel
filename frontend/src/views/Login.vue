@@ -45,6 +45,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import store from "@/store/index";
 
 export default defineComponent({
   name: "Login",
@@ -68,7 +69,7 @@ export default defineComponent({
             },
           })
           .then(() => {
-            localStorage.loggedIn = true;
+            store.commit("updateLogin", true);
             this.$router.push("/");
           })
           .catch((error: any) => {

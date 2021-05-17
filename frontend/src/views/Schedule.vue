@@ -29,6 +29,7 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { defineComponent } from "vue";
 import MovieQuote from "@/components/MovieQuote.vue";
+import store from "@/store/index";
 
 export default defineComponent({
   name: "Schedule",
@@ -60,6 +61,7 @@ export default defineComponent({
         })
         .catch((error: AxiosError) => {
           if (error.response?.status === 401) {
+            store.commit("updateLogin", false);
             this.$router.push("/login");
           }
         });
