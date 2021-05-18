@@ -1,7 +1,10 @@
 <template>
-  <h1 class="p-5 text-3xl font-bold text-left sm:text-5xl sm:p-10">
+  <h1 class="p-5 pb-0 text-3xl font-bold text-left sm:text-5xl sm:p-10 sm:pb-5">
     {{ heading || "Nothing Scheduled" }}
   </h1>
+  <h2 class="text-left font-semibold sm:px-10 px-5 mb-5 text-2xl">
+    {{ movieDate }}
+  </h2>
   <hr class="mb-10 shadow" />
   <MovieDisplay
     class="sm:mx-10"
@@ -43,6 +46,7 @@ export default defineComponent({
       movie: movie,
       listId: 0,
       heading: "",
+      movieDate: "",
     };
   },
   computed: {},
@@ -80,8 +84,10 @@ export default defineComponent({
 
       if (showDate === todayDate) {
         this.heading = "TONIGHT";
+        this.movieDate = showDate;
       } else {
-        this.heading = `Next up: ${showDate}`;
+        this.heading = `Next up`;
+        this.movieDate = showDate;
       }
     },
   },
