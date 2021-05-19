@@ -1,30 +1,37 @@
 <template>
-  <div class="bg-white sm:mx-10 mb-10 rounded shadow">
-    <ul v-show="movies.length">
-      <li
-        class="flex items-stretch p-5 even:bg-gray-200"
-        :key="movie.id"
-        v-for="movie in movies"
-      >
-        <span class="text-left sm:w-1/3">
+  <ul
+    class="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4 mx-5 p-0 sm:p-5"
+    v-show="movies.length"
+  >
+    <li
+      class="border border-gray-300 bg-gray-300 shadow rounded-lg"
+      :key="movie.id"
+      v-for="movie in movies"
+    >
+      <img class="hidden sm:block object-cover w-full" :src="movie.poster" />
+
+      <div class="flex flex-col bg-gray-300 sm:px-5">
+        <span class="font-semibold py-2">
           {{ movie.title }} ({{ movie.year }})</span
         >
-        <span class="text-left sm:w-1/3" v-if="movie.next_showing">
+        <span class="py-2" v-if="movie.next_showing">
           {{ showTime(movie.next_showing) }}
         </span>
 
-        <div class="flex justify-end sm:w-1/3 space-x-4">
-          <add-showing :movieId="movie.id" @updated-list="updateList" />
-          <font-awesome-icon
-            @click="deleteMovie(movie.id)"
-            class="cursor-pointer hover:text-red-700"
-            icon="trash-alt"
-          />
-        </div>
-      </li>
-    </ul>
-    <p class="p-10" v-show="!movies.length">No movies in list</p>
-  </div>
+        <add-showing
+          class="py-2"
+          :movieId="movie.id"
+          @updated-list="updateList"
+        />
+        <font-awesome-icon
+          @click="deleteMovie(movie.id)"
+          class="mx-auto my-2 cursor-pointer hover:text-red-700"
+          icon="trash-alt"
+        />
+      </div>
+    </li>
+  </ul>
+  <p class="p-10" v-show="!movies.length">No movies in list</p>
 </template>
 
 <script lang="ts">

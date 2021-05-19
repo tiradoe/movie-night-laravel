@@ -1,10 +1,10 @@
 <template>
-  <div class="flex space-x-2">
-    <label class="" for="datepicker">Add Showing</label>
+  <div class="flex flex-col p-2">
     <datepicker
       id="datepicker"
-      class="text-center border border-gray-400"
+      class="text-center border border-gray-400 mx-auto w-full"
       placeholder="Choose Showing"
+      aria-placeholder="Choose showing date"
       :lowerLimit="new Date()"
       v-model="picked"
       v-on:update:modelValue="addShowing"
