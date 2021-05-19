@@ -1,17 +1,17 @@
 <template>
   <ul
-    class="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4 mx-5 p-0 sm:p-5"
+    class="p-0 mx-5 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4 sm:p-5 xl:mx-auto"
     v-show="movies.length"
   >
     <li
-      class="border border-gray-300 bg-gray-300 shadow rounded-lg"
+      class="bg-gray-300 border border-gray-300 rounded-lg shadow"
       :key="movie.id"
       v-for="movie in movies"
     >
-      <img class="hidden sm:block object-cover w-full" :src="movie.poster" />
+      <img class="hidden object-cover w-full sm:block" :src="movie.poster" />
 
       <div class="flex flex-col bg-gray-300 sm:px-5">
-        <span class="font-semibold py-2">
+        <span class="py-2 font-semibold">
           {{ movie.title }} ({{ movie.year }})</span
         >
         <span class="py-2" v-if="movie.next_showing">
