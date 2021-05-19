@@ -62,7 +62,7 @@ class ShowingController extends Controller
         ]);
     }
 
-    public function deleteShowing(Request $request, $showing_id)
+    public function deleteShowing(Request $request)
     {
         try {
             $showing = Showing::where("owner", $request->user()->id)
