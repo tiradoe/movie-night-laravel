@@ -3,7 +3,7 @@
     <div id="logo" class="inline-block">
       <span class="text-xl font-bold">Movie Night!</span>
     </div>
-    <div v-if="loggedIn" id="links" class="inline-block">
+    <div v-if="loggedIn" id="links" class="hidden sm:inline-block">
       <router-link class="font-bold" to="/">Home</router-link> |
       <router-link class="font-bold" to="/lists">Lists</router-link> |
       <router-link class="font-bold" to="/schedule">Schedule</router-link> |
@@ -15,15 +15,35 @@
         <font-awesome-icon icon="sign-out-alt" />
       </span>
     </div>
+
+    <font-awesome-icon
+      class="text-3xl inline-block sm:hidden cursor-pointer"
+      icon="bars"
+      @click="toggleMenu"
+    />
+    <side-menu
+      class="inline-block"
+      :isOpen="showMenu"
+      v-on:closeMenu="toggleMenu"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import store from "@/store/index";
+import SideMenu from "@/components/Menu.vue";
 
 export default defineComponent({
   name: "Navbar",
+  components: {
+    SideMenu,
+  },
+  data: function () {
+    return {
+      showMenu: false,
+    };
+  },
   computed: {
     loggedIn(): boolean {
       return store.state.loggedIn;
@@ -35,6 +55,9 @@ export default defineComponent({
         store.commit("updateLogin", false);
         this.$router.push("/login");
       });
+    },
+    toggleMenu(): void {
+      this.showMenu = !this.showMenu;
     },
   },
 });

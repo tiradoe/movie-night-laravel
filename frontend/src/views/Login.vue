@@ -9,7 +9,7 @@
         <label class="block pb-2 text-left" for="email">Email</label>
         <input
           v-model="formData.email"
-          class="block p-2 bg-gray-200 rounded w-72 md:w-96"
+          class="block p-2 bg-gray-200 rounded w-72 sm:w-96"
           id="email"
           type="email"
         />
@@ -18,7 +18,7 @@
         <label class="block pb-2 text-left" for="password">Password</label>
         <input
           v-model="formData.password"
-          class="block p-2 bg-gray-200 rounded w-72 md:w-96"
+          class="block p-2 bg-gray-200 rounded w-72 sm:w-96"
           id="password"
           type="password"
         />
