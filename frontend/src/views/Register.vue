@@ -63,7 +63,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import store from "@/store/index";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export const authClient = axios.create({
   baseURL: process.env.VUE_APP_ROOT_API,
@@ -86,8 +86,8 @@ export default defineComponent({
   },
   methods: {
     authenticate() {
-      authClient.get("/sanctum/csrf-cookie").then(() => {
-        authClient
+      this.$http.get("/sanctum/csrf-cookie").then(() => {
+        this.$http
           .post(`/register`, this.formData, {
             headers: {
               Accept: "application/json",
@@ -97,8 +97,19 @@ export default defineComponent({
             store.commit("updateLogin", true);
             this.$router.push("/");
           })
-          .catch((error) => {
-            console.error(error.response.data.message);
+          .catch((error: AxiosError) => {
+            console.log(error.response?.data.errors);
+            if (error.response?.status === 422) {
+              if ("name" in error.response?.data.errors) {
+                this.errorText = error.response?.data.errors.name[0];
+              } else if ("email" in error.response?.data.errors)
+                this.errorText = error.response?.data.errors.email[0];
+            } else if ("password" in error.response?.data.errors) {
+              this.errorText = error.response?.data.errors.password[0];
+            } else {
+              console.log("else");
+              this.errorText = error.response?.data.message;
+            }
           });
       });
     },
