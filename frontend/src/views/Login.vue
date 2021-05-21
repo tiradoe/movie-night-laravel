@@ -1,7 +1,7 @@
 <template>
-  <div class="p-4 bg-gray-50">
+  <div class="sm:p-4 bg-gray-50">
     <h1 class="m-10 text-3xl font-bold text-center">Login</h1>
-    <p v-if="errorText" class="inline-block p-3 text-gray-600 bg-red-100">
+    <p v-if="errorText" class="inline-block sm:p-3 text-gray-600 bg-red-100">
       {{ errorText }}
     </p>
     <form class="flex flex-col items-center">
@@ -9,7 +9,7 @@
         <label class="block pb-2 text-left" for="email">Email</label>
         <input
           v-model="formData.email"
-          class="block p-2 bg-gray-200 rounded md:w-96"
+          class="block p-2 bg-gray-200 rounded w-72 md:w-96"
           id="email"
           type="email"
         />
@@ -18,7 +18,7 @@
         <label class="block pb-2 text-left" for="password">Password</label>
         <input
           v-model="formData.password"
-          class="block p-2 bg-gray-200 rounded md:w-96"
+          class="block p-2 bg-gray-200 rounded w-72 md:w-96"
           id="password"
           type="password"
         />
