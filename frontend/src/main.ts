@@ -4,16 +4,25 @@ import router from "./router";
 import store from "./store";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
-    faPencilAlt,
-    faTrashAlt,
-    faCogs,
-    faSignOutAlt,
+  faBars,
+  faPencilAlt,
+  faTrashAlt,
+  faCogs,
+  faSignOutAlt,
+  faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import axiosPlugin from "@/plugins/axios";
 import "./index.css";
 
-library.add(faPencilAlt, faTrashAlt, faCogs, faSignOutAlt);
+library.add(
+  faBars,
+  faPencilAlt,
+  faTrashAlt,
+  faCogs,
+  faSignOutAlt,
+  faTimesCircle
+);
 
 const app = createApp(App);
 app.use(store);
