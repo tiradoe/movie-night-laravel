@@ -10,7 +10,7 @@
         <label class="block text-left pb-2" for="name">Name</label>
         <input
           v-model="formData.name"
-          class="block bg-gray-200 p-2 md:w-96"
+          class="block bg-gray-200 p-2 w-72 md:w-96"
           id="name"
           type="text"
         />
@@ -20,7 +20,7 @@
         <label class="block text-left pb-2" for="email">Email</label>
         <input
           v-model="formData.email"
-          class="block bg-gray-200 p-2 md:w-96"
+          class="block bg-gray-200 p-2 w-72 md:w-96"
           id="email"
           type="email"
         />
@@ -30,7 +30,7 @@
         <label class="block text-left pb-2" for="password">Password</label>
         <input
           v-model="formData.password"
-          class="block bg-gray-200 p-2 md:w-96"
+          class="block bg-gray-200 p-2 w-72 md:w-96"
           id="password"
           type="password"
         />
@@ -42,7 +42,7 @@
         >
         <input
           v-model="formData.password_confirmation"
-          class="block bg-gray-200 p-2 md:w-96"
+          class="block bg-gray-200 p-2 w-72 md:w-96"
           id="confirm-password"
           type="password"
         />
