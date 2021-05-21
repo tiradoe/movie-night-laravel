@@ -35,6 +35,7 @@
       class="inline-block"
       :isOpen="showMenu"
       v-on:closeMenu="toggleMenu"
+      v-on:logout="logout"
     />
   </div>
 </template>
