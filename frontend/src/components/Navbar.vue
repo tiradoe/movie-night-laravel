@@ -17,6 +17,7 @@
     </div>
 
     <font-awesome-icon
+      v-if="loggedIn"
       class="text-3xl inline-block sm:hidden cursor-pointer"
       icon="bars"
       @click="toggleMenu"
@@ -25,6 +26,7 @@
       class="inline-block"
       :isOpen="showMenu"
       v-on:closeMenu="toggleMenu"
+      v-on:logout="logout"
     />
   </div>
 </template>

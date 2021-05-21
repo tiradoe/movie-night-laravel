@@ -20,7 +20,10 @@
       <router-link class="font-bold text-3xl pt-5" to="/settings">
         Settings
       </router-link>
-      <span @click="logout" class="font-bold cursor-pointer text-3xl pt-5">
+      <span
+        @click="$emit('logout')"
+        class="font-bold cursor-pointer text-3xl pt-5"
+      >
         Log Out
       </span>
     </div>
@@ -38,6 +41,6 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ["closeMenu"],
+  emits: ["closeMenu", "logout"],
 });
 </script>
