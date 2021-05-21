@@ -3,11 +3,20 @@
     <div id="logo" class="inline-block">
       <span class="text-xl font-bold">Movie Night!</span>
     </div>
-    <div v-if="loggedIn" id="links" class="hidden sm:inline-block">
-      <router-link class="font-bold" to="/">Home</router-link> |
-      <router-link class="font-bold" to="/lists">Lists</router-link> |
-      <router-link class="font-bold" to="/schedule">Schedule</router-link> |
-      <router-link class="font-bold" to="/settings">
+    <div v-show="loggedIn" id="links" class="hidden sm:inline-block">
+      <router-link @click="closeMenu()" class="font-bold" to="/">
+        Home
+      </router-link>
+      |
+      <router-link @click="closeMenu" class="font-bold" to="/lists">
+        Lists
+      </router-link>
+      |
+      <router-link @click="closeMenu" class="font-bold" to="/schedule">
+        Schedule
+      </router-link>
+      |
+      <router-link @click="closeMenu" class="font-bold" to="/settings">
         <font-awesome-icon icon="cogs" />
       </router-link>
       |
@@ -17,6 +26,7 @@
     </div>
 
     <font-awesome-icon
+      v-show="loggedIn"
       class="text-3xl inline-block sm:hidden cursor-pointer"
       icon="bars"
       @click="toggleMenu"
@@ -50,14 +60,18 @@ export default defineComponent({
     },
   },
   methods: {
-    logout() {
+    logout(): void {
       this.$http.post("/logout").then(() => {
         store.commit("updateLogin", false);
+        this.showMenu = false;
         this.$router.push("/login");
       });
     },
     toggleMenu(): void {
       this.showMenu = !this.showMenu;
+    },
+    closeMenu(): void {
+      this.showMenu = false;
     },
   },
 });

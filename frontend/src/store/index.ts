@@ -11,7 +11,7 @@ const movieList: List = {
 export default createStore({
   state: {
     currentList: movieList,
-    loggedIn: !!localStorage.getItem("loggedIn"),
+    loggedIn: localStorage.getItem("loggedIn") == "true",
   },
   mutations: {
     updateList(state, newList: List): void {
