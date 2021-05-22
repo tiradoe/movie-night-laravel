@@ -10,14 +10,32 @@
     />
 
     <div id="links" class="flex flex-col">
-      <router-link class="font-bold text-3xl pt-5" to="/">Home</router-link>
-      <router-link class="font-bold text-3xl pt-5" to="/lists"
-        >Lists</router-link
+      <router-link
+        @click="$emit('closeMenu')"
+        class="font-bold text-3xl pt-5"
+        to="/"
       >
-      <router-link class="font-bold text-3xl pt-5" to="/schedule"
-        >Schedule</router-link
+        Home
+      </router-link>
+      <router-link
+        @click="$emit('closeMenu')"
+        class="font-bold text-3xl pt-5"
+        to="/lists"
       >
-      <router-link class="font-bold text-3xl pt-5" to="/settings">
+        Lists
+      </router-link>
+      <router-link
+        @click="$emit('closeMenu')"
+        class="font-bold text-3xl pt-5"
+        to="/schedule"
+      >
+        Schedule
+      </router-link>
+      <router-link
+        @click="$emit('closeMenu')"
+        class="font-bold text-3xl pt-5"
+        to="/settings"
+      >
         Settings
       </router-link>
       <span
