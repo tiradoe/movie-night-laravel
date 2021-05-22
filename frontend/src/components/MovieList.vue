@@ -38,7 +38,7 @@
 import { defineComponent } from "@vue/runtime-core";
 import { Movie } from "@/types/index";
 import store from "@/store/index";
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import AddShowing from "./AddShowing.vue";
 import { Showing } from "@/types/index";
 
@@ -85,6 +85,12 @@ export default defineComponent({
         .get(`/api/lists/${this.$route.params.id}`)
         .then((response: AxiosResponse) => {
           store.commit("updateList", response.data.list);
+        })
+        .catch((error: AxiosError) => {
+          if (error.response?.status === 401) {
+            store.commit("updateLogin", false);
+            this.$router.push("/login");
+          }
         });
     },
   },

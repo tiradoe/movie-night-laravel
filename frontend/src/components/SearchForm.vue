@@ -16,7 +16,7 @@
 
       <!-- SEARCH BUTTON -->
       <button
-        class="mb-10 inline-block p-2 mt-5 text-white rounded rounded-l-none shadow cursor-pointer bg-button border-l-none"
+        class="inline-block p-2 mt-5 mb-10 text-white rounded rounded-l-none shadow cursor-pointer bg-button border-l-none"
         @click="findMovie()"
         aria-label="Search"
       >
@@ -31,42 +31,6 @@
       :listId="listId"
       v-on:resetMovie="resetMovie"
     />
-    <div v-show="showNotFound === false">No movie found.</div>
-
-    <!-- ADD MOVIE -->
-    <div v-if="searchStatus === 'Not Found'" id="movie-form" class="m-5">
-      <h1 class="font-bold">Add Movie</h1>
-      <div class="p-2">
-        <!-- TITLE -->
-        <label for="title" class="mr-2 font-semibold">Title</label>
-        <input id="title" class="bg-gray-200" type="text" />
-      </div>
-
-      <!-- DIRECTOR -->
-      <div class="p-2">
-        <label for="title" class="mr-2 font-semibold">Director</label>
-        <input id="title" class="bg-gray-200" type="text" />
-      </div>
-
-      <!-- RATING -->
-      <div class="p-2">
-        <label for="rating" class="mr-2 font-semibold">Rating</label>
-        <select class="p-2" id="rating">
-          <option>G</option>
-          <option>PG</option>
-          <option>PG-13</option>
-          <option>R</option>
-          <option>NC-17</option>
-          <option>Not Rated</option>
-        </select>
-      </div>
-
-      <!-- YEAR -->
-      <div class="p-2">
-        <label for="year" class="mr-2 font-semibold">Year</label>
-        <input id="year" class="bg-gray-200" type="number" />
-      </div>
-    </div>
   </div>
 </template>
 
@@ -74,7 +38,8 @@
 import { defineComponent } from "vue";
 import MovieDisplay from "@/components/MovieDisplay.vue";
 import { Movie } from "@/types/index";
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
+import store from "@/store/index";
 
 let movie: Movie | null = null;
 
@@ -111,7 +76,11 @@ export default defineComponent({
           this.searchStatus = "Found";
           this.movie = response.data;
         })
-        .catch(() => {
+        .catch((error: AxiosError) => {
+          if (error.response?.status === 401) {
+            store.commit("updateLogin", false);
+            this.$router.push("/login");
+          }
           this.searchStatus = "Not Found";
         });
     },
