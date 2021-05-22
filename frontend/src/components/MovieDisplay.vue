@@ -90,10 +90,8 @@ export default defineComponent({
           store.commit("updateList", response.data.list);
         })
         .catch((error: AxiosError) => {
-          if (error.response && error.response.status === 304) {
+          if (error.response?.status === 304) {
             alert("Movie already in list!");
-          } else {
-            console.error(error);
           }
         });
     },

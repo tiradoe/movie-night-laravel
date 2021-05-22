@@ -45,8 +45,6 @@ export default defineComponent({
         if (error.response?.status === 401) {
           store.commit("updateLogin", false);
           this.$router.push("/login");
-        } else {
-          console.error(error);
         }
       });
   },

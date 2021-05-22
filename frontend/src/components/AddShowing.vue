@@ -15,7 +15,8 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import Datepicker from "vue3-datepicker";
-import { AxiosResponse } from "axios";
+import { AxiosError } from "axios";
+import store from "@/store";
 
 export default defineComponent({
   name: "AddShowing",
@@ -41,8 +42,13 @@ export default defineComponent({
             movie_id: this.movieId,
             show_time: event,
           })
-          .then((response: AxiosResponse) => this.$emit("updated-list"))
-          .catch((error: Error) => console.error(error));
+          .then(() => this.$emit("updated-list"))
+          .catch((error: AxiosError) => {
+            if (error.response?.status === 401) {
+              store.commit("updateLogin", false);
+              this.$router.push("/login");
+            }
+          });
       }
     },
   },

@@ -98,7 +98,6 @@ export default defineComponent({
             this.$router.push("/");
           })
           .catch((error: AxiosError) => {
-            console.log(error.response?.data.errors);
             if (error.response?.status === 422) {
               if ("name" in error.response?.data.errors) {
                 this.errorText = error.response?.data.errors.name[0];
@@ -107,7 +106,6 @@ export default defineComponent({
             } else if ("password" in error.response?.data.errors) {
               this.errorText = error.response?.data.errors.password[0];
             } else {
-              console.log("else");
               this.errorText = error.response?.data.message;
             }
           });
