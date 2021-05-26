@@ -1,11 +1,13 @@
 <template>
   <div class="flex flex-col">
-    <!-- SEARCH INPUT -->
-    <div>
+    <div class="block m-5 sm:m-10 flex max-h-10">
       <!-- TEXT FIELD -->
+      <label class="font-semibold text-left py-2 sm:p-2 w-1/3" for="search"
+        >Add Movie</label
+      >
       <input
         id="search"
-        class="p-2 rounded rounded-r-none shadow border-r-none focus:shadow-outline"
+        class="p-2 w-2/3 rounded rounded-r-none shadow border-r-none focus:shadow-outline"
         @keyup.enter="findMovie()"
         type="text"
         v-model="query"
@@ -16,7 +18,7 @@
 
       <!-- SEARCH BUTTON -->
       <button
-        class="inline-block p-2 mt-5 mb-10 text-white rounded rounded-l-none shadow cursor-pointer bg-button border-l-none"
+        class="p-2 text-white rounded rounded-l-none shadow cursor-pointer bg-button border-l-none"
         @click="findMovie()"
         aria-label="Search"
       >

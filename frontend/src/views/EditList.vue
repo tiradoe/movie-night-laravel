@@ -5,10 +5,11 @@
     </h1>
   </div>
   <hr class="shadow" />
-  <div id="movie-search" class="sm:m-10">
-    <search-form v-if="currentList.id" class="" :listId="currentList.id" />
+
+  <div class="flex flex-col">
+    <search-form v-if="currentList.id" :listId="currentList.id" />
+    <movie-list />
   </div>
-  <movie-list />
 </template>
 
 <script lang="ts">
