@@ -2,19 +2,17 @@
   <!-- FILTER FIELD-->
   <input
     id="filter"
-    class="p-0 m-5 sm:mx-10 p-2 rounded rounded-r-none shadow border-r-none focus:shadow-outline"
+    class="mb-5 w-full p-2 rounded rounded-r-none shadow border-r-none focus:shadow-outline"
     type="text"
     v-model="filterString"
     aria-label="Filter movie list"
     placeholder="Filter Movie List"
     aria-placeholder="Filter Movie List"
+    v-show="movies.length"
   />
 
   <!-- MOVIE LIST -->
-  <ul
-    class="p-0 mx-5 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4 sm:p-5 xl:mx-auto"
-    v-show="movies.length"
-  >
+  <ul class="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4">
     <li
       class="bg-gray-300 border border-gray-300 rounded-lg shadow"
       :key="movie.id"

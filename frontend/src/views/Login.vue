@@ -73,8 +73,8 @@ export default defineComponent({
             store.commit("updateLogin", true);
             this.$router.push("/");
           })
-          .catch((error: AxiosError) => {
-            this.errorText = error.response?.data.message;
+          .catch(() => {
+            this.errorText = "Login Failed.";
           });
       });
     },
