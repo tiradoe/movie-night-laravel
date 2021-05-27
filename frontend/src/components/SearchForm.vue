@@ -1,39 +1,38 @@
 <template>
-  <div class="flex flex-col">
-    <div class="block m-5 sm:m-10 flex max-h-10">
-      <!-- TEXT FIELD -->
-      <label class="font-semibold text-left py-2 sm:p-2 w-1/3" for="search"
-        >Add Movie</label
-      >
-      <input
-        id="search"
-        class="p-2 w-2/3 rounded rounded-r-none shadow border-r-none focus:shadow-outline"
-        @keyup.enter="findMovie()"
-        type="text"
-        v-model="query"
-        aria-label="Enter Movie Title"
-        placeholder="Enter Movie Title or IMDB ID"
-        aria-placeholder="Enter Movie Title or IMDB ID"
-      />
-
-      <!-- SEARCH BUTTON -->
-      <button
-        class="p-2 text-white rounded rounded-l-none shadow cursor-pointer bg-button border-l-none"
-        @click="findMovie()"
-        aria-label="Search"
-      >
-        Search
-      </button>
-    </div>
-
-    <!-- RESULTS -->
-    <MovieDisplay
-      v-if="movie"
-      :movie="movie"
-      :listId="listId"
-      v-on:resetMovie="resetMovie"
+  <div class="flex my-10 max-h-10">
+    <!-- TEXT FIELD -->
+    <label class="font-semibold text-left py-2 sm:p-2 w-1/3" for="search"
+      >Add Movie</label
+    >
+    <input
+      id="search"
+      class="p-2 w-2/3 rounded rounded-r-none shadow border-r-none focus:shadow-outline"
+      @keyup.enter="findMovie()"
+      type="text"
+      v-model="query"
+      aria-label="Enter Movie Title"
+      placeholder="Enter Movie Title or IMDB ID"
+      aria-placeholder="Enter Movie Title or IMDB ID"
     />
+
+    <!-- SEARCH BUTTON -->
+    <button
+      class="p-2 text-white rounded rounded-l-none shadow cursor-pointer bg-button border-l-none"
+      @click="findMovie()"
+      aria-label="Search"
+    >
+      Search
+    </button>
   </div>
+
+  <!-- RESULTS -->
+  <MovieDisplay
+    v-if="movie"
+    class="mb-5"
+    :movie="movie"
+    :listId="listId"
+    v-on:resetMovie="resetMovie"
+  />
 </template>
 
 <script lang="ts">
