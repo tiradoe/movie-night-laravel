@@ -6,7 +6,7 @@
   </div>
   <hr class="shadow" />
 
-  <div class="text-center mx-5 sm:mx-10 xl:mx-auto">
+  <div class="text-center mx-5 sm:mx-10 xl:mx-auto max-w-7xl">
     <search-form v-if="currentList.id" :listId="currentList.id" />
     <movie-list />
   </div>
