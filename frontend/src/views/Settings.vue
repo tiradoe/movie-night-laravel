@@ -22,7 +22,7 @@
     <form @submit.prevent="resetPassword">
       <div class="py-5 flex flex-col">
         <span class="font-semibold">Current Password</span>
-        <input class="p-2 sm:w-96" type="text" v-model="current_password" />
+        <input class="p-2 sm:w-96" type="password" v-model="current_password" />
         <span v-show="current_password_error" class="text-red-700 mt-1">
           {{ this.current_password_error }}</span
         >
@@ -30,7 +30,7 @@
 
       <div class="py-5 flex flex-col">
         <span class="font-semibold">New Password</span>
-        <input class="p-2 sm:w-96" type="text" v-model="password" />
+        <input class="p-2 sm:w-96" type="password" v-model="password" />
         <span v-show="new_password_error" class="text-red-700 mt-1">
           {{ new_password_error }}</span
         >
@@ -40,7 +40,7 @@
         <span class="font-semibold">Confirm New Password</span>
         <input
           class="p-2 sm:w-96"
-          type="text"
+          type="password"
           v-model="password_confirmation"
         />
       </div>
