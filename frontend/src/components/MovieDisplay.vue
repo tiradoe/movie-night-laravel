@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!movie.error" class="text-left bg-white rounded shadow sm:p-5">
+  <div v-if="!movie.error" class="text-left bg-gray-300 rounded shadow sm:p-5">
     <div class="py-10">
       <!-- MOVIE POSTER -->
       <img

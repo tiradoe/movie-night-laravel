@@ -37,7 +37,8 @@ class ShowingController extends Controller
         if ($request->input('next') == 1) {
             try {
                 $showing = Showing::where("owner", $request->user()->id)
-                    ->where('show_time', '>=', Carbon::now()->startOfDay())
+                    // @TODO: Pull the timezone from a user setting
+                    ->where('show_time', '>=', Carbon::today("America/Denver"))
                     ->orderBy('show_time')
                     ->firstOrFail();
 
