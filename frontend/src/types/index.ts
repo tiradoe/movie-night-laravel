@@ -26,8 +26,10 @@ export interface Review {
 }
 
 export interface Showing {
+  id: number;
   movie_id: number;
-  show_time: Date;
+  show_time: string;
+  owner: number;
 }
 
 export interface User {

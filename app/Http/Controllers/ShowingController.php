@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use App\Models\Showing;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class ShowingController extends Controller
 
         $showing = Showing::create([
             "movie_id" => $movie->id,
-            "show_time" => $request->input("show_time"),
+            "show_time" => Carbon::parse($request->input("show_time"))->setTimezone('UTC'),
             "owner" => $request->user()->id,
         ]);
 
@@ -36,6 +37,7 @@ class ShowingController extends Controller
         if ($request->input('next') == 1) {
             try {
                 $showing = Showing::where("owner", $request->user()->id)
+                    ->where('show_time', '>=', Carbon::now()->startOfDay())
                     ->orderBy('show_time')
                     ->firstOrFail();
 

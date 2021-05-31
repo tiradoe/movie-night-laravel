@@ -40,7 +40,7 @@ export default defineComponent({
         this.$http
           .post("/api/showings", {
             movie_id: this.movieId,
-            show_time: event,
+            show_time: event.toUTCString(),
           })
           .then(() => this.$emit("updated-list"))
           .catch((error: AxiosError) => {
