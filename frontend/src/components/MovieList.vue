@@ -2,7 +2,7 @@
   <!-- FILTER FIELD-->
   <input
     id="filter"
-    class="mb-5 w-full p-2 rounded rounded-r-none shadow border-r-none focus:shadow-outline"
+    class="w-full p-2 mb-5 rounded rounded-r-none shadow border-r-none focus:shadow-outline"
     type="text"
     v-model="filterString"
     aria-label="Filter movie list"
@@ -12,7 +12,7 @@
   />
 
   <!-- MOVIE LIST -->
-  <ul class="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4">
+  <ul class="mb-10 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4">
     <li
       class="bg-gray-300 border border-gray-300 rounded-lg shadow"
       :key="movie.id"
@@ -23,9 +23,12 @@
 
       <!-- TITLE AND YEAR -->
       <div class="flex flex-col bg-gray-300 sm:px-5">
-        <span class="py-2 font-semibold">
-          {{ movie.title }} ({{ movie.year }})</span
-        >
+        <section class="flex flex-row flex-col sm:p-5">
+          <span class="py-2 font-semibold sm:py-0">
+            {{ movie.title }}
+          </span>
+          <span> {{ movie.year }}</span>
+        </section>
         <!-- NEXT SHOWING-->
         <span class="py-2" v-if="movie.next_showing">
           {{ showTime(movie.next_showing) }}
