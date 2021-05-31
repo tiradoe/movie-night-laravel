@@ -19,10 +19,13 @@
       v-for="movie in filterList"
     >
       <!-- MOVIE POSTER -->
-      <img class="hidden object-cover w-full sm:block" :src="movie.poster" />
+      <img
+        class="hidden rounded-t object-cover w-full sm:block"
+        :src="movie.poster"
+      />
 
       <!-- TITLE AND YEAR -->
-      <div class="flex flex-col bg-gray-300 sm:px-5">
+      <div class="flex flex-col rounded sm:rounded-none bg-gray-300 sm:px-5">
         <section class="flex flex-row flex-col sm:p-5">
           <span class="py-2 font-semibold sm:py-0">
             {{ movie.title }}
