@@ -53,7 +53,7 @@
         </li>
       </ul>
 
-      <div v-else class="p-5 bg-white rounded shadow sm:mx-10">
+      <div v-else class="p-5 bg-gray-300 rounded shadow sm:mx-10">
         <movie-quote
           quote="If <i>this</i> is empty, <i>this</i> doesn't matter."
           actor="Tom Cruise"
