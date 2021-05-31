@@ -6,23 +6,26 @@
     {{ movieDate }}
   </h2>
   <hr class="mb-10 shadow" />
-  <MovieDisplay
-    class="sm:mx-10"
-    v-if="movie"
-    :movie="movie"
-    :mainDisplay="true"
-    :listId="listId"
-  />
-  <p v-else class="p-10 bg-white rounded shadow sm:m-10">
-    <movie-quote
-      actor="Heath Ledger"
-      movie="The Dark Knight"
-      quote="Do I really
+  <loader v-if="loading" item="movie" />
+  <div v-else>
+    <MovieDisplay
+      class="sm:mx-10"
+      v-if="movie"
+      :movie="movie"
+      :mainDisplay="true"
+      :listId="listId"
+    />
+    <p v-else class="p-10 bg-white rounded shadow sm:m-10">
+      <movie-quote
+        actor="Heath Ledger"
+        movie="The Dark Knight"
+        quote="Do I really
     look like a guy with a plan? <br />You know what I am? I'm a dog chasing
     cars. <br />I wouldn't know what to do with one if I caught it! You know, I
     just... <i>do</i> things."
-    />
-  </p>
+      />
+    </p>
+  </div>
 </template>
 
 <script lang="ts">
@@ -30,6 +33,7 @@ import { defineComponent } from "vue";
 import MovieDisplay from "@/components/MovieDisplay.vue";
 import { Movie } from "@/types/index";
 import MovieQuote from "@/components/MovieQuote.vue";
+import Loader from "@/components/Loader.vue";
 import { AxiosError, AxiosResponse } from "axios";
 import store from "@/store/index";
 
@@ -40,6 +44,7 @@ export default defineComponent({
   components: {
     MovieDisplay,
     MovieQuote,
+    Loader,
   },
   data: function () {
     return {
@@ -47,6 +52,7 @@ export default defineComponent({
       listId: 0,
       heading: "",
       movieDate: "",
+      loading: true,
     };
   },
   computed: {},
@@ -58,6 +64,7 @@ export default defineComponent({
         this.getHeading(showTime);
 
         this.movie = response.data.movie;
+        this.loading = false;
       })
       .catch((error: AxiosError) => {
         if (error.response?.status == 401) {

@@ -56,10 +56,10 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import { Movie } from "@/types/index";
-import store from "@/store/index";
 import { AxiosError, AxiosResponse } from "axios";
-import AddShowing from "./AddShowing.vue";
 import { Showing } from "@/types/index";
+import AddShowing from "./AddShowing.vue";
+import store from "@/store/index";
 
 export default defineComponent({
   name: "MovieList",
@@ -83,6 +83,7 @@ export default defineComponent({
       filterString: "",
     };
   },
+  emits: ["loaded"],
   methods: {
     deleteMovie(movieId: number): void {
       this.$http
@@ -111,6 +112,8 @@ export default defineComponent({
         .get(`/api/lists/${this.$route.params.id}`)
         .then((response: AxiosResponse) => {
           store.commit("updateList", response.data.list);
+
+          this.$emit("loaded");
         })
         .catch((error: AxiosError) => {
           if (error.response?.status === 401) {
