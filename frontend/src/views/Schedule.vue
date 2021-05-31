@@ -32,7 +32,7 @@
           />
         </li>
       </ul>
-      <span v-else class="text-left block">Nothing scheduled</span>
+      <span v-else class="block text-left">Nothing scheduled</span>
 
       <!-- PREVIOUS SHOWINGS -->
       <details class="flex pt-10 text-left sm:">
@@ -64,15 +64,15 @@
             />
           </li>
         </ul>
-        <div v-else>
-          <movie-quote
-            actor="Tommy Wiseau"
-            movie="The Room"
-            quote="Anyway, how's
-    your sex life?"
-          />
-        </div>
       </details>
+    </div>
+    <div v-else class="p-10 bg-gray-300 rounded shadow sm:m-10">
+      <movie-quote
+        actor="Tommy Wiseau"
+        movie="The Room"
+        quote="Anyway, how's
+    your sex life?"
+      />
     </div>
   </div>
 </template>

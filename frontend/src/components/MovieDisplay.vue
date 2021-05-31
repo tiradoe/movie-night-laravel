@@ -54,7 +54,7 @@
       </div>
     </div>
   </div>
-  <div v-else class="p-10 bg-white rounded shadow">
+  <div v-else class="p-10 bg-gray-300 rounded shadow">
     <movie-quote
       quote="We ain't found shit"
       actor="Tim Russ"

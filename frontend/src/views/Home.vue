@@ -15,7 +15,7 @@
       :mainDisplay="true"
       :listId="listId"
     />
-    <p v-else class="p-10 bg-white rounded shadow sm:m-10">
+    <p v-else class="p-10 bg-gray-300 rounded shadow sm:m-10">
       <movie-quote
         actor="Heath Ledger"
         movie="The Dark Knight"
@@ -71,6 +71,7 @@ export default defineComponent({
           store.commit("updateLogin", false);
           this.$router.push("/login");
         }
+        this.loading = false;
       });
   },
   methods: {
