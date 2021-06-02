@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col p-2">
+  <div class="flex flex-col">
     <datepicker
       id="datepicker"
       class="text-center border border-gray-400 mx-auto w-full"
