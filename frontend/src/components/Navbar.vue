@@ -1,7 +1,9 @@
 <template>
   <div class="flex justify-between p-5 text-white shadow-lg sm:p-10 bg-header">
     <div id="logo" class="inline-block">
-      <span class="text-xl font-bold">Movie Night!</span>
+      <span @click="goHome" class="text-xl font-bold cursor-pointer"
+        >Movie Night!</span
+      >
     </div>
     <div v-show="loggedIn" id="links" class="hidden sm:inline-block">
       <router-link class="font-bold" to="/"> Home </router-link>
@@ -61,6 +63,9 @@ export default defineComponent({
         this.showMenu = false;
         this.$router.push("/login");
       });
+    },
+    goHome(): void {
+      this.$router.push("/");
     },
     toggleMenu(): void {
       this.showMenu = !this.showMenu;

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-300 p-5 rounded">
+  <div class="p-5 mb-10 bg-gray-300 rounded">
     <!-- FILTER FIELD-->
     <input
       id="filter"
@@ -10,29 +10,34 @@
       placeholder="Filter Movie List"
       aria-placeholder="Filter Movie List"
       v-show="movies.length"
+      @keydown="resetDetails"
     />
 
     <!-- MOVIE LIST -->
-    <ul class="mb-10 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4">
+    <ul
+      id="movie-list"
+      class="mb-10 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4"
+    >
       <!-- LIST ITEM -->
       <li
         class="flex flex-col border border-gray-300 rounded-lg shadow"
+        :data-movie="movie.id"
         :key="movie.id"
         v-for="movie in filterList"
       >
         <!-- MOVIE POSTER -->
         <img
-          class="cursor-pointer rounded-t object-fill w-full sm:h-1/2 md:h-2/3"
+          class="object-fill w-full rounded-t cursor-pointer sm:h-1/2 md:h-2/3"
           @click="showDetails(movie, $event)"
           :src="movie.poster"
         />
 
         <!-- TITLE AND YEAR -->
         <div
-          class="h-full sm:text-sm flex flex-col rounded sm:rounded-none text-gray-200 bg-header p-2 sm:h-1/2 md:h-1/3"
+          class="flex flex-col h-full p-3 text-gray-200 rounded sm:text-sm sm:rounded-none bg-header sm:h-1/2 md:h-1/3"
         >
           <span
-            class="mx-auto font-semibold h-2/4 text-xs lg:text-base overflow-hidden"
+            class="mx-auto overflow-hidden text-xs font-semibold h-2/4 lg:text-base"
           >
             {{ movie.title }}
           </span>
@@ -50,7 +55,7 @@
 
       <!-- MOVIE DETAILS -->
       <div
-        class="wtf sm:p-5 sm:h-full w-full bg-blue-300 sm:row-span-1 sm:col-span-4"
+        class="w-full bg-blue-300 wtf sm:p-5 sm:h-full col-span-2 sm:col-span-4 xl:col-span-5"
         id="movie-details"
         v-show="displayMovie"
       >
@@ -59,19 +64,13 @@
           ({{ displayMovie.year }})
         </h2>
         <div class="flex flex-col">
-          <div class="text-xs mb-5">
+          <div class="mb-5 text-xs">
             <span v-if="displayMovie">{{ displayMovie.plot }}</span>
           </div>
           <div>
-            <ul class="text-left">
-              <li>Showing 1</li>
-              <li>Showing 2</li>
-              <li>Showing 3</li>
-              <li>Showing 4</li>
-            </ul>
             <add-showing
               v-if="displayMovie"
-              class="py-2 w-36"
+              class="py-2 mx-auto w-36"
               :movieId="displayMovie.id"
               @updated-list="updateList"
             />
@@ -119,20 +118,60 @@ export default defineComponent({
   emits: ["loaded"],
   methods: {
     deleteMovie(movieId: number): void {
+      this.resetDetails();
       this.$http
         .delete(`/api/lists/${this.listId}/movie/${movieId}`)
         .then((response: AxiosResponse) => {
           store.commit("updateList", response.data.list);
         });
     },
+    resetDetails(): void {
+      this.displayMovie = null;
+    },
     showDetails(movie: Movie, event: any): void {
-      const listItem = event.currentTarget?.parentNode;
+      const windowWidth: number = window.innerWidth;
+      const listItem: HTMLLIElement = event.currentTarget.parentNode;
+      const movieDetailsDiv: HTMLElement | null = document.getElementById(
+        "movie-details"
+      );
+      let listWidth = 2;
+
       this.displayMovie = movie;
 
-      listItem.insertAdjacentElement(
-        "afterend",
-        document.getElementById("movie-details")
-      );
+      if (windowWidth >= 640 && windowWidth < 1280) {
+        // sm - lg
+        listWidth = 4;
+      } else if (windowWidth > 1280) {
+        // xl
+        listWidth = 5;
+      }
+
+      const selectedIndex: number = this.movies.findIndex((movie) => {
+        return movie.id === Number(listItem.getAttribute("data-movie"));
+      });
+
+      // Calculate the end of the row
+      const movieRowLocation: number = (selectedIndex + 1) % listWidth;
+      let rowEnd: HTMLLIElement | null;
+
+      if (movieRowLocation === 0) {
+        rowEnd = listItem;
+      } else {
+        const rowEndIndex = selectedIndex + (listWidth - movieRowLocation);
+        let rowEndElement;
+
+        if (rowEndIndex >= this.movies.length) {
+          rowEndElement = this.movies[this.movies.length - 1];
+        } else {
+          rowEndElement = this.movies[rowEndIndex];
+        }
+
+        rowEnd = document.querySelector(`[data-movie='${rowEndElement.id}']`);
+      }
+
+      if (movieDetailsDiv && rowEnd) {
+        rowEnd.insertAdjacentElement("afterend", movieDetailsDiv);
+      }
     },
     showTime(dtTime: Showing[]): string {
       if (dtTime.length > 0) {
@@ -150,6 +189,7 @@ export default defineComponent({
       }
     },
     updateList() {
+      this.resetDetails();
       this.$http
         .get(`/api/lists/${this.$route.params.id}`)
         .then((response: AxiosResponse) => {
@@ -170,5 +210,3 @@ export default defineComponent({
   },
 });
 </script>
-
-

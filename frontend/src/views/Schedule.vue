@@ -36,7 +36,7 @@
 
       <!-- PREVIOUS SHOWINGS -->
       <details class="flex pt-10 text-left sm:">
-        <summary class="flex flex-row cursor-pointer">
+        <summary class="flex flex-row cursor-pointer list-none">
           <h2
             v-if="previousShowings.length > 0"
             class="flex flex-row m-5 font-semibold underline sm:m-0 sm:mb-5"
