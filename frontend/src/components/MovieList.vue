@@ -34,7 +34,7 @@
 
         <!-- TITLE AND YEAR -->
         <div
-          class="flex flex-col h-full p-3 text-gray-200 rounded sm:text-sm sm:rounded-none bg-header sm:h-1/2 md:h-1/3"
+          class="flex flex-col h-full p-3 text-gray-200 rounded-none rounded-b sm:text-sm bg-header sm:h-1/2 md:h-1/3"
         >
           <span
             class="mx-auto overflow-hidden text-xs font-semibold h-2/4 lg:text-base"
@@ -55,7 +55,7 @@
 
       <!-- MOVIE DETAILS -->
       <div
-        class="w-full bg-blue-300 wtf sm:p-5 sm:h-full col-span-2 sm:col-span-4 xl:col-span-5"
+        class="w-full bg-blue-100 sm:p-5 sm:h-full col-span-2 sm:col-span-4 xl:col-span-5"
         id="movie-details"
         v-show="displayMovie"
       >
@@ -64,8 +64,12 @@
           ({{ displayMovie.year }})
         </h2>
         <div class="flex flex-col">
-          <div class="mb-5 text-xs">
+          <div class="mb-5 text-base text-left">
+            <h3 class="py-5 font-semibold">Plot</h3>
             <span v-if="displayMovie">{{ displayMovie.plot }}</span>
+            <span v-if="displayMovie" class="block pt-3"
+              >Rated {{ displayMovie.rated }}</span
+            >
           </div>
           <div>
             <add-showing
