@@ -2,18 +2,26 @@
   <div class="p-5 mb-10 bg-gray-300 rounded">
     <!-- FILTER FIELD-->
     <input
-      id="filter"
+      aria-label="Filter movie list"
+      aria-placeholder="Filter Movie List"
       class="w-full p-2 mb-5 rounded shadow focus:shadow-outline"
+      id="filter"
+      placeholder="Filter Movie List"
       type="text"
       v-model="filterString"
-      aria-label="Filter movie list"
-      placeholder="Filter Movie List"
-      aria-placeholder="Filter Movie List"
       v-show="movies.length"
-      @keydown="resetDetails"
     />
 
+    <div
+      id="filter-options"
+      class="mb-5 text-left font-semibold"
+      v-show="movies.length"
+    >
+      <label for="hide-scheduled" class="pr-2">Hide Scheduled</label>
+      <input id="hide-scheduled" type="checkbox" v-model="hideScheduled" />
+    </div>
     <!-- MOVIE LIST -->
+
     <ul
       id="movie-list"
       class="mb-10 grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-4"
@@ -23,7 +31,7 @@
         class="flex flex-col border border-gray-300 rounded-lg shadow"
         :data-movie="movie.id"
         :key="movie.id"
-        v-for="movie in filterList"
+        v-for="movie in movies"
       >
         <!-- MOVIE POSTER -->
         <img
@@ -55,7 +63,7 @@
 
       <!-- MOVIE DETAILS -->
       <div
-        class="w-full bg-blue-100 sm:p-5 sm:h-full col-span-2 sm:col-span-4 xl:col-span-5"
+        class="w-full bg-blue-100 p-2 sm:p-5 sm:h-full col-span-2 sm:col-span-4 xl:col-span-5"
         id="movie-details"
         v-show="displayMovie"
       >
@@ -103,23 +111,34 @@ export default defineComponent({
   },
   computed: {
     movies(): Movie[] {
-      return store.state.currentList.movies;
-    },
-    filterList(): Movie[] {
-      return store.state.currentList.movies.filter(
-        (movie) =>
-          movie.title.toLowerCase().search(this.filterString.toLowerCase()) > -1
-      );
+      this.resetDetails();
+      let movies: Movie[] = store.state.currentList.movies;
+
+      if (this.filterString !== "") {
+        movies = movies.filter(
+          (movie) =>
+            movie.title.toLowerCase().search(this.filterString.toLowerCase()) >
+            -1
+        );
+      }
+
+      if (this.hideScheduled) {
+        movies = movies.filter((movie) => movie.showings.length === 0);
+      }
+
+      return movies;
     },
   },
   data: function () {
     return {
-      listId: this.$route.params.id,
+      hideScheduled: false,
       filterString: "",
+      listId: this.$route.params.id,
       displayMovie: displayMovie,
     };
   },
   emits: ["loaded"],
+
   methods: {
     deleteMovie(movieId: number): void {
       this.resetDetails();

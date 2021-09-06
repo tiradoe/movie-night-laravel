@@ -131,7 +131,7 @@ class MovieListController extends Controller
         return response()->json($movieLists);
     }
 
-    public function getMovielist(Request $request, $list_id)
+    public function getMovieList(Request $request, $list_id)
     {
         try {
             $list = MovieList::where('id', $list_id)
@@ -141,7 +141,7 @@ class MovieListController extends Controller
             $list->movies;
 
             foreach ($list->movies as $movie) {
-                $movie->nextShowing;
+                $movie->showings;
             }
         } catch (ModelNotFoundException $e) {
             return response()

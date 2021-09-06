@@ -31,7 +31,11 @@
           class="flex justify-around p-5 even:bg-gray-200"
         >
           <!-- LIST NAME -->
-          <span class="flex-1 text-left">{{ list.name }}</span>
+          <div class="flex-1 text-left">
+            <router-link :to="`/lists/edit/${list.id}`">
+              <span class="font-semibold">{{ list.name }}</span>
+            </router-link>
+          </div>
 
           <!-- MOVIE COUNT -->
           <span class="flex-1 text-left">{{ list.movies_count }} movies </span>
