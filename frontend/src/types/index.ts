@@ -1,23 +1,22 @@
 export interface List {
   id: number;
-  name: string;
   movieCount: number;
   movies: Movie[];
+  name: string;
 }
 
 export interface Movie {
+  actors: string;
+  director: string;
+  genre: string;
   id: number;
+  plot: string;
+  poster: string;
+  rating: string;
+  reviews: Review[];
+  showings: Showing[];
   title: string;
   year: number;
-  rating: string;
-  genre: string;
-  director: string;
-  actors: string;
-  plot: string;
-  reviews: Review[];
-  poster: string;
-  showings: Showing[];
-  next_showing: Showing;
 }
 
 export interface Review {
@@ -28,12 +27,12 @@ export interface Review {
 export interface Showing {
   id: number;
   movie_id: number;
-  show_time: string;
   owner: number;
+  show_time: string;
 }
 
 export interface User {
   id: number;
-  name: string;
   email: string;
+  name: string;
 }

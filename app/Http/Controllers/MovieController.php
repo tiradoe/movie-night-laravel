@@ -26,7 +26,7 @@ class MovieController extends Controller
      * )
      */
 
-    public function getMovies(Request $request): JsonResponse
+    public function getMovies(): JsonResponse
     {
         $movies = Movie::all();
 
