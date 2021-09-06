@@ -190,7 +190,7 @@ class MovieListController extends Controller
 
             $movies = $movieList->movies;
             foreach ($movies as $movie) {
-                $movie->nextShowing;
+                $movie->showings;
             }
 
             return response()->json(["list" => $movieList, "movies" => $movies]);
