@@ -9,13 +9,13 @@
       placeholder="Filter Movie List"
       type="text"
       v-model="filterString"
-      v-show="movies.length"
+      v-show="movies.length || filterActivated"
     />
 
     <div
       id="filter-options"
-      class="mb-5 text-left font-semibold"
-      v-show="movies.length"
+      class="mb-5 font-semibold text-left"
+      v-show="movies.length || filterActivated"
     >
       <label for="hide-scheduled" class="pr-2">Hide Scheduled</label>
       <input id="hide-scheduled" type="checkbox" v-model="hideScheduled" />
@@ -63,7 +63,7 @@
 
       <!-- MOVIE DETAILS -->
       <div
-        class="w-full bg-blue-100 p-2 sm:p-5 sm:h-full col-span-2 sm:col-span-4 xl:col-span-5"
+        class="w-full p-2 bg-blue-100 sm:p-5 sm:h-full col-span-2 sm:col-span-4 xl:col-span-5"
         id="movie-details"
         v-show="displayMovie"
       >
@@ -110,6 +110,9 @@ export default defineComponent({
     AddShowing,
   },
   computed: {
+    filterActivated(): boolean {
+      return this.filterString !== "" || this.hideScheduled === true;
+    },
     movies(): Movie[] {
       this.resetDetails();
       let movies: Movie[] = store.state.currentList.movies;
