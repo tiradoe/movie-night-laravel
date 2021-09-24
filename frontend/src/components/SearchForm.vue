@@ -23,14 +23,15 @@
       <div class="flex flex-col mb-5 col-span-2 sm:mx-2">
         <label class="font-semibold text-left" for="Year"> Year </label>
         <input
-          class="p-2 rounded shadow sm:max-w-xs sm:mr-5"
+          class="p-2 rounded shadow sm:max-w-xl"
           id="year"
+          maxlength="4"
           v-model="year"
         />
       </div>
 
       <!-- CONTENT TYPE -->
-      <div class="flex flex-col sm:max-w-xs col-span-2 sm:mx-2">
+      <div class="flex flex-col sm:max-w-xl col-span-2 sm:mx-2">
         <label class="font-semibold text-left" for="content-type"> Type </label>
         <select
           class="p-2 mb-5 bg-white rounded shadow"
