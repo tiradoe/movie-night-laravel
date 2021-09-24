@@ -105,12 +105,14 @@ class MovieController extends Controller
     public function search(Request $request): JsonResponse
     {
         $imdbIdRegex = "/tt\d+/";
-
-        $params = $request->all();
-        $query = $params["query"];
         $queryType = "t";
 
-        preg_match($imdbIdRegex, $params["query"], $matches);
+        $query = $request->input('query');
+        $year = $request->input('year');
+        $type = $request->input('type');
+
+        // If it's an IMDb id, update the query type
+        preg_match($imdbIdRegex, $query, $matches);
 
         if (count($matches) > 0) {
             $queryType = "i";
@@ -119,6 +121,8 @@ class MovieController extends Controller
         $response = Http::get("http://www.omdbapi.com/", [
             "apikey" => config("app.omdb_key"),
             "plot" => "full",
+            "type" => $type,
+            "y" => $year,
             $queryType => $query
         ])->json();
 

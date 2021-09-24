@@ -1,29 +1,57 @@
 <template>
-  <div class="flex my-10 max-h-10">
-    <!-- TEXT FIELD -->
-    <label class="font-semibold text-left py-2 sm:p-2 w-1/3" for="search"
-      >Add Movie</label
-    >
-    <input
-      id="search"
-      class="p-2 w-2/3 rounded rounded-r-none shadow border-r-none focus:shadow-outline"
-      @keyup.enter="findMovie()"
-      type="text"
-      v-model="query"
-      aria-label="Enter Movie Title"
-      placeholder="Enter Movie Title or IMDB ID"
-      aria-placeholder="Enter Movie Title or IMDB ID"
-    />
+  <fieldset
+    class="flex flex-col p-2 mt-5 mb-5 text-left bg-gray-300 rounded shadow"
+  >
+    <h2 class="mb-5 font-semibold">Add Movie</h2>
+    <div class="grid grid-cols-2">
+      <div class="flex flex-col mb-5 col-span-2 sm:mx-2">
+        <label class="font-semibold text-left" for="search"> Title </label>
+        <!-- MOVIE TITLE / IMDB ID-->
+        <input
+          id="search"
+          class="max-w-xl p-2 rounded shadow border-r-none focus:shadow-outline"
+          @keyup.enter="findMovie()"
+          type="text"
+          v-model="query"
+          aria-label="Enter Movie Title"
+          placeholder="Enter Movie Title or IMDB ID"
+          aria-placeholder="Enter Movie Title or IMDB ID"
+        />
+      </div>
 
+      <!-- YEAR -->
+      <div class="flex flex-col mb-5 col-span-2 sm:mx-2">
+        <label class="font-semibold text-left" for="Year"> Year </label>
+        <input
+          class="p-2 rounded shadow sm:max-w-xs sm:mr-5"
+          id="year"
+          v-model="year"
+        />
+      </div>
+
+      <!-- CONTENT TYPE -->
+      <div class="flex flex-col sm:max-w-xs col-span-2 sm:mx-2">
+        <label class="font-semibold text-left" for="content-type"> Type </label>
+        <select
+          class="p-2 mb-5 bg-white rounded shadow"
+          id="content-type"
+          v-model="contentType"
+        >
+          <option value="movie">Movie</option>
+          <option value="series">Series</option>
+          <option value="episode">Episode</option>
+        </select>
+      </div>
+    </div>
     <!-- SEARCH BUTTON -->
     <button
-      class="p-2 text-white rounded rounded-l-none shadow cursor-pointer bg-button border-l-none"
+      class="p-2 text-white rounded shadow cursor-pointer sm:max-w-xs sm:mx-2 col-span-3 sm:col-span-2 bg-button border-l-none"
       @click="findMovie()"
       aria-label="Search"
     >
       Search
     </button>
-  </div>
+  </fieldset>
 
   <!-- RESULTS -->
   <MovieDisplay
@@ -65,6 +93,8 @@ export default defineComponent({
   data: function () {
     return {
       query: "",
+      year: "",
+      contentType: "movie",
       searchStatus: "waiting",
       movie: movie,
     };
@@ -72,7 +102,9 @@ export default defineComponent({
   methods: {
     findMovie(): void {
       this.$http
-        .get(`/api/movies/search?query=${this.query}`)
+        .get(
+          `/api/movies/search?query=${this.query}&year=${this.year}&type=${this.contentType}`
+        )
         .then((response: AxiosResponse) => {
           this.searchStatus = "Found";
           this.movie = response.data;
