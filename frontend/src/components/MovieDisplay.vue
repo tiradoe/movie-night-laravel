@@ -21,7 +21,7 @@
           <button
             v-show="!mainDisplay && movie"
             @click="addToList(movie)"
-            class="p-2 text-lg text-white rounded bg-button"
+            class="p-2 text-lg text-white rounded sm:mr-5 bg-button"
           >
             Add to List
           </button>
