@@ -121,6 +121,8 @@ export default defineComponent({
     resetMovie(): void {
       this.movie = null;
       this.query = "";
+      this.year = "";
+      this.contentType = "movie";
     },
   },
   props: {
