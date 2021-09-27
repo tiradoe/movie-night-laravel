@@ -41,7 +41,9 @@ class setUuids extends Command
     {
         $movielists = MovieList::where('uuid', null)->get();
         foreach ($movielists as $list) {
-            $list->uuid = Str::uuid();
+            $uuid = Str::uuid();
+            $list->uuid = $uuid;
+            $list->slug = $uuid;
             $list->save();
         }
 
