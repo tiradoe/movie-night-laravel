@@ -2,10 +2,9 @@
   <div class="flex flex-col">
     <datepicker
       id="datepicker"
-      class="text-center border border-gray-400 mx-auto w-full"
+      class="w-full mx-auto text-center border border-gray-400"
       placeholder="Choose Showing"
       aria-placeholder="Choose showing date"
-      :lowerLimit="new Date()"
       v-model="picked"
       v-on:update:modelValue="addShowing"
     />

@@ -103,9 +103,6 @@ export default defineComponent({
             store.commit("updateLogin", false);
             this.$router.push("/login");
           }
-          if (error.response?.status === 500) {
-            console.log("Whoops");
-          }
         });
     },
   },
