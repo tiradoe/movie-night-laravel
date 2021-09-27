@@ -15,7 +15,7 @@ class UpdateMovielistTable extends Migration
     {
         Schema::table('movie_lists', function (Blueprint $table) {
             $table->string('slug')->nullable()->unique();
-            $table->uuid('uuid')->index();
+            $table->uuid('uuid')->index()->nullable()->unique();
         });
     }
 
@@ -28,6 +28,7 @@ class UpdateMovielistTable extends Migration
     {
         Schema::table('movie_lists', function (Blueprint $table) {
             $table->dropColumn('slug');
+            $table->dropColumn('uuid');
         });
     }
 }
