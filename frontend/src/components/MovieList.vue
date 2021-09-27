@@ -15,7 +15,7 @@
     <div
       id="filter-options"
       class="mb-5 font-semibold text-left"
-      v-show="movies.length || filterActivated"
+      v-show="(movies.length || filterActivated) && loggedIn"
     >
       <label for="hide-scheduled" class="pr-2">Hide Scheduled</label>
       <input id="hide-scheduled" type="checkbox" v-model="hideScheduled" />
@@ -54,6 +54,7 @@
 
           <!-- TRASH ICON -->
           <font-awesome-icon
+            v-show="loggedIn"
             @click="deleteMovie(movie.id)"
             class="mx-auto mt-2 cursor-pointer hover:text-red-700 h-1/4"
             icon="trash-alt"
@@ -82,6 +83,7 @@
           <div>
             <add-showing
               v-if="displayMovie"
+              v-show="loggedIn"
               class="py-2 mx-auto w-36"
               :movieId="displayMovie.id"
               @updated-list="updateList"
@@ -112,6 +114,9 @@ export default defineComponent({
   computed: {
     filterActivated(): boolean {
       return this.filterString !== "" || this.hideScheduled === true;
+    },
+    loggedIn(): boolean {
+      return store.state.loggedIn;
     },
     movies(): Movie[] {
       this.resetDetails();
