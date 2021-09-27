@@ -25,34 +25,42 @@
 
       <!-- LISTS -->
       <ul v-if="lists.length > 0" class="bg-white rounded shadow sm:m-10">
-        <li
-          :key="list.id"
-          v-for="list in lists"
-          class="flex justify-around p-5 even:bg-gray-200"
-        >
-          <!-- LIST NAME -->
-          <div class="flex-1 text-left">
-            <router-link :to="`/lists/edit/${list.id}`">
-              <span class="font-semibold">{{ list.name }}</span>
-            </router-link>
-          </div>
+        <li :key="list.id" v-for="list in lists" class="p-5 even:bg-gray-200">
+          <div class="flex justify-around">
+            <!-- LIST NAME -->
+            <div class="flex-1 text-left">
+              <router-link :to="`/lists/edit/${list.uuid}`">
+                <span class="font-semibold">{{ list.name }}</span>
+              </router-link>
+            </div>
 
-          <!-- MOVIE COUNT -->
-          <span class="flex-1 text-left">{{ list.movies_count }} movies </span>
+            <!-- MOVIE COUNT -->
+            <span class="flex-1 text-left"
+              >{{ list.movies_count }} movies
+            </span>
 
-          <!-- EDIT AND DELETE -->
-          <div class="text-left">
-            <router-link :to="`/lists/edit/${list.id}`">
+            <!-- EDIT AND DELETE -->
+            <div class="text-left">
+              <router-link :to="`/lists/edit/${list.uuid}`">
+                <font-awesome-icon
+                  class="mx-5 hover:text-yellow-600"
+                  icon="pencil-alt"
+                />
+              </router-link>
               <font-awesome-icon
-                class="mx-5 hover:text-yellow-600"
-                icon="pencil-alt"
+                @click="deleteList(list.uuid)"
+                class="mx-1 cursor-pointer hover:text-red-600"
+                icon="trash-alt"
               />
-            </router-link>
-            <font-awesome-icon
-              @click="deleteList(list.id)"
-              class="mx-1 cursor-pointer hover:text-red-600"
-              icon="trash-alt"
-            />
+            </div>
+          </div>
+          <div class="flex mt-5 text-left">
+            <span class="mr-2">Owner:</span>
+            <span class="mr-5"> You</span>
+            <div>
+              <span class="mr-2">Access:</span>
+              <span>{{ access(list.isPublic) }}</span>
+            </div>
           </div>
         </li>
       </ul>
@@ -92,6 +100,15 @@ export default defineComponent({
     this.getLists();
   },
   methods: {
+    access(isPublic: boolean): string {
+      let access = "Private";
+
+      if (isPublic) {
+        access = "Public";
+      }
+
+      return access;
+    },
     addList() {
       if (this.listName !== "") {
         this.$http

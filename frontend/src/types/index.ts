@@ -3,6 +3,7 @@ export interface List {
   movieCount: number;
   movies: Movie[];
   name: string;
+  isPublic: boolean;
 }
 
 export interface Movie {

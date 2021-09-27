@@ -5,6 +5,7 @@ const movieList: List = {
   id: 0,
   name: "",
   movieCount: 0,
+  isPublic: false,
   movies: [],
 };
 
@@ -23,6 +24,9 @@ export default createStore({
     updateLogin(state, loggedIn: boolean): void {
       localStorage.setItem("loggedIn", loggedIn.toString());
       state.loggedIn = loggedIn;
+    },
+    updateListAccess(state, access): void {
+      state.currentList.isPublic = access;
     },
   },
   actions: {},

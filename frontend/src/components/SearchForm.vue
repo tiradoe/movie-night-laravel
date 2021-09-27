@@ -1,9 +1,11 @@
 <template>
   <fieldset
-    class="flex flex-col p-2 mt-5 mb-5 text-left bg-gray-300 rounded shadow"
+    class="flex flex-col items-center p-5 mt-5 mb-5 text-left bg-gray-300 rounded shadow"
   >
-    <h2 class="mb-5 font-semibold">Add Movie</h2>
-    <div class="grid grid-cols-2">
+    <h2 class="font-semibold underline cursor-pointer" @click="toggleAddMovie">
+      Add Movie
+    </h2>
+    <div class="sm:w-1/2 grid grid-cols-2" v-show="addMovie">
       <div class="flex flex-col mb-5 col-span-2 sm:mx-2">
         <label class="font-semibold text-left" for="search"> Title </label>
         <!-- MOVIE TITLE / IMDB ID-->
@@ -49,6 +51,7 @@
       class="p-2 text-white rounded shadow cursor-pointer sm:max-w-xs sm:mx-2 col-span-3 sm:col-span-2 bg-button border-l-none"
       @click="findMovie()"
       aria-label="Search"
+      v-show="addMovie"
     >
       Search
     </button>
@@ -98,6 +101,7 @@ export default defineComponent({
       contentType: "movie",
       searchStatus: "waiting",
       movie: movie,
+      addMovie: false,
     };
   },
   methods: {
@@ -117,6 +121,9 @@ export default defineComponent({
           }
           this.searchStatus = "Not Found";
         });
+    },
+    toggleAddMovie(): void {
+      this.addMovie = !this.addMovie;
     },
     resetMovie(): void {
       this.movie = null;

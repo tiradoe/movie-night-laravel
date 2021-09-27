@@ -9,8 +9,17 @@ class MovieList extends Model
 {
     use HasFactory;
 
+    protected $hidden = [
+        'id'
+    ];
+
     public function movies()
     {
         return $this->belongsToMany(Movie::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
     }
 }

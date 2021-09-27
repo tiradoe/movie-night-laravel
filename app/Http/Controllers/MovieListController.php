@@ -7,9 +7,11 @@ use App\Models\MovieList;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Str;
 
 class MovieListController extends Controller
 {
+
     /**
      * @OA\Post(
      *     path="/api/lists/{listId}",
@@ -52,10 +54,10 @@ class MovieListController extends Controller
      * )
      */
 
-    public function addToList(Request $request, $list_id)
+    public function addToList(Request $request, $uuid)
     {
         try {
-            $movieList = MovieList::findOrFail($list_id);
+            $movieList = MovieList::where('uuid', $uuid)->firstOrFail();
             if ($movieList->owner != $request->user()->id) {
                 throw new ModelNotFoundException;
             }
@@ -108,8 +110,11 @@ class MovieListController extends Controller
     public function createMovieList(Request $request)
     {
         $movieList = new MovieList();
+        $uuid = Str::uuid();
 
+        $movieList->uuid = $uuid;
         $movieList->name = $request->name;
+        $movieList->slug = $uuid;
         $movieList->isPublic = $request->isPublic;
         $movieList->owner = $request->user()->id;
 
@@ -122,6 +127,26 @@ class MovieListController extends Controller
         ]);
     }
 
+    public function updateMovieList(Request $request)
+    {
+        try {
+
+            $movieList = MovieList::where('uuid', $request->input('uuid'))->firstOrFail();
+            $name = $request->input('name');
+
+            $movieList->name = $name;
+            $movieList->isPublic = $request->input('isPublic');
+            $movieList->slug = $request->input('slug') ?? strtolower(str_replace(" ", "-", $name));
+            $movieList->save();
+        } catch (Exception $e) {
+            return response()
+                ->json(["data" => "Could not update list."])
+                ->setStatusCode(500);
+        }
+
+        return $movieList;
+    }
+
     public function getMovieLists(Request $request)
     {
         $movieLists = MovieList::withCount('movies')
@@ -131,10 +156,30 @@ class MovieListController extends Controller
         return response()->json($movieLists);
     }
 
-    public function getMovieList(Request $request, $list_id)
+    public function getMovieList(Request $request, $uuid)
     {
+        //If not authenticated, check if the list is public
+        if (!$request->user()) {
+            try {
+                $movieList = MovieList::where('uuid', $uuid)
+                    ->where('isPublic', true)
+                    ->firstOrFail();
+
+                $movieList->movies;
+
+                return response()->json([
+                    'status' => 200,
+                    'list' => $movieList,
+                ]);
+            } catch (Exception $e) {
+                return response()
+                    ->json(["data" => "There was an error retrieving the list."])
+                    ->setStatusCode(404);
+            }
+        }
+
         try {
-            $list = MovieList::where('id', $list_id)
+            $list = MovieList::where('uuid', $uuid)
                 ->where('owner', $request->user()->id)
                 ->firstOrFail();
 
@@ -161,10 +206,10 @@ class MovieListController extends Controller
         ]);
     }
 
-    public function deleteMovieList(Request $request, $list_id)
+    public function deleteMovieList(Request $request, $uuid)
     {
         try {
-            $movieList = MovieList::where("id", $list_id)
+            $movieList = MovieList::where("uuid", $uuid)
                 ->where("owner", $request->user()->id)
                 ->firstOrFail();
             $movieList->movies()->detach();
@@ -178,15 +223,15 @@ class MovieListController extends Controller
         }
     }
 
-    public function removeMovie(Request $request, $list_id, $movie_id)
+    public function removeMovie(Request $request, $uuid, $movie_id)
     {
         try {
-            $movieList = MovieList::where("id", $list_id)
+            $movieList = MovieList::where("uuid", $uuid)
                 ->where("owner", $request->user()->id)
                 ->firstOrFail();
 
             $deleteMovie = Movie::findOrFail($movie_id);
-            $deleteMovie->movieLists()->detach($list_id);
+            $deleteMovie->movieLists()->detach($movieList->id);
 
             $movies = $movieList->movies;
             foreach ($movies as $movie) {
