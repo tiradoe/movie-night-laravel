@@ -63,6 +63,12 @@ const routes: Array<RouteRecordRaw> = [
       authCheck(next);
     },
   },
+  {
+    path: "/p/:slug",
+    name: "ListView",
+    component: () =>
+      import(/* webpackChunkName: "newlist" */ "@/views/public/ListView.vue"),
+  },
 ];
 
 const router = createRouter({

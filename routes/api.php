@@ -32,6 +32,7 @@ Route::middleware(["auth:sanctum"])->group(function () {
     Route::get("/lists/{id}", [MovieListController::class, "getMovieList"]);
     Route::post("/lists", [MovieListController::class, "createMovieList"]);
     Route::post("/lists/{id}", [MovieListController::class, "addToList"]);
+    Route::put("/lists", [MovieListController::class, "updateMovieList"]);
     Route::delete("/lists/{id}/movie/{movieId}", [MovieListController::class, "removeMovie"]);
     Route::delete("/lists/{id}", [MovieListController::class, "deleteMovieList"]);
 
@@ -39,3 +40,5 @@ Route::middleware(["auth:sanctum"])->group(function () {
     Route::post("/showings", [ShowingController::class, "createShowing"]);
     Route::delete("/showings/{id}", [ShowingController::class, "deleteShowing"]);
 });
+
+Route::get("/lists/{id}", [MovieListController::class, "getMovieList"]);

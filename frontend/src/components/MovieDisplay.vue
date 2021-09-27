@@ -18,13 +18,22 @@
             {{ movie.title }}
           </span>
 
-          <button
-            v-show="!mainDisplay && movie"
-            @click="addToList(movie)"
-            class="p-2 text-lg text-white rounded sm:mr-5 bg-button"
-          >
-            Add to List
-          </button>
+          <div>
+            <button
+              v-show="!mainDisplay && movie"
+              @click="addToList(movie)"
+              class="p-2 mr-2 text-lg text-white rounded bg-button"
+            >
+              Add to List
+            </button>
+            <button
+              v-show="!mainDisplay && movie"
+              @click="closeDisplay"
+              class="p-2 text-lg text-white bg-red-700 rounded sm:mr-5"
+            >
+              X
+            </button>
+          </div>
         </div>
 
         <!-- MOVIE INFO -->
@@ -94,6 +103,9 @@ export default defineComponent({
             alert("Movie already in list!");
           }
         });
+    },
+    closeDisplay(): void {
+      this.$emit("resetMovie");
     },
   },
   props: {

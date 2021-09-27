@@ -216,8 +216,15 @@ export default defineComponent({
     },
     updateList() {
       this.resetDetails();
+      let list_id = this.$route.params.id;
+
+      // Use slug in public view
+      if (typeof list_id === "undefined") {
+        list_id = this.$route.params.slug;
+      }
+
       this.$http
-        .get(`/api/lists/${this.$route.params.id}`)
+        .get(`/api/lists/${list_id}`)
         .then((response: AxiosResponse) => {
           store.commit("updateList", response.data.list);
 
