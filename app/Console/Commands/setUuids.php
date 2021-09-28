@@ -2,9 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Models\MovieList;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class setUuids extends Command
 {
@@ -13,7 +14,7 @@ class setUuids extends Command
      *
      * @var string
      */
-    protected $signature = 'set:uuids';
+    protected $signature = 'set:uuids {table}';
 
     /**
      * The console command description.
@@ -39,12 +40,12 @@ class setUuids extends Command
      */
     public function handle()
     {
-        $movielists = MovieList::where('uuid', null)->get();
-        foreach ($movielists as $list) {
-            $uuid = Str::uuid();
-            $list->uuid = $uuid;
-            $list->slug = $uuid;
-            $list->save();
+        try {
+            DB::table($this->argument('table'))
+                ->where('uuid', null)
+                ->update(['uuid' => Str::uuid()]);
+        } catch (Exception $e) {
+            echo ("Error! " . $e->getMessage());
         }
 
         echo ('Done!');
