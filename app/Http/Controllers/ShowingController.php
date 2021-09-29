@@ -41,7 +41,6 @@ class ShowingController extends Controller
                 $user = User::where('uuid', $uuid)->firstOrFail();
 
                 $showings = Showing::where('owner', $user->id)
-                    ->where('show_time', '>=', Carbon::today("America/Denver"))
                     ->orderBy('show_time')
                     ->get();
 
@@ -49,7 +48,11 @@ class ShowingController extends Controller
                     throw new ModelNotFoundException;
                 }
 
-                return response()->json($showings);
+                foreach ($showings as $showing) {
+                    $showing->movie;
+                }
+
+                return response()->json(['showings' => $showings]);
             } catch (ModelNotFoundException $e) {
                 return response()
                     ->json(["data" => "Could not find showing."])

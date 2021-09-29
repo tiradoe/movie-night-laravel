@@ -18,32 +18,32 @@
     </div>
 
     <div
-      class="m-5 flex text-left flex-col p-5 mx-10 bg-gray-300 rounded shadow-lg"
+      class="flex flex-col p-5 m-5 mx-10 text-left bg-gray-300 rounded shadow-lg"
     >
       <span class="text-xl font-extrabold">Reset Password </span>
 
       <form @submit.prevent="resetPassword">
-        <div class="py-5 flex flex-col">
+        <div class="flex flex-col py-5">
           <span class="font-semibold">Current Password</span>
           <input
             class="p-2 sm:w-96"
             type="password"
             v-model="current_password"
           />
-          <span v-show="current_password_error" class="text-red-700 mt-1">
+          <span v-show="current_password_error" class="mt-1 text-red-700">
             {{ this.current_password_error }}</span
           >
         </div>
 
-        <div class="py-5 flex flex-col">
+        <div class="flex flex-col py-5">
           <span class="font-semibold">New Password</span>
           <input class="p-2 sm:w-96" type="password" v-model="password" />
-          <span v-show="new_password_error" class="text-red-700 mt-1">
+          <span v-show="new_password_error" class="mt-1 text-red-700">
             {{ new_password_error }}</span
           >
         </div>
 
-        <div class="py-5 flex flex-col">
+        <div class="flex flex-col py-5">
           <span class="font-semibold">Confirm New Password</span>
           <input
             class="p-2 sm:w-96"
@@ -51,7 +51,7 @@
             v-model="password_confirmation"
           />
         </div>
-        <button class="p-2 rounded bg-button text-white">Submit</button>
+        <button class="p-2 text-white rounded bg-button">Submit</button>
       </form>
     </div>
   </div>
@@ -113,6 +113,7 @@ export default defineComponent({
           id: response.data.id,
           name: response.data.name,
           email: response.data.email,
+          uuid: response.data.uuid
         };
 
         this.user = userData;

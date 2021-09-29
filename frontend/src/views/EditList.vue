@@ -46,7 +46,7 @@
 
     <div class="flex">
       <span class="mr-2">URL:</span>
-      <span>{{ app_host }}/p/{{ currentList.slug }}</span>
+      <span>{{ appHost }}/list/{{ currentList.slug }}</span>
     </div>
   </div>
 </template>
@@ -76,7 +76,7 @@ export default defineComponent({
     currentList() {
       return store.state.currentList;
     },
-    app_host() {
+    appHost() {
       return window.location.origin;
     },
     listName() {

@@ -63,11 +63,21 @@ const routes: Array<RouteRecordRaw> = [
       authCheck(next);
     },
   },
+
+  // Public Routes
   {
-    path: "/p/:slug",
+    path: "/list/:slug",
     name: "ListView",
     component: () =>
       import(/* webpackChunkName: "newlist" */ "@/views/public/ListView.vue"),
+  },
+  {
+    path: "/schedule/:slug",
+    name: "ScheduleView",
+    component: () =>
+      import(
+        /* webpackChunkName: "newlist" */ "@/views/public/ScheduleView.vue"
+      ),
   },
 ];
 
