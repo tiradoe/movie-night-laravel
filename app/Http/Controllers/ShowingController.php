@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use App\Models\Showing;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -32,8 +33,34 @@ class ShowingController extends Controller
         ]);
     }
 
-    public function getShowings(Request $request)
+    public function getShowings(Request $request, String $uuid = "")
     {
+        // Public showings
+        if (!$request->user()) {
+            try {
+                $user = User::where('uuid', $uuid)->firstOrFail();
+
+                $showings = Showing::where('owner', $user->id)
+                    ->orderBy('show_time')
+                    ->get();
+
+                if (count($showings) === 0) {
+                    throw new ModelNotFoundException;
+                }
+
+                foreach ($showings as $showing) {
+                    $showing->movie;
+                }
+
+                return response()->json(['showings' => $showings]);
+            } catch (ModelNotFoundException $e) {
+                return response()
+                    ->json(["data" => "Could not find showing."])
+                    ->setStatusCode(404);
+            }
+        }
+
+        // Next showing
         if ($request->input('next') == 1) {
             try {
                 $showing = Showing::where("owner", $request->user()->id)
@@ -51,6 +78,7 @@ class ShowingController extends Controller
                 return response()->json(["showing" => [], "movie" => []])->setStatusCode(404);
             }
         }
+
 
         $showings = Showing::where('owner', $request->user()->id)
             ->orderBy('show_time')

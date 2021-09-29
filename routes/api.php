@@ -42,3 +42,4 @@ Route::middleware(["auth:sanctum"])->group(function () {
 });
 
 Route::get("/lists/{id}", [MovieListController::class, "getMovieList"]);
+Route::get("/showings/{uuid}", [ShowingController::class, "getShowings"]);
