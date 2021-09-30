@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class setUuids extends Command
 {
@@ -14,7 +14,7 @@ class setUuids extends Command
      *
      * @var string
      */
-    protected $signature = 'set:uuids {table}';
+    protected $signature = 'set:uuids';
 
     /**
      * The console command description.
@@ -41,9 +41,12 @@ class setUuids extends Command
     public function handle()
     {
         try {
-            DB::table($this->argument('table'))
-                ->where('uuid', null)
-                ->update(['uuid' => Str::uuid()]);
+            $users = User::where('uuid', null)->get();
+
+            foreach ($users as $user) {
+                $user->uuid = Str::uuid();
+                $user->save();
+            }
         } catch (Exception $e) {
             echo ("Error! " . $e->getMessage());
         }
