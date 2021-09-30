@@ -41,5 +41,6 @@ Route::middleware(["auth:sanctum"])->group(function () {
     Route::delete("/showings/{id}", [ShowingController::class, "deleteShowing"]);
 });
 
+// Public Routes
 Route::get("/lists/{id}", [MovieListController::class, "getMovieList"]);
 Route::get("/showings/{uuid}", [ShowingController::class, "getShowings"]);
