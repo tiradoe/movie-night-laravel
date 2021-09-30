@@ -51,7 +51,7 @@
 
         <!-- PREVIOUS SHOWINGS -->
         <details class="flex pt-10 text-left sm:">
-          <summary class="flex flex-row cursor-pointer list-none">
+          <summary class="flex flex-row list-none cursor-pointer">
             <h2
               v-if="previousShowings.length > 0"
               class="flex flex-row m-5 font-semibold underline sm:m-0 sm:mb-5"
@@ -91,7 +91,7 @@
 
         <div class="flex">
           <span class="mr-2">URL:</span>
-          <span>{{ appHost }}/schedule/p/{{ user.uuid }}</span>
+          <span>{{ appHost }}/schedule/{{ user.uuid }}</span>
         </div>
       </div>
     </div>
