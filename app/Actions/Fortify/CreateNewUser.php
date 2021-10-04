@@ -3,6 +3,8 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Models\Schedule;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -33,11 +35,24 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'username' => $input['username'],
             'uuid' => Str::uuid(),
         ]);
+
+        $uuid = Str::uuid();
+
+        Schedule::create([
+            "name" => "Default",
+            "isPublic" => false,
+            "owner" => $user->id,
+            "slug" => $uuid,
+            "uuid" => $uuid
+        ]);
+
+        return $user;
     }
 }

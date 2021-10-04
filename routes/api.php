@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieListController;
 use App\Http\Controllers\ShowingController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +23,7 @@ Route::middleware(["auth:sanctum"])->group(function () {
     Route::get("/user", function (Request $request) {
         return $request->user();
     });
+    Route::put("/user", [UserController::class, "updateUser"]);
 
     Route::get("/movies", [MovieController::class, "getMovies"]);
     Route::get("/movies/search", [MovieController::class, "search"]);
@@ -37,10 +40,15 @@ Route::middleware(["auth:sanctum"])->group(function () {
     Route::delete("/lists/{id}", [MovieListController::class, "deleteMovieList"]);
 
     Route::get("/showings", [ShowingController::class, "getShowings"]);
+    Route::get("/showings/{id}", [ShowingController::class, "getShowing"]);
     Route::post("/showings", [ShowingController::class, "createShowing"]);
     Route::delete("/showings/{id}", [ShowingController::class, "deleteShowing"]);
+
+    Route::post("/schedules", [ScheduleController::class, "createSchedule"]);
+    Route::get("/schedules", [ScheduleController::class, "getSchedule"]);
+    Route::put("/schedules", [ScheduleController::class, "updateSchedule"]);
 });
 
 // Public Routes
 Route::get("/lists/{id}", [MovieListController::class, "getMovieList"]);
-Route::get("/showings/{uuid}", [ShowingController::class, "getShowings"]);
+Route::get("/schedules/user/{userIdentifier}/slug/{slug}", [ScheduleController::class, "getSchedule"]);
