@@ -1,5 +1,7 @@
 <template>
-  <h1 class="p-5 text-3xl font-bold text-left sm:text-5xl sm:p-10">Schedule</h1>
+  <h1 class="p-5 text-3xl font-bold text-left sm:text-5xl sm:p-10">
+    {{ title }}
+  </h1>
   <hr class="mb-10 shadow" />
 
   <loader v-if="loading" item="schedule" />
@@ -80,6 +82,14 @@ let schedule: Schedule;
 export default defineComponent({
   name: "ScheduleView",
   components: { MovieQuote, Loader },
+  computed: {
+    title(): string {
+      if (this.schedule?.name) {
+        return this.schedule.name;
+      }
+      return "Schedule";
+    },
+  },
   methods: {
     prettyDate(showTime: Date): string {
       const formatted = new Date(showTime).toLocaleString("en-US", {
@@ -119,7 +129,7 @@ export default defineComponent({
             today.setHours(0, 0, 0, 0);
 
             if (show_time.getTime() < today.getTime()) {
-              this.schedule = response.data;
+              this.schedule = response.data.schedule;
               this.previousShowings.push(showing);
             } else {
               this.showings.push(showing);
