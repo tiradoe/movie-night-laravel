@@ -46,7 +46,7 @@
 
     <div class="flex">
       <span class="mr-2">URL:</span>
-      <span>{{ appHost }}/list/{{ currentList.slug }}</span>
+      <span>{{ appHost }}/u/{{ identifier }}/l/{{ currentList.slug }}</span>
     </div>
   </div>
 </template>
@@ -57,7 +57,8 @@ import SearchForm from "@/components/SearchForm.vue";
 import MovieList from "@/components/MovieList.vue";
 import Loader from "@/components/Loader.vue";
 import store from "@/store/index";
-import { AxiosError } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
+import { User } from "@/types/index";
 
 export default defineComponent({
   name: "EditList",
@@ -70,6 +71,7 @@ export default defineComponent({
     return {
       loading: true,
       selectedTab: "list",
+      user: { id: 0, name: "", email: "", uuid: "", username: "" },
     };
   },
   computed: {
@@ -79,6 +81,13 @@ export default defineComponent({
     appHost() {
       return window.location.origin;
     },
+    identifier(): string {
+      if (this.user.username) {
+        return this.user.username;
+      } else {
+        return this.user.uuid;
+      }
+    },
     listName() {
       if (!this.loading) {
         return store.state.currentList.name;
@@ -87,6 +96,28 @@ export default defineComponent({
     },
   },
   methods: {
+    getUser(): void {
+      this.$http
+        .get("/api/user")
+        .then((response: AxiosResponse) => {
+          let userData: User = {
+            id: response.data.id,
+            name: response.data.name,
+            email: response.data.email,
+            username: response.data.username,
+            uuid: response.data.uuid,
+          };
+
+          this.user = userData;
+          this.loading = false;
+        })
+        .catch((error: AxiosError) => {
+          if (error.response?.status === 401) {
+            store.commit("updateLogin", false);
+            this.$router.push("/login");
+          }
+        });
+    },
     updateLoading(): void {
       this.loading = false;
     },
@@ -105,6 +136,9 @@ export default defineComponent({
           }
         });
     },
+  },
+  mounted() {
+    this.getUser();
   },
 });
 </script>

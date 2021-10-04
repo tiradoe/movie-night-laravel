@@ -122,8 +122,7 @@ import { defineComponent } from "vue";
 import MovieQuote from "@/components/MovieQuote.vue";
 import Loader from "@/components/Loader.vue";
 import store from "@/store/index";
-import { Showing } from "@/types/index";
-import { Schedule, User } from "@/types/index";
+import { Showing, Schedule, User } from "@/types/index";
 
 let previousShowings: Showing[] = [];
 let showings: Showing[] = [];
@@ -137,7 +136,7 @@ export default defineComponent({
       return window.location.origin;
     },
     identifier(): string {
-      if (typeof this.user.username !== "undefined") {
+      if (this.user.username) {
         return this.user.username;
       } else {
         return this.user.uuid;

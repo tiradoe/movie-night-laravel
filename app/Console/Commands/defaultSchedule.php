@@ -55,7 +55,8 @@ class defaultSchedule extends Command
                     "name" => "Default",
                     "isPublic" => false,
                     "uuid" => $uuid,
-                    "slug" => $uuid
+                    "slug" => $uuid,
+                    "owner" => $user->id
                 ]);
             }
         }
