@@ -15,12 +15,12 @@
       </h2>
       <ul
         v-if="showings.length"
-        class="flex flex-col bg-gray-300 rounded sm:px-5"
+        class="flex flex-col bg-gray-300 rounded m-5 sm:m-0 sm:px-5"
       >
         <li
           :key="showing.id"
           v-for="showing in showings"
-          class="flex m-5 sm:m-10"
+          class="flex p-5 sm:m-10"
         >
           <span class="w-1/2 text-left">{{ showing.movie.title }}</span>
           <span class="w-1/2 text-right">{{
@@ -42,7 +42,7 @@
         </summary>
         <ul
           v-if="previousShowings.length > 0"
-          class="flex flex-col bg-gray-300 rounded sm:px-5"
+          class="flex flex-col bg-gray-300 rounded m-5 sm:m-0 sm:px-5"
         >
           <li
             :key="showing.id"
