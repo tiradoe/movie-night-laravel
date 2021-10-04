@@ -134,7 +134,7 @@ export default defineComponent({
   },
   props: {
     listId: {
-      type: Number,
+      type: String,
       required: true,
     },
   },

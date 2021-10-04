@@ -31,7 +31,7 @@
 
       <!-- PREVIOUS SHOWINGS -->
       <details class="flex pt-10 text-left sm:">
-        <summary class="flex flex-row cursor-pointer list-none">
+        <summary class="flex flex-row list-none cursor-pointer">
           <h2
             v-if="previousShowings.length > 0"
             class="flex flex-row m-5 font-semibold underline sm:m-0 sm:mb-5"
@@ -70,12 +70,12 @@
 import { defineComponent } from "@vue/runtime-core";
 import Loader from "@/components/Loader.vue";
 import MovieQuote from "@/components/MovieQuote.vue";
-import store from "@/store/index";
-import { AxiosError, AxiosResponse } from "axios";
-import { Showing } from "@/types/index";
+import { AxiosResponse } from "axios";
+import { Schedule, Showing } from "@/types/index";
 
 let previousShowings: Showing[] = [];
 let showings: Showing[] = [];
+let schedule: Schedule;
 
 export default defineComponent({
   name: "ScheduleView",
@@ -100,20 +100,26 @@ export default defineComponent({
       }
     },
     getShowings(): void {
-      const uuid = window.location.pathname.split("/")[2];
+      const usernameRegex = new RegExp("(?<=/u/).*(?=/s)");
+      const uuidRegex = new RegExp("(?<=/s/).+");
+      const pathname = window.location.pathname;
+
+      const username = pathname.match(usernameRegex);
+      const uuid = pathname.match(uuidRegex);
 
       this.$http
-        .get(`/api/showings/${uuid}`)
+        .get(`/api/schedules/user/${username}/slug/${uuid}`)
         .then((response: AxiosResponse) => {
           this.previousShowings = [];
           this.showings = [];
 
-          response.data.showings.forEach((showing: Showing) => {
+          response.data.schedule.showings.forEach((showing: Showing) => {
             const show_time = new Date(showing.show_time.toString());
             let today = new Date();
             today.setHours(0, 0, 0, 0);
 
             if (show_time.getTime() < today.getTime()) {
+              this.schedule = response.data;
               this.previousShowings.push(showing);
             } else {
               this.showings.push(showing);
@@ -126,6 +132,7 @@ export default defineComponent({
   },
   data: function () {
     return {
+      schedule: schedule,
       showings: showings,
       previousShowings: previousShowings,
       loading: true,

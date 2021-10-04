@@ -24,4 +24,9 @@ class Showing extends Model
     {
         return $this->belongsTo(Movie::class);
     }
+
+    public function schedule()
+    {
+        return $this->belongsTo(Schedule::class);
+    }
 }

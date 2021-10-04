@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use App\Models\Schedule;
 use App\Models\Showing;
 use App\Models\User;
 use Carbon\Carbon;
@@ -22,23 +23,33 @@ class ShowingController extends Controller
             ])->setStatusCode(404);
         }
 
+        $schedule = Schedule::where('owner', $request->user()->id)
+            ->firstOrFail();
+
+
         $showing = Showing::create([
             "movie_id" => $movie->id,
             "show_time" => Carbon::parse($request->input("show_time"))->setTimezone('UTC'),
             "owner" => $request->user()->id,
         ]);
 
+        $showing->schedule_id = $schedule->id;
+        $showing->save();
+
+
         return response()->json([
             "showing" => $showing
         ]);
     }
 
-    public function getShowings(Request $request, String $uuid = "")
+    public function getShowings(Request $request, String $uuid = "", $username = "")
     {
         // Public showings
         if (!$request->user()) {
             try {
-                $user = User::where('uuid', $uuid)->firstOrFail();
+                $user = User::where('uuid', $uuid)
+                    ->where('username', $username)
+                    ->firstOrFail();
 
                 $showings = Showing::where('owner', $user->id)
                     ->orderBy('show_time')
