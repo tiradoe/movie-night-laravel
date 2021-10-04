@@ -1,11 +1,10 @@
 <template>
-  <h1 class="p-5 text-3xl font-bold text-left sm:text-5xl sm:p-10">
-    {{ title }}
-  </h1>
-  <hr class="mb-10 shadow" />
-
   <loader v-if="loading" item="schedule" />
   <div v-else>
+    <h1 class="p-5 text-3xl font-bold text-left sm:text-5xl sm:p-10">
+      {{ title }}
+    </h1>
+    <hr class="mb-10 shadow" />
     <div
       v-if="showings.length > 0 || previousShowings.length > 0"
       class="sm:m-10"
