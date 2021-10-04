@@ -79,6 +79,28 @@ export default defineComponent({
     };
   },
   methods: {
+    getUser(): void {
+      this.$http
+        .get("/api/user")
+        .then((response: AxiosResponse) => {
+          let userData: User = {
+            id: response.data.id,
+            name: response.data.name,
+            email: response.data.email,
+            uuid: response.data.uuid,
+            username: response.data.username,
+          };
+
+          this.user = userData;
+          this.loading = false;
+        })
+        .catch((error: AxiosError) => {
+          if (error.response?.status === 401) {
+            store.commit("updateLogin", false);
+            this.$router.push("/login");
+          }
+        });
+    },
     resetPassword(): void {
       this.$http
         .put("/user/password", {
@@ -106,25 +128,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.$http
-      .get("/api/user")
-      .then((response: AxiosResponse) => {
-        let userData: User = {
-          id: response.data.id,
-          name: response.data.name,
-          email: response.data.email,
-          uuid: response.data.uuid
-        };
-
-        this.user = userData;
-        this.loading = false;
-      })
-      .catch((error: AxiosError) => {
-        if (error.response?.status === 401) {
-          store.commit("updateLogin", false);
-          this.$router.push("/login");
-        }
-      });
+    this.getUser();
   },
 });
 </script>

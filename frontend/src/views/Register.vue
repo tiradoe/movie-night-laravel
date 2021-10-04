@@ -1,48 +1,58 @@
 <template>
   <div class="p-4 bg-gray-50">
-    <h1 class="m-5 font-bold text-center text-3xl">Create Account</h1>
+    <h1 class="m-5 text-3xl font-bold text-center">Create Account</h1>
 
     <form class="flex flex-col items-center flex-grow w-full">
-      <p v-if="errorText" class="bg-red-100 inline-block p-3 text-gray-600">
+      <p v-if="errorText" class="inline-block p-3 text-gray-600 bg-red-100">
         {{ errorText }}
       </p>
       <div class="block m-5">
-        <label class="block text-left pb-2" for="name">Name</label>
+        <label class="block pb-2 text-left" for="name">Name</label>
         <input
           v-model="formData.name"
-          class="block bg-gray-200 p-2 w-72 sm:w-96"
+          class="block p-2 bg-gray-200 w-72 sm:w-96"
           id="name"
           type="text"
         />
       </div>
 
       <div class="block m-5">
-        <label class="block text-left pb-2" for="email">Email</label>
+        <label class="block pb-2 text-left" for="username">Username</label>
+        <input
+          v-model="formData.username"
+          class="block p-2 bg-gray-200 w-72 sm:w-96"
+          id="username"
+          type="text"
+        />
+      </div>
+
+      <div class="block m-5">
+        <label class="block pb-2 text-left" for="email">Email</label>
         <input
           v-model="formData.email"
-          class="block bg-gray-200 p-2 w-72 sm:w-96"
+          class="block p-2 bg-gray-200 w-72 sm:w-96"
           id="email"
           type="email"
         />
       </div>
 
       <div class="block m-5">
-        <label class="block text-left pb-2" for="password">Password</label>
+        <label class="block pb-2 text-left" for="password">Password</label>
         <input
           v-model="formData.password"
-          class="block bg-gray-200 p-2 w-72 sm:w-96"
+          class="block p-2 bg-gray-200 w-72 sm:w-96"
           id="password"
           type="password"
         />
       </div>
 
       <div class="block m-5">
-        <label class="block text-left pb-2" for="confirm-password"
+        <label class="block pb-2 text-left" for="confirm-password"
           >Confirm Password</label
         >
         <input
           v-model="formData.password_confirmation"
-          class="block bg-gray-200 p-2 w-72 sm:w-96"
+          class="block p-2 bg-gray-200 w-72 sm:w-96"
           id="confirm-password"
           type="password"
         />
@@ -50,7 +60,7 @@
 
       <button
         @click.prevent="authenticate"
-        class="block p-5 mx-auto bg-button rounded text-white"
+        class="block p-5 mx-auto text-white rounded bg-button"
         type="submit"
         value="submit"
       >
@@ -81,6 +91,7 @@ export default defineComponent({
         email: "",
         password: "",
         password_confirmation: "",
+        username: "",
       },
     };
   },
@@ -105,6 +116,8 @@ export default defineComponent({
                 this.errorText = error.response?.data.errors.email[0];
             } else if ("password" in error.response?.data.errors) {
               this.errorText = error.response?.data.errors.password[0];
+            } else if ("username" in error.response?.data.errors) {
+              this.errorText = error.response?.data.errors.username[0];
             } else {
               this.errorText = error.response?.data.message;
             }

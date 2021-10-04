@@ -66,13 +66,13 @@ const routes: Array<RouteRecordRaw> = [
 
   // Public Routes
   {
-    path: "/list/:slug",
+    path: "/u/:username/l/:slug",
     name: "ListView",
     component: () =>
       import(/* webpackChunkName: "newlist" */ "@/views/public/ListView.vue"),
   },
   {
-    path: "/schedule/:slug",
+    path: "/u/:username/s/:slug",
     name: "ScheduleView",
     component: () =>
       import(

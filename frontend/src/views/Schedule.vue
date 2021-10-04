@@ -9,7 +9,7 @@
       <span
         class="mr-5 underline cursor-pointer hover:bg-blue-400"
         @click="updateTab('schedule')"
-        >List</span
+        >Schedule</span
       >
       <span
         class="underline cursor-pointer hover:bg-blue-400"
@@ -40,11 +40,12 @@
             <span class="w-1/2 text-right sm:text-left">{{
               prettyDate(showing.show_time)
             }}</span>
-            <font-awesome-icon
-              @click="deleteShowing(showing.id)"
-              class="ml-5 cursor-pointer hover:text-red-700"
-              icon="trash-alt"
-            />
+            <div @click="deleteShowing(showing.id)">
+              <font-awesome-icon
+                class="ml-5 cursor-pointer hover:text-red-700"
+                icon="trash-alt"
+              />
+            </div>
           </li>
         </ul>
         <span v-else class="block text-left">Nothing scheduled</span>
@@ -87,11 +88,20 @@
         class="flex flex-col items-center mt-5 bg-gray-300"
         v-show="!loading && selectedTab === 'settings'"
       >
-        <div class="flex"></div>
-
+        <div class="flex">
+          <label for="is-public" class="mr-2">Public:</label>
+          <input
+            v-if="schedule"
+            v-show="schedule"
+            @change="updateAccess"
+            type="checkbox"
+            v-model="schedule.isPublic"
+            id="is-public"
+          />
+        </div>
         <div class="flex">
           <span class="mr-2">URL:</span>
-          <span>{{ appHost }}/schedule/{{ user.uuid }}</span>
+          <span>{{ appHost }}/u/{{ identifier }}/s/{{ schedule.slug }}</span>
         </div>
       </div>
     </div>
@@ -113,10 +123,11 @@ import MovieQuote from "@/components/MovieQuote.vue";
 import Loader from "@/components/Loader.vue";
 import store from "@/store/index";
 import { Showing } from "@/types/index";
-import { User } from "@/types/index";
+import { Schedule, User } from "@/types/index";
 
 let previousShowings: Showing[] = [];
 let showings: Showing[] = [];
+let schedule: Schedule;
 
 export default defineComponent({
   name: "Schedule",
@@ -125,14 +136,22 @@ export default defineComponent({
     appHost(): string {
       return window.location.origin;
     },
+    identifier(): string {
+      if (typeof this.user.username !== "undefined") {
+        return this.user.username;
+      } else {
+        return this.user.uuid;
+      }
+    },
   },
   data: function () {
     return {
+      schedule: schedule,
       showings: showings,
       previousShowings: previousShowings,
       loading: true,
       selectedTab: "schedule",
-      user: { id: 0, name: "", email: "", uuid: "" },
+      user: { id: 0, name: "", email: "", uuid: "", username: "" },
     };
   },
   methods: {
@@ -146,17 +165,15 @@ export default defineComponent({
       return formatted;
     },
     deleteShowing(showingId: number): void {
-      const confirmDelete = confirm(`Delete showing?`);
-
-      if (confirmDelete === true) {
+      if (confirm("Delete showing?") === true) {
         this.$http
           .delete(`/api/showings/${showingId}`)
-          .then(this.getShowings());
+          .then(this.getSchedule());
       }
     },
-    getShowings(): void {
+    getSchedule(): void {
       this.$http
-        .get("/api/showings")
+        .get(`/api/schedules`)
         .then((response: AxiosResponse) => {
           this.previousShowings = [];
           this.showings = [];
@@ -169,6 +186,7 @@ export default defineComponent({
             if (show_time.getTime() < today.getTime()) {
               this.previousShowings.push(showing);
             } else {
+              this.schedule = response.data;
               this.showings.push(showing);
             }
           });
@@ -190,6 +208,7 @@ export default defineComponent({
             id: response.data.id,
             name: response.data.name,
             email: response.data.email,
+            username: response.data.username,
             uuid: response.data.uuid,
           };
 
@@ -203,12 +222,22 @@ export default defineComponent({
           }
         });
     },
+    updateAccess(): void {
+      this.$http
+        .put("/api/schedules", this.schedule)
+        .catch((error: AxiosError) => {
+          if (error.response?.status === 401) {
+            store.commit("updateLogin", false);
+            this.$router.push("/login");
+          }
+        });
+    },
     updateTab(page: string) {
       this.selectedTab = page;
     },
   },
   mounted() {
-    this.getShowings();
+    this.getSchedule();
     this.getUser();
   },
 });

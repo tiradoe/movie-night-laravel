@@ -25,6 +25,16 @@ export interface Review {
   value: string;
 }
 
+export interface Schedule {
+  id: number;
+  isPublic: boolean;
+  name: string;
+  owner: number;
+  showings: Showing[];
+  slug: string;
+  uuid: string;
+}
+
 export interface Showing {
   id: number;
   movie_id: number;
@@ -37,4 +47,5 @@ export interface User {
   email: string;
   name: string;
   uuid: string;
+  username: string;
 }
