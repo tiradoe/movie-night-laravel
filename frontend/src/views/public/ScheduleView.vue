@@ -15,7 +15,7 @@
       </h2>
       <ul
         v-if="showings.length"
-        class="flex flex-col bg-gray-300 rounded m-5 sm:m-0 sm:px-5"
+        class="flex flex-col m-5 bg-gray-300 rounded sm:m-0 sm:px-5"
       >
         <li
           :key="showing.id"
@@ -42,7 +42,7 @@
         </summary>
         <ul
           v-if="previousShowings.length > 0"
-          class="flex flex-col bg-gray-300 rounded m-5 sm:m-0 sm:px-5"
+          class="flex flex-col m-5 bg-gray-300 rounded sm:m-0 sm:px-5"
         >
           <li
             :key="showing.id"
@@ -109,12 +109,10 @@ export default defineComponent({
       }
     },
     getShowings(): void {
-      const usernameRegex = new RegExp("(?<=/u/).*(?=/s)");
-      const uuidRegex = new RegExp("(?<=/s/).+");
       const pathname = window.location.pathname;
 
-      const username = pathname.match(usernameRegex);
-      const uuid = pathname.match(uuidRegex);
+      const username = pathname.split("/")[2];
+      const uuid = pathname.split("/")[4];
 
       this.$http
         .get(`/api/schedules/user/${username}/slug/${uuid}`)
