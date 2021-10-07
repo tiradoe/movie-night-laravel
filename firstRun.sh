@@ -28,6 +28,8 @@ else
     echo "Ok, just don't forget to add it to your .env file!"
 fi
 
+touch frontend/.env
+
 echo "===== Installing PHP dependencies ====="
 composer install
 
@@ -35,6 +37,7 @@ echo "===== Building application ====="
 vendor/bin/sail up --build -d
 vendor/bin/sail run web npm install
 vendor/bin/sail php artisan migrate
+vendor/bin/sail php artisan key:generate 
 
 echo "===== Generating API documentation ====="
 vendor/bin/sail php artisan l5-swagger:generate

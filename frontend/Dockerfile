@@ -1,5 +1,12 @@
 FROM node:lts-alpine
 
+# Install python/pip
+ENV PYTHONUNBUFFERED=1
+RUN apk add --update --no-cache python2 make g++ && ln -sf python2 /usr/bin/python
+
+RUN python -m ensurepip
+RUN pip install --no-cache --upgrade pip setuptools
+
 # make the 'app' folder the current working directory
 WORKDIR /app
 
