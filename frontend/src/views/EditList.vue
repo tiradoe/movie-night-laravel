@@ -23,7 +23,7 @@
 
   <div
     v-show="!loading && selectedTab === 'list'"
-    class="mx-5 text-center sm:mx-10 xl:mx-auto max-w-7xl"
+    class="mx-5 sm:mx-10 xl:mx-auto max-w-7xl"
   >
     <search-form v-if="currentList.uuid" :listId="currentList.uuid" />
     <movie-list @loaded="updateLoading" />
