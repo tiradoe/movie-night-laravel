@@ -3,10 +3,11 @@ import { List, Movie } from "@/types/index";
 
 const movieList: List = {
   id: 0,
+  isPublic: false,
   name: "",
   movieCount: 0,
-  isPublic: false,
   movies: [],
+  schedule_id: 0,
 };
 
 export default createStore({

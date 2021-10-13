@@ -57,10 +57,6 @@ export default defineComponent({
       type: Number,
       required: true,
     },
-    scheduleId: {
-      type: Number,
-      required: true,
-    },
   },
 });
 </script>

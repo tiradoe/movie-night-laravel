@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ShowingCollection;
+use App\Http\Resources\ShowingResource;
 use App\Models\Movie;
 use App\Models\Schedule;
 use App\Models\Showing;
@@ -37,9 +39,7 @@ class ShowingController extends Controller
         $showing->save();
 
 
-        return response()->json([
-            "showing" => $showing
-        ]);
+        return new ShowingResource($showing);
     }
 
     public function getShowings(Request $request, String $uuid = "", $username = "")
@@ -63,7 +63,7 @@ class ShowingController extends Controller
                     $showing->movie;
                 }
 
-                return response()->json(['showings' => $showings]);
+                return new ShowingCollection($showings);
             } catch (ModelNotFoundException $e) {
                 return response()
                     ->json(["data" => "Could not find showing."])
@@ -99,9 +99,7 @@ class ShowingController extends Controller
             $showing->movie;
         }
 
-        return response()->json([
-            "showings" => $showings
-        ]);
+        return new ShowingCollection($showings);
     }
 
     public function deleteShowing(Request $request, int $showing_id)
@@ -113,7 +111,7 @@ class ShowingController extends Controller
 
             $showing->delete();
 
-            return response()->json($showing);
+            return new ShowingResource($showing);
         } catch (ModelNotFoundException $e) {
             return response()
                 ->json(["data" => "Could not find movie to delete"])

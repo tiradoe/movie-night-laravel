@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MovieListCollection;
+use App\Http\Resources\MovieListResource;
 use App\Models\Movie;
 use App\Models\MovieList;
 use Exception;
@@ -57,8 +59,8 @@ class MovieListController extends Controller
     public function addToList(Request $request, $uuid)
     {
         try {
-            $movieList = MovieList::where('uuid', $uuid)->firstOrFail();
-            if ($movieList->owner != $request->user()->id) {
+            $movie_list = MovieList::where('uuid', $uuid)->firstOrFail();
+            if ($movie_list->owner != $request->user()->id) {
                 throw new ModelNotFoundException;
             }
         } catch (ModelNotFoundException $e) {
@@ -90,20 +92,20 @@ class MovieListController extends Controller
         }
 
         //add this movie to list if it's not already on it
-        if (empty($movieList->movies()->find($movie->id))) {
-            $movieList->movies()->attach($movie->id);
+        if (empty($movie_list->movies()->find($movie->id))) {
+            $movie_list->movies()->attach($movie->id);
 
-            $movies = $movieList->movies;
+            $movies = $movie_list->movies;
             foreach ($movies as $movie) {
                 $movie->showings;
             }
-            return response()->json([
-                'list' => $movieList,
-            ]);
+            return (new MovieListResource($movie_list))
+                ->response()
+                ->setStatusCode(200);
         } else {
-            return response()->json([
-                'list' => $movieList,
-            ])->setStatusCode(304);
+            return (new MovieListResource($movie_list))
+                ->response()
+                ->setStatusCode(304);
         }
     }
 
@@ -120,31 +122,31 @@ class MovieListController extends Controller
 
         $movieList->save();
 
-        return response()->json([
-            'lists' => MovieList::withCount('movies')
+        return new MovieListCollection(
+            MovieList::withCount('movies')
                 ->where('owner', $request->user()->id)
                 ->get()
-        ]);
+        );
     }
 
     public function updateMovieList(Request $request)
     {
         try {
 
-            $movieList = MovieList::where('uuid', $request->input('uuid'))->firstOrFail();
+            $movie_list = MovieList::where('uuid', $request->input('uuid'))->firstOrFail();
             $name = $request->input('name');
 
-            $movieList->name = $name;
-            $movieList->isPublic = $request->input('isPublic');
-            $movieList->slug = $request->input('slug') ?? strtolower(str_replace(" ", "-", $name));
-            $movieList->save();
+            $movie_list->name = $name;
+            $movie_list->isPublic = $request->input('isPublic');
+            $movie_list->slug = $request->input('slug') ?? strtolower(str_replace(" ", "-", $name));
+            $movie_list->save();
         } catch (Exception $e) {
             return response()
                 ->json(["data" => "Could not update list."])
                 ->setStatusCode(500);
         }
 
-        return $movieList;
+        return new MovieListResource($movie_list);
     }
 
     public function getMovieLists(Request $request)
@@ -153,7 +155,7 @@ class MovieListController extends Controller
             ->where("owner", $request->user()->id)
             ->get();
 
-        return response()->json($movieLists);
+        return new MovieListCollection($movieLists);
     }
 
     public function getMovieList(Request $request, $uuid)
@@ -161,16 +163,13 @@ class MovieListController extends Controller
         //If not authenticated, check if the list is public
         if (!$request->user()) {
             try {
-                $movieList = MovieList::where('uuid', $uuid)
+                $movie_list = MovieList::where('uuid', $uuid)
                     ->where('isPublic', true)
                     ->firstOrFail();
 
-                $movieList->movies;
+                $movie_list->movies;
 
-                return response()->json([
-                    'status' => 200,
-                    'list' => $movieList,
-                ]);
+                return new MovieListResource($movie_list);
             } catch (Exception $e) {
                 return response()
                     ->json(["data" => "There was an error retrieving the list."])
@@ -179,13 +178,13 @@ class MovieListController extends Controller
         }
 
         try {
-            $list = MovieList::where('uuid', $uuid)
+            $movie_list = MovieList::where('uuid', $uuid)
                 ->where('owner', $request->user()->id)
                 ->firstOrFail();
 
-            $list->movies;
+            $movie_list->movies;
 
-            foreach ($list->movies as $movie) {
+            foreach ($movie_list->movies as $movie) {
                 $movie->showings;
             }
         } catch (ModelNotFoundException $e) {
@@ -194,28 +193,25 @@ class MovieListController extends Controller
                 ->setStatusCode(404);
         }
 
-        if (empty($list)) {
+        if (empty($movie_list)) {
             return response()->json([
                 'list' => null,
             ])->setStatusCode(404);
         }
 
-        return response()->json([
-            'status' => 200,
-            'list' => $list,
-        ]);
+        return new MovieListResource($movie_list);
     }
 
     public function deleteMovieList(Request $request, $uuid)
     {
         try {
-            $movieList = MovieList::where("uuid", $uuid)
+            $movie_list = MovieList::where("uuid", $uuid)
                 ->where("owner", $request->user()->id)
                 ->firstOrFail();
-            $movieList->movies()->detach();
-            $movieList->delete();
+            $movie_list->movies()->detach();
+            $movie_list->delete();
 
-            return response()->json($movieList);
+            return new MovieListResource($movie_list);
         } catch (ModelNotFoundException $e) {
             return response()
                 ->json(["data" => "Could not find movie to delete"])
@@ -226,19 +222,16 @@ class MovieListController extends Controller
     public function removeMovie(Request $request, $uuid, $movie_id)
     {
         try {
-            $movieList = MovieList::where("uuid", $uuid)
+            $movie_list = MovieList::where("uuid", $uuid)
                 ->where("owner", $request->user()->id)
                 ->firstOrFail();
 
-            $deleteMovie = Movie::findOrFail($movie_id);
-            $deleteMovie->movieLists()->detach($movieList->id);
+            $movie = Movie::findOrFail($movie_id);
+            $movie->movieLists()->detach($movie_list->id);
 
-            $movies = $movieList->movies;
-            foreach ($movies as $movie) {
-                $movie->showings;
-            }
+            $movie_list->movies;
 
-            return response()->json(["list" => $movieList, "movies" => $movies]);
+            return new MovieListResource($movie_list);
         } catch (ModelNotFoundException $e) {
             return response()
                 ->json(['data' => 'Could not find movie on list.'])

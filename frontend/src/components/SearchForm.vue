@@ -1,17 +1,15 @@
 <template>
-  <fieldset
-    class="flex flex-col items-center p-5 mt-5 mb-5 text-left bg-gray-300 rounded shadow"
-  >
+  <fieldset class="bg-gray-300 my-5 p-5 max-w-xl mx-auto rounded">
     <h2 class="font-semibold underline cursor-pointer" @click="toggleAddMovie">
       Add Movie
     </h2>
-    <div class="sm:w-1/2 grid grid-cols-2" v-show="addMovie">
-      <div class="flex flex-col mb-5 col-span-2 sm:mx-2">
+    <div class="" v-show="addMovie">
+      <div class="flex flex-col my-5">
         <label class="font-semibold text-left" for="search"> Title </label>
         <!-- MOVIE TITLE / IMDB ID-->
         <input
           id="search"
-          class="max-w-xl p-2 rounded shadow border-r-none focus:shadow-outline"
+          class="p-2 rounded shadow border-r-none focus:shadow-outline"
           @keyup.enter="findMovie()"
           type="text"
           v-model="query"
@@ -22,7 +20,7 @@
       </div>
 
       <!-- YEAR -->
-      <div class="flex flex-col mb-5 col-span-2 sm:mx-2">
+      <div class="flex flex-col my-5">
         <label class="font-semibold text-left" for="Year"> Year </label>
         <input
           class="p-2 rounded shadow sm:max-w-xl"
@@ -33,10 +31,10 @@
       </div>
 
       <!-- CONTENT TYPE -->
-      <div class="flex flex-col sm:max-w-xl col-span-2 sm:mx-2">
+      <div class="flex flex-col my-5">
         <label class="font-semibold text-left" for="content-type"> Type </label>
         <select
-          class="p-2 mb-5 bg-white rounded shadow"
+          class="p-2 bg-white rounded shadow"
           id="content-type"
           v-model="contentType"
         >
@@ -48,7 +46,7 @@
     </div>
     <!-- SEARCH BUTTON -->
     <button
-      class="p-2 text-white rounded shadow cursor-pointer sm:max-w-xs sm:mx-2 col-span-3 sm:col-span-2 bg-button border-l-none"
+      class="p-2 text-white rounded shadow cursor-pointer bg-button border-l-none"
       @click="findMovie()"
       aria-label="Search"
       v-show="addMovie"

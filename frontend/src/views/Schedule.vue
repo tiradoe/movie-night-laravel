@@ -73,11 +73,12 @@
               <span class="w-1/2 text-right sm:text-left">{{
                 prettyDate(showing.show_time)
               }}</span>
-              <font-awesome-icon
-                @click="deleteShowing(showing.id)"
-                class="ml-5 cursor-pointer hover:text-red-700"
-                icon="trash-alt"
-              />
+              <div @click="deleteShowing(showing.id)">
+                <font-awesome-icon
+                  class="ml-5 cursor-pointer hover:text-red-700"
+                  icon="trash-alt"
+                />
+              </div>
             </li>
           </ul>
         </details>
@@ -101,7 +102,9 @@
         </div>
         <div class="flex">
           <span class="mr-2">URL:</span>
-          <span>{{ appHost }}/u/{{ identifier }}/s/{{ schedule.slug }}</span>
+          <span v-if="schedule"
+            >{{ appHost }}/u/{{ identifier }}/s/{{ schedule.slug }}</span
+          >
         </div>
       </div>
     </div>
