@@ -148,7 +148,7 @@ export default defineComponent({
       this.$http
         .get("/api/lists")
         .then((response: AxiosResponse) => {
-          this.lists = response.data;
+          this.lists = response.data.lists;
           this.loading = false;
         })
         .catch((error: AxiosError) => {

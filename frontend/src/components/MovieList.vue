@@ -153,7 +153,7 @@ export default defineComponent({
       this.$http
         .delete(`/api/lists/${this.listId}/movie/${movieId}`)
         .then((response: AxiosResponse) => {
-          store.commit("updateList", response.data.list);
+          store.commit("updateList", response.data);
         });
     },
     resetDetails(): void {
@@ -231,7 +231,7 @@ export default defineComponent({
       this.$http
         .get(`/api/lists/${list_id}`)
         .then((response: AxiosResponse) => {
-          store.commit("updateList", response.data.list);
+          store.commit("updateList", response.data);
 
           this.$emit("loaded");
         })

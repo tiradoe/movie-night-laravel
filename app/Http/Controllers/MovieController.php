@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MovieResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\JsonResponse;
@@ -26,11 +27,11 @@ class MovieController extends Controller
      * )
      */
 
-    public function getMovies(): JsonResponse
+    public function getMovies(): MovieResource
     {
         $movies = Movie::all();
 
-        return response()->json(["movies" => $movies]);
+        return new MovieResource($movies);
     }
 
     /**
@@ -60,15 +61,13 @@ class MovieController extends Controller
      *     ),
      * )
      */
-    public function getMovie($id): JsonResponse
+    public function getMovie($id): MovieResource
     {
         try {
             $movie = Movie::findOrFail($id);
             $movie->nextShowing;
 
-            return response()->json([
-                "movie" => $movie,
-            ]);
+            return new MovieResource(($movie));
         } catch (ModelNotFoundException $e) {
             return response()
                 ->json(["data" => "Movie not Found"])
@@ -80,14 +79,14 @@ class MovieController extends Controller
      * Delete a movie from the database
      * @author Ed Tirado
      */
-    public function deleteMovie($id): JsonResponse
+    public function deleteMovie($id): MovieResource
     {
         try {
             $movie = Movie::findOrFail($id);
             $movie->movieLists()->detach();
             $movie->delete();
 
-            return response()->json($movie);
+            return new MovieResource($movie);
         } catch (ModelNotFoundException $e) {
             return response()
                 ->json(["data" => "Could not find movie to delete"])

@@ -96,7 +96,7 @@ export default defineComponent({
         .post(`/api/lists/${this.listId}`, movie)
         .then((response: AxiosResponse) => {
           this.$emit("resetMovie");
-          store.commit("updateList", response.data.list);
+          store.commit("updateList", response.data);
         })
         .catch((error: AxiosError) => {
           if (error.response?.status === 304) {
@@ -118,7 +118,7 @@ export default defineComponent({
       required: false,
     },
     listId: {
-      type: Number,
+      type: String,
       required: true,
     },
   },

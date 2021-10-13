@@ -1,9 +1,10 @@
 export interface List {
   id: number;
+  isPublic: boolean;
   movieCount: number;
   movies: Movie[];
   name: string;
-  isPublic: boolean;
+  schedule_id: number;
 }
 
 export interface Movie {
