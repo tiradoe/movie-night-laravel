@@ -13,16 +13,14 @@
       <h2 class="m-5 font-semibold text-left sm:m-0 sm:mb-5">
         Upcoming Showings
       </h2>
-      <ul v-if="showings.length" class="flex flex-col rounded sm:m-0">
+      <ul v-if="showings.length" class="flex flex-col">
         <li
-          class="w-full bg-gray-300 mb-2 p-2"
           :key="showing.id"
           v-for="showing in showings"
+          class="w-full p-2 bg-gray-300 mb-2"
         >
           <showing-info :showing="showing" />
         </li>
-
-        <li></li>
       </ul>
 
       <span v-else class="block text-left">Nothing scheduled</span>
@@ -39,12 +37,12 @@
         </summary>
         <ul
           v-if="previousShowings.length > 0"
-          class="flex flex-col m-5 bg-gray-300 rounded sm:m-0"
+          class="flex flex-col rounded sm:m-0"
         >
           <li
             :key="showing.id"
             v-for="showing in previousShowings"
-            class="w-full bg-gray-300 mb-2 p-2"
+            class="w-full p-2 bg-gray-300 mb-2"
           >
             <showing-info :showing="showing" />
           </li>
