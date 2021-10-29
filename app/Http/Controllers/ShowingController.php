@@ -47,7 +47,8 @@ class ShowingController extends Controller
     {
         try {
             $showing = Showing::where('owner', $request->user()->id)
-                ->where('id', $showing_id)->firstOrFail();
+                ->where('id', $showing_id)
+                ->firstOrFail();
         } catch (ItemNotFoundException $e) {
             return response()->json([
                 "error" => "Could not find showing."
