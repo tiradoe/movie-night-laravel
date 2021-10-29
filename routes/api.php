@@ -41,6 +41,7 @@ Route::middleware(["auth:sanctum"])->group(function () {
 
     Route::get("/showings", [ShowingController::class, "getShowings"]);
     Route::get("/showings/{id}", [ShowingController::class, "getShowing"]);
+    Route::put("/showings/{id}", [ShowingController::class, "updateShowing"]);
     Route::post("/showings", [ShowingController::class, "createShowing"]);
     Route::delete("/showings/{id}", [ShowingController::class, "deleteShowing"]);
 

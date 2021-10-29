@@ -11,6 +11,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\ItemNotFoundException;
 
 class ShowingController extends Controller
 {
@@ -40,6 +41,22 @@ class ShowingController extends Controller
 
 
         return new ShowingResource($showing);
+    }
+
+    public function updateShowing(Request $request, int $showing_id)
+    {
+        try {
+            $showing = Showing::where('owner', $request->user()->id)
+                ->where('id', $showing_id)
+                ->firstOrFail();
+        } catch (ItemNotFoundException $e) {
+            return response()->json([
+                "error" => "Could not find showing."
+            ])->setStatusCode(404);
+        }
+
+        $showing->isPublic = $request->input('isPublic');
+        $showing->save();
     }
 
     public function getShowings(Request $request, String $uuid = "", $username = "")

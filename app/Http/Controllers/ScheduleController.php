@@ -101,9 +101,9 @@ class ScheduleController extends Controller
             ->where('isPublic', true)
             ->firstOrFail();
 
-        $schedule->showings;
+        $schedule->public_showings;
 
-        foreach ($schedule->showings as $showing) {
+        foreach ($schedule->public_showings as $showing) {
             $showing->movie;
         }
 

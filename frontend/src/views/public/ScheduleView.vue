@@ -7,31 +7,28 @@
     <hr class="mb-10 shadow" />
     <div
       v-if="showings.length > 0 || previousShowings.length > 0"
-      class="sm:m-10"
+      class="text-center sm:m-10 max-w-6xl xl:mx-auto"
     >
       <!-- UPCOMING SHOWINGS -->
       <h2 class="m-5 font-semibold text-left sm:m-0 sm:mb-5">
         Upcoming Showings
       </h2>
-      <ul
-        v-if="showings.length"
-        class="flex flex-col m-5 bg-gray-300 rounded sm:m-0 sm:px-5"
-      >
+      <ul v-if="showings.length" class="flex flex-col rounded sm:m-0">
         <li
+          class="w-full bg-gray-300 mb-2 p-2"
           :key="showing.id"
           v-for="showing in showings"
-          class="flex p-5 sm:m-10"
         >
-          <span class="w-1/2 text-left">{{ showing.movie.title }}</span>
-          <span class="w-1/2 text-right">{{
-            prettyDate(showing.show_time)
-          }}</span>
+          <showing-info :showing="showing" />
         </li>
+
+        <li></li>
       </ul>
+
       <span v-else class="block text-left">Nothing scheduled</span>
 
       <!-- PREVIOUS SHOWINGS -->
-      <details class="flex pt-10 text-left sm:">
+      <details class="flex pt-10">
         <summary class="flex flex-row list-none cursor-pointer">
           <h2
             v-if="previousShowings.length > 0"
@@ -42,17 +39,14 @@
         </summary>
         <ul
           v-if="previousShowings.length > 0"
-          class="flex flex-col m-5 bg-gray-300 rounded sm:m-0 sm:px-5"
+          class="flex flex-col m-5 bg-gray-300 rounded sm:m-0"
         >
           <li
             :key="showing.id"
             v-for="showing in previousShowings"
-            class="flex m-5 sm:m-10"
+            class="w-full bg-gray-300 mb-2 p-2"
           >
-            <span class="w-1/2 text-left">{{ showing.movie.title }}</span>
-            <span class="w-1/2 text-right">{{
-              prettyDate(showing.show_time)
-            }}</span>
+            <showing-info :showing="showing" />
           </li>
         </ul>
       </details>
@@ -71,6 +65,7 @@
 import { defineComponent } from "@vue/runtime-core";
 import Loader from "@/components/Loader.vue";
 import MovieQuote from "@/components/MovieQuote.vue";
+import ShowingInfo from "@/components/Showing.vue";
 import { AxiosResponse } from "axios";
 import { Schedule, Showing } from "@/types/index";
 
@@ -80,7 +75,7 @@ let schedule: Schedule;
 
 export default defineComponent({
   name: "ScheduleView",
-  components: { MovieQuote, Loader },
+  components: { MovieQuote, Loader, ShowingInfo },
   computed: {
     title(): string {
       if (this.schedule?.name) {
@@ -120,7 +115,7 @@ export default defineComponent({
           this.previousShowings = [];
           this.showings = [];
 
-          response.data.schedule.showings.forEach((showing: Showing) => {
+          response.data.schedule.public_showings.forEach((showing: Showing) => {
             const show_time = new Date(showing.show_time.toString());
             let today = new Date();
             today.setHours(0, 0, 0, 0);

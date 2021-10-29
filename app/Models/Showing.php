@@ -15,6 +15,7 @@ class Showing extends Model
     ];
 
     protected $fillable = [
+        "isPublic",
         "movie_id",
         "show_time",
         "owner",
