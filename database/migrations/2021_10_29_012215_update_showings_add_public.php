@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateShowingsTableAddSchedule extends Migration
+class UpdateShowingsAddPublic extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,7 @@ class UpdateShowingsTableAddSchedule extends Migration
     public function up()
     {
         Schema::table('showings', function (Blueprint $table) {
-            $table->foreignId('schedule_id')
-                ->nullable()
-                ->references('id')
-                ->on('schedules')
-                ->onDelete('cascade');
+            $table->boolean('isPublic')->default(false);
         });
     }
 
@@ -30,7 +26,7 @@ class UpdateShowingsTableAddSchedule extends Migration
     public function down()
     {
         Schema::table('showings', function (Blueprint $table) {
-            $table->dropColumn('schedule_id');
+            $table->dropColumn('isPublic');
         });
     }
 }

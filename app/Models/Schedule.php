@@ -20,6 +20,14 @@ class Schedule extends Model
 
     public function showings()
     {
-        return $this->hasMany(Showing::class)->orderBy('show_time');
+        return $this->hasMany(Showing::class)
+            ->orderBy('show_time');
+    }
+
+    public function public_showings()
+    {
+        return $this->hasMany(Showing::class)
+            ->where('isPublic', true)
+            ->orderBy('show_time');
     }
 }
