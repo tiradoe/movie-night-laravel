@@ -20,65 +20,44 @@
 
     <div
       v-if="showings.length > 0 || previousShowings.length > 0"
-      class="sm:m-10"
+      class="text-center sm:m-10 max-w-6xl xl:mx-auto"
     >
       <div v-show="!loading && selectedTab === 'schedule'">
         <!-- UPCOMING SHOWINGS -->
         <h2 class="m-5 font-semibold text-left sm:m-0 sm:mb-5">
           Upcoming Showings
         </h2>
-        <ul
-          v-if="showings.length"
-          class="flex flex-col bg-gray-300 rounded sm:px-5"
-        >
+        <ul v-if="showings.length" class="flex flex-col">
           <li
             :key="showing.id"
             v-for="showing in showings"
-            class="flex m-5 sm:m-10"
+            class="w-full bg-gray-300 mb-2 p-2"
           >
-            <span class="w-1/2 text-left">{{ showing.movie.title }}</span>
-            <span class="w-1/2 text-right sm:text-left">{{
-              prettyDate(showing.show_time)
-            }}</span>
-            <div @click="deleteShowing(showing.id)">
-              <font-awesome-icon
-                class="ml-5 cursor-pointer hover:text-red-700"
-                icon="trash-alt"
-              />
-            </div>
+            <showing-info
+              v-on:update-schedule="getSchedule"
+              :showing="showing"
+            />
           </li>
         </ul>
         <span v-else class="block text-left">Nothing scheduled</span>
 
         <!-- PREVIOUS SHOWINGS -->
-        <details class="flex pt-10 text-left sm:">
-          <summary class="flex flex-row list-none cursor-pointer">
+        <details class="pt-10">
+          <summary class="text-left list-none cursor-pointer">
             <h2
               v-if="previousShowings.length > 0"
-              class="flex flex-row m-5 font-semibold underline sm:m-0 sm:mb-5"
+              class="m-5 font-semibold underline sm:m-0 sm:mb-5"
             >
               Previous Showings
             </h2>
           </summary>
-          <ul
-            v-if="previousShowings.length > 0"
-            class="flex flex-col bg-gray-300 rounded sm:px-5"
-          >
+          <ul v-if="previousShowings.length > 0" class="flex flex-col">
             <li
+              class="w-full bg-gray-300 mb-2 p-2"
               :key="showing.id"
               v-for="showing in previousShowings"
-              class="flex m-5 sm:m-10"
             >
-              <span class="w-1/2 text-left">{{ showing.movie.title }}</span>
-              <span class="w-1/2 text-right sm:text-left">{{
-                prettyDate(showing.show_time)
-              }}</span>
-              <div @click="deleteShowing(showing.id)">
-                <font-awesome-icon
-                  class="ml-5 cursor-pointer hover:text-red-700"
-                  icon="trash-alt"
-                />
-              </div>
+              <showing-info :showing="showing" />
             </li>
           </ul>
         </details>
@@ -124,6 +103,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { defineComponent } from "vue";
 import MovieQuote from "@/components/MovieQuote.vue";
 import Loader from "@/components/Loader.vue";
+import ShowingInfo from "@/components/Showing.vue";
 import store from "@/store/index";
 import { Showing, Schedule, User } from "@/types/index";
 
@@ -133,7 +113,7 @@ let schedule: Schedule;
 
 export default defineComponent({
   name: "Schedule",
-  components: { MovieQuote, Loader },
+  components: { MovieQuote, Loader, ShowingInfo },
   computed: {
     appHost(): string {
       return window.location.origin;
@@ -165,13 +145,6 @@ export default defineComponent({
       });
 
       return formatted;
-    },
-    deleteShowing(showingId: number): void {
-      if (confirm("Delete showing?") === true) {
-        this.$http
-          .delete(`/api/showings/${showingId}`)
-          .then(this.getSchedule());
-      }
     },
     getSchedule(): void {
       this.$http

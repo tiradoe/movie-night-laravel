@@ -41,6 +41,7 @@ export interface Showing {
   movie_id: number;
   owner: number;
   show_time: string;
+  isPublic: boolean;
 }
 
 export interface User {
