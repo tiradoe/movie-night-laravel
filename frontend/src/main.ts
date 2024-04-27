@@ -27,6 +27,6 @@ library.add(
 const app = createApp(App);
 app.use(store);
 app.use(router);
-app.use(axiosPlugin);
+app.use(axiosPlugin, {});
 app.component("font-awesome-icon", FontAwesomeIcon);
 app.mount("#app");
