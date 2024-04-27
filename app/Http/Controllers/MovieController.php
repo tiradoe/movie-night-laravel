@@ -27,7 +27,7 @@ class MovieController extends Controller
      * )
      */
 
-    public function getMovies(): MovieResource
+    public function index(): MovieResource
     {
         $movies = Movie::all();
 
@@ -61,7 +61,7 @@ class MovieController extends Controller
      *     ),
      * )
      */
-    public function getMovie($id): MovieResource
+    public function show($id): MovieResource
     {
         try {
             $movie = Movie::findOrFail($id);
@@ -79,7 +79,7 @@ class MovieController extends Controller
      * Delete a movie from the database
      * @author Ed Tirado
      */
-    public function deleteMovie($id): MovieResource
+    public function destroy($id): MovieResource
     {
         try {
             $movie = Movie::findOrFail($id);

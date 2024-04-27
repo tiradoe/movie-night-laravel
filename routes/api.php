@@ -25,11 +25,10 @@ Route::middleware(["auth:sanctum"])->group(function () {
     });
     Route::put("/user", [UserController::class, "updateUser"]);
 
-    Route::get("/movies", [MovieController::class, "getMovies"]);
+    Route::get("/movies", [MovieController::class, "index"]);
     Route::get("/movies/search", [MovieController::class, "search"]);
-    Route::get("/movies/{id}", [MovieController::class, "getMovie"]);
-    Route::post("/movies", [MovieController::class, "createMovie"]);
-    Route::delete("/movies/{id}", [MovieController::class, "deleteMovie"]);
+    Route::get("/movies/{id}", [MovieController::class, "show"]);
+    Route::delete("/movies/{id}", [MovieController::class, "destroy"]);
 
     Route::get("/lists", [MovieListController::class, "index"]);
     Route::get("/lists/{id}", [MovieListController::class, "show"]);
