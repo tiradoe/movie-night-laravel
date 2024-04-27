@@ -10,7 +10,8 @@ class MovieList extends Model
     use HasFactory;
 
     protected $hidden = [
-        'id'
+        'id',
+        'slug'
     ];
 
     public function movies()

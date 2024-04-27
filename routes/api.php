@@ -31,13 +31,13 @@ Route::middleware(["auth:sanctum"])->group(function () {
     Route::post("/movies", [MovieController::class, "createMovie"]);
     Route::delete("/movies/{id}", [MovieController::class, "deleteMovie"]);
 
-    Route::get("/lists", [MovieListController::class, "getMovieLists"]);
-    Route::get("/lists/{id}", [MovieListController::class, "getMovieList"]);
-    Route::post("/lists", [MovieListController::class, "createMovieList"]);
+    Route::get("/lists", [MovieListController::class, "index"]);
+    Route::get("/lists/{id}", [MovieListController::class, "show"]);
+    Route::post("/lists", [MovieListController::class, "store"]);
     Route::post("/lists/{id}", [MovieListController::class, "addToList"]);
-    Route::put("/lists", [MovieListController::class, "updateMovieList"]);
+    Route::put("/lists", [MovieListController::class, "update"]);
     Route::delete("/lists/{id}/movie/{movieId}", [MovieListController::class, "removeMovie"]);
-    Route::delete("/lists/{id}", [MovieListController::class, "deleteMovieList"]);
+    Route::delete("/lists/{id}", [MovieListController::class, "destroy"]);
 
     Route::get("/showings", [ShowingController::class, "getShowings"]);
     Route::get("/showings/{id}", [ShowingController::class, "getShowing"]);

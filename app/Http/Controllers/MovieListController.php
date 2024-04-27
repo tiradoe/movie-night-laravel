@@ -109,7 +109,7 @@ class MovieListController extends Controller
         }
     }
 
-    public function createMovieList(Request $request)
+    public function store(Request $request)
     {
         $movieList = new MovieList();
         $uuid = Str::uuid();
@@ -129,7 +129,7 @@ class MovieListController extends Controller
         );
     }
 
-    public function updateMovieList(Request $request)
+    public function update(Request $request)
     {
         try {
 
@@ -149,7 +149,7 @@ class MovieListController extends Controller
         return new MovieListResource($movie_list);
     }
 
-    public function getMovieLists(Request $request)
+    public function index(Request $request)
     {
         $movieLists = MovieList::withCount('movies')
             ->where("owner", $request->user()->id)
@@ -158,7 +158,7 @@ class MovieListController extends Controller
         return new MovieListCollection($movieLists);
     }
 
-    public function getMovieList(Request $request, $uuid)
+    public function show(Request $request, $uuid)
     {
         //If not authenticated, check if the list is public
         if (!$request->user()) {
@@ -202,7 +202,7 @@ class MovieListController extends Controller
         return new MovieListResource($movie_list);
     }
 
-    public function deleteMovieList(Request $request, $uuid)
+    public function destroy(Request $request, $uuid)
     {
         try {
             $movie_list = MovieList::where("uuid", $uuid)
