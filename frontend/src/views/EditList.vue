@@ -52,13 +52,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+import {defineComponent} from "vue";
 import SearchForm from "@/components/SearchForm.vue";
 import MovieList from "@/components/MovieList.vue";
 import Loader from "@/components/Loader.vue";
 import store from "@/store/index";
-import { AxiosError, AxiosResponse } from "axios";
-import { User } from "@/types/index";
+import {AxiosError, AxiosResponse} from "axios";
 
 export default defineComponent({
   name: "EditList",
@@ -100,15 +99,13 @@ export default defineComponent({
       this.$http
         .get("/api/user")
         .then((response: AxiosResponse) => {
-          let userData: User = {
+          this.user = {
             id: response.data.id,
             name: response.data.name,
             email: response.data.email,
             username: response.data.username,
             uuid: response.data.uuid,
           };
-
-          this.user = userData;
           this.loading = false;
         })
         .catch((error: AxiosError) => {

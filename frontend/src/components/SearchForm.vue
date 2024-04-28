@@ -72,7 +72,7 @@ import { Movie } from "@/types/index";
 import { AxiosError, AxiosResponse } from "axios";
 import store from "@/store/index";
 
-let movie: Movie | null = null;
+const movie: Movie | null = null;
 
 export default defineComponent({
   name: "SearchForm",

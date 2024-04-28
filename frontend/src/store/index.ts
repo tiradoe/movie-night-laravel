@@ -5,6 +5,8 @@ const movieList: List = {
   id: 0,
   isPublic: false,
   name: "",
+  uuid: "",
+  slug: "",
   movieCount: 0,
   movies: [],
   schedule_id: 0,

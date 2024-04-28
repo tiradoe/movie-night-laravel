@@ -3,7 +3,7 @@
   <movie-list class="h-full" />
 </template>
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+import { defineComponent } from "vue";
 import MovieList from "@/components/MovieList.vue";
 import store from "@/store/index";
 

@@ -60,15 +60,15 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+import {defineComponent} from "vue";
 import Loader from "@/components/Loader.vue";
 import MovieQuote from "@/components/MovieQuote.vue";
 import ShowingInfo from "@/components/Showing.vue";
-import { AxiosResponse } from "axios";
-import { Schedule, Showing } from "@/types/index";
+import {AxiosResponse} from "axios";
+import {Schedule, Showing} from "@/types/index";
 
-let previousShowings: Showing[] = [];
-let showings: Showing[] = [];
+const previousShowings: Showing[] = [];
+const showings: Showing[] = [];
 let schedule: Schedule;
 
 export default defineComponent({
@@ -84,18 +84,16 @@ export default defineComponent({
   },
   methods: {
     prettyDate(showTime: Date): string {
-      const formatted = new Date(showTime).toLocaleString("en-US", {
+      return new Date(showTime).toLocaleString("en-US", {
         month: "2-digit",
         day: "2-digit",
         year: "2-digit",
       });
-
-      return formatted;
     },
     deleteShowing(showingId: number): void {
       const confirmDelete = confirm(`Delete showing?`);
 
-      if (confirmDelete === true) {
+      if (confirmDelete) {
         this.$http
           .delete(`/api/showings/${showingId}`)
           .then(this.getShowings());
@@ -115,7 +113,7 @@ export default defineComponent({
 
           response.data.schedule.public_showings.forEach((showing: Showing) => {
             const show_time = new Date(showing.show_time.toString());
-            let today = new Date();
+            const today = new Date();
             today.setHours(0, 0, 0, 0);
 
             if (show_time.getTime() < today.getTime()) {

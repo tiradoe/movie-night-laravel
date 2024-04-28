@@ -97,7 +97,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+import { defineComponent } from "vue";
 import { Movie } from "@/types/index";
 import { AxiosError, AxiosResponse } from "axios";
 import { Showing } from "@/types/index";
