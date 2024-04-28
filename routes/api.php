@@ -50,5 +50,5 @@ Route::middleware(["auth:sanctum"])->group(function () {
 });
 
 // Public Routes
-Route::get("/lists/{id}", [MovieListController::class, "getMovieList"]);
+Route::get("/lists/{id}", [MovieListController::class, "show"]);
 Route::get("/schedules/user/{userIdentifier}/slug/{slug}", [ScheduleController::class, "getSchedule"]);
