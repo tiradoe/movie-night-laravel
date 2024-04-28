@@ -58,9 +58,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { User } from "@/types/index";
-import { AxiosResponse, AxiosError } from "axios";
+import {defineComponent} from "vue";
+import {AxiosError, AxiosResponse} from "axios";
 import Loader from "@/components/Loader.vue";
 import store from "@/store/index";
 
@@ -69,7 +68,7 @@ export default defineComponent({
   components: { Loader },
   data: function () {
     return {
-      user: { id: 0, name: "", email: "" },
+      user: { id: 0, name: "", email: "", uuid: "", username: "" },
       current_password: "",
       loading: true,
       password: "",
@@ -83,15 +82,13 @@ export default defineComponent({
       this.$http
         .get("/api/user")
         .then((response: AxiosResponse) => {
-          let userData: User = {
+          this.user = {
             id: response.data.id,
             name: response.data.name,
             email: response.data.email,
             uuid: response.data.uuid,
             username: response.data.username,
           };
-
-          this.user = userData;
           this.loading = false;
         })
         .catch((error: AxiosError) => {
@@ -108,10 +105,10 @@ export default defineComponent({
           password: this.password,
           password_confirmation: this.password_confirmation,
         })
-        .catch((error: AxiosError) => {
+        .catch((error: AxiosError<any,any>) => {
           this.resetErrors();
           if (error.response?.status === 422) {
-            const password_errors = error.response.data.errors;
+            const password_errors = error.response?.data.errors;
 
             if (password_errors.current_password) {
               this.current_password_error = password_errors.current_password[0];

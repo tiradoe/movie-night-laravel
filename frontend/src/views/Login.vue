@@ -46,6 +46,7 @@
 </template>
 
 <script lang="ts">
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { AxiosError } from "axios";
 import { defineComponent } from "vue";
 import store from "@/store/index";

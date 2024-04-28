@@ -77,8 +77,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
-import { List } from "@/types/index";
+import { defineComponent } from "vue";
+import { List } from "@/types";
 import MovieQuote from "@/components/MovieQuote.vue";
 import Loader from "@/components/Loader.vue";
 import { AxiosError, AxiosResponse } from "axios";

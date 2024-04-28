@@ -1,5 +1,7 @@
 export interface List {
   id: number;
+  uuid: string,
+  slug: string,
   isPublic: boolean;
   movieCount: number;
   movies: Movie[];

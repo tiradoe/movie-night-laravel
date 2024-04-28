@@ -99,16 +99,16 @@
 </template>
 
 <script lang="ts">
-import { AxiosError, AxiosResponse } from "axios";
-import { defineComponent } from "vue";
+import {AxiosError, AxiosResponse} from "axios";
+import {defineComponent} from "vue";
 import MovieQuote from "@/components/MovieQuote.vue";
 import Loader from "@/components/Loader.vue";
 import ShowingInfo from "@/components/Showing.vue";
 import store from "@/store/index";
-import { Showing, Schedule, User } from "@/types/index";
+import {Schedule, Showing} from "@/types";
 
-let previousShowings: Showing[] = [];
-let showings: Showing[] = [];
+const previousShowings: Showing[] = [];
+const showings: Showing[] = [];
 let schedule: Schedule;
 
 export default defineComponent({
@@ -155,7 +155,7 @@ export default defineComponent({
 
           response.data.showings.forEach((showing: Showing) => {
             const show_time = new Date(showing.show_time.toString());
-            let today = new Date();
+            const today = new Date();
             today.setHours(0, 0, 0, 0);
 
             if (show_time.getTime() < today.getTime()) {
@@ -179,15 +179,13 @@ export default defineComponent({
       this.$http
         .get("/api/user")
         .then((response: AxiosResponse) => {
-          let userData: User = {
+          this.user = {
             id: response.data.id,
             name: response.data.name,
             email: response.data.email,
             username: response.data.username,
             uuid: response.data.uuid,
           };
-
-          this.user = userData;
           this.loading = false;
         })
         .catch((error: AxiosError) => {

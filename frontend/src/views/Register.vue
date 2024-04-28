@@ -108,7 +108,7 @@ export default defineComponent({
             store.commit("updateLogin", true);
             this.$router.push("/");
           })
-          .catch((error: AxiosError) => {
+          .catch((error: AxiosError<any,any>) => {
             if (error.response?.status === 422) {
               if ("name" in error.response?.data.errors) {
                 this.errorText = error.response?.data.errors.name[0];
